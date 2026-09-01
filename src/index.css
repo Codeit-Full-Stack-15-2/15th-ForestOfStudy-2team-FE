@@ -1,0 +1,60 @@
+:root {
+  --color-gray-900: #414141;
+  --color-gray-500: #818181;
+  --color-gray-300: #dddddd;
+  --color-gray-100: #eeeeee;
+  --color-bg-base: #f6f4ef;
+  --color-brand-primary: #99c08e;
+  --color-red-primary: #f50e0e;
+  --color-red-dark: #c41013;
+  --color-red-light: #ffa3a5;
+  --color-green-light: #e1edde;
+  --color-green-text: #578246;
+  --color-yellow-light: #fff1cc;
+  --color-yellow-text: #c18e1b;
+  --color-blue-light: #e0f1f5;
+  --color-blue-text: #418099;
+  --color-pink-light: #fde0e9;
+  --color-pink-text: #bc3c6a;
+
+  /* 본문 및 인터페이스 (Body / UI) */
+  --font-size-2xs: 0.625rem; /* 10px */
+  --font-size-xs: 0.75rem; /* 12px */
+  --font-size-sm: 0.875rem; /* 14px */
+  --font-size-md: 1rem; /* 16px / (기본 기준점) */
+  --font-size-lg: 1.125rem; /* 18px */
+  --font-size-xl: 1.25rem; /* 20px  */
+
+  /* 제목 (Heading) */
+  --font-size-2xl: 1.5rem; /* 24px  */
+  --font-size-3xl: 2rem; /* 32px  */
+
+  /* 대형 히어로 / 디스플레이 (Display) */
+  --font-size-display-sm: 5rem; /* 80px */
+  --font-size-display-md: 7.5rem; /* 120px */
+  --font-size-display-lg: 9.375rem; /* 150px */
+}
+/* 웹 폰트 등록 */
+@font-face {
+  font-family: 'JejuStoneWall';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-EF@1.0/EF_jejudoldam.woff2')
+    format('woff2');
+  font-weight: normal;
+  font-display: swap;
+}
+
+/* 전역 기본 폰트 pretendard */
+body {
+  font-family:
+    'Pretendard Variable',
+    Pretendard,
+    -apple-system,
+    BlinkMacSystemFont,
+    system-ui,
+    Roboto,
+    'Helvetica Neue',
+    'Segoe UI',
+    'Apple SD Gothic Neo',
+    'Noto Sans KR',
+    sans-serif;
+}
