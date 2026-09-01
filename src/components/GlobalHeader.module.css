@@ -1,0 +1,57 @@
+.container {
+  background-color: var(--color-bg-base);
+}
+
+.wrapper {
+  max-width: 1480px;
+  display: flex;
+  margin: 0 auto;
+  height: 100px;
+  justify-content: space-between;
+  align-items: center;
+
+  & img {
+    width: 181.6px;
+  }
+
+  & button {
+    width: 252px;
+    height: 58px;
+    border-radius: 16px;
+    background-color: var(--color-brand-primary);
+    border: none;
+    cursor: pointer;
+
+    & span {
+      font-family: JejuStoneWall;
+      font-size: var(--font-size-lg);
+      color: #fff;
+      text-shadow: 0px -2px 0px var(--color-green-text);
+    }
+  }
+}
+
+@media (max-width: 744px) {
+  .wrapper {
+    padding: 0 24px;
+    & button {
+      width: 160px;
+    }
+  }
+}
+
+@media (max-width: 375px) {
+  .wrapper {
+    padding: 0 16px;
+    & img {
+      width: 106px;
+    }
+    & button {
+      width: 106px;
+      height: 38px;
+      & span {
+        font-size: var(--font-size-xs);
+      }
+    }
+  }
+}
