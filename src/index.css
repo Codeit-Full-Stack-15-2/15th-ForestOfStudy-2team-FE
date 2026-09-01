@@ -58,3 +58,8 @@ body {
     'Noto Sans KR',
     sans-serif;
 }
+
+/* 전체 백그라운드 컬러 */
+body {
+  background-color: var(--color-bg-base);
+}
