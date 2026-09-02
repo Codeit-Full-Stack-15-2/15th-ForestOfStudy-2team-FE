@@ -1,3 +1,101 @@
-.test-class {
-  color: red;
+.home {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.recentStudies,
+.studyBrowse {
+  background-color: #fff;
+  border-radius: 20px;
+  padding: 32px;
+}
+
+.sectionTitle {
+  margin-bottom: 24px;
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  color: var(--color-gray-900);
+}
+
+.searchInput {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: var(--font-size-md);
+}
+
+.searchBox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  width: 100%;
+  max-width: 360px;
+  height: 42px;
+
+  padding: 0 16px;
+
+  border: 1px solid var(--color-gray-300);
+  border-radius: 12px;
+}
+
+.searchBox img {
+  width: 20px;
+  height: 20px;
+}
+
+.searchBox:focus-within {
+  border-color: var(--color-gray-500);
+}
+
+.searchInput::placeholder {
+  color: var(--color-gray-500);
+}
+
+.sortSelect {
+  width: 160px;
+  height: 42px;
+  padding: 0 16px;
+
+  border: 1px solid var(--color-gray-300);
+  border-radius: 12px;
+  outline: none;
+
+  font-size: var(--font-size-md);
+}
+
+.sortSelect:focus {
+  border-color: var(--color-gray-500);
+}
+
+.studyControls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.studyList {
+  margin-top: 24px;
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.studyCard {
+  background-color: var(--color-green-light);
+  padding: 24px;
+  border-radius: 16px;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
 }
