@@ -22,36 +22,61 @@
       display: flex;
       flex-wrap: wrap;
       gap: 4px;
+      position: relative;
       & .reactionBadge {
         padding: 7.5px 8px;
         background-color: rgba(0, 0, 0, 0.5);
         border-radius: 50px;
+        border: none;
         word-break: break-all;
         font-size: var(--font-size-md);
         font-weight: 400;
         color: #fff;
+        cursor: pointer;
       }
-      & .reactionBadgeMore {
-        padding: 7.5px 8px;
+      & .more {
         background-color: rgba(0, 0, 0, 0.3);
-        border-radius: 50px;
-        font-size: var(--font-size-md);
-        font-weight: 400;
-        color: #fff;
+      }
+      & .allReactions {
+        position: absolute;
+        right: 0;
+        top: 42px;
+        padding: 12px;
+        display: flex;
+        gap: 4px;
+        flex-wrap: wrap;
+        width: 242px;
+
+        background-color: #fff;
+        border-radius: 15px;
+        border: 1px solid var(--color-gray-300);
+        box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.08);
       }
     }
-    & .add {
-      padding: 6px 8px;
-      border-radius: 50px;
-      border: 1px solid rgba(0, 0, 0, 0.1);
-      background: none;
-      cursor: pointer;
-      & span {
-        margin-left: 5px;
+    & .addWrapper {
+      position: relative;
+      & .add {
+        padding: 7.5px 8px;
+        border-radius: 50px;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        background: none;
+        cursor: pointer;
+        & span {
+          margin-left: 5px;
+        }
+        & img,
+        span {
+          vertical-align: middle;
+        }
       }
-      & img,
-      span {
-        vertical-align: middle;
+      & .emojiController {
+        position: absolute;
+        top: 42px;
+        left: 0px;
+        border-radius: 15px;
+        border: 1px solid var(--color-gray-300);
+        box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
       }
     }
   }
@@ -227,6 +252,14 @@
     display: block;
     & .reaction {
       margin-top: 16px;
+      & .addWrapper {
+        & .emojiController {
+          position: absolute;
+          top: 40px;
+          left: auto;
+          right: 0px;
+        }
+      }
     }
     & .controlls {
       text-align: right;
