@@ -1,0 +1,231 @@
+/* Header */
+.controllsContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  & .reaction {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    & .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      position: relative;
+      & .reactionBadge {
+        padding: 7.5px 8px;
+        background-color: rgba(0, 0, 0, 0.5);
+        border-radius: 50px;
+        border: none;
+        word-break: break-all;
+        font-size: var(--font-size-md);
+        font-weight: 400;
+        color: #fff;
+        cursor: pointer;
+      }
+      & .more {
+        background-color: rgba(0, 0, 0, 0.3);
+      }
+      & .allReactions {
+        position: absolute;
+        right: 0;
+        top: 42px;
+        padding: 12px;
+        display: flex;
+        gap: 4px;
+        flex-wrap: wrap;
+        width: 242px;
+
+        background-color: #fff;
+        border-radius: 15px;
+        border: 1px solid var(--color-gray-300);
+        box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.08);
+      }
+    }
+    & .addWrapper {
+      position: relative;
+      & .add {
+        padding: 7.5px 8px;
+        border-radius: 50px;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        background: none;
+        cursor: pointer;
+        & span {
+          margin-left: 5px;
+        }
+        & img,
+        span {
+          vertical-align: middle;
+        }
+      }
+      & .emojiController {
+        position: absolute;
+        top: 42px;
+        left: 0px;
+        border-radius: 15px;
+        border: 1px solid var(--color-gray-300);
+        box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+      }
+    }
+  }
+  & .controlls {
+    color: var(--color-gray-500);
+    order: 1;
+    & button {
+      padding: 0 16px;
+      border: none;
+      background: none;
+      font-size: var(--font-size-md);
+      cursor: pointer;
+      &:last-child {
+        padding-right: 0;
+        color: var(--color-gray-500);
+      }
+      &:first-child {
+        color: var(--color-green-text);
+      }
+      &:nth-child(2) {
+        color: var(--color-green-text);
+      }
+    }
+  }
+}
+.titleContainer {
+  display: flex;
+  margin-top: 24px;
+  justify-content: space-between;
+  & .title {
+    font-size: var(--font-size-3xl);
+    font-weight: 800;
+    color: var(--color-gray-900);
+  }
+  & .titleButtons {
+    & button {
+      padding: 12px 16px 12px 24px;
+      margin-right: 16px;
+      border: 1px solid var(--color-gray-300);
+      border-radius: 15px;
+      background-color: #fff;
+      cursor: pointer;
+      color: var(--color-gray-500);
+      &:last-child {
+        margin-right: 0;
+      }
+      & span {
+        margin-right: 4px;
+        font-size: var(--font-size-md);
+      }
+      & span,
+      img {
+        vertical-align: middle;
+      }
+    }
+  }
+}
+
+.label {
+  font-size: var(--font-size-lg);
+  color: var(--color-gray-500);
+}
+
+.descriptionContainer {
+  margin-top: 16px;
+  & .description {
+    margin-top: 8px;
+    font-size: var(--font-size-lg);
+    line-height: 1.333333;
+    color: var(--color-gray-900);
+  }
+}
+
+.pointContainer {
+  margin-top: 24px;
+  & .badge {
+    display: inline-block;
+    padding: 8px 12px;
+    margin-top: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50px;
+    & span {
+      margin-left: 4px;
+      font-size: var(--font-size-md);
+      font-weight: 500;
+      color: var(--color-gray-900);
+    }
+    & span,
+    img {
+      vertical-align: middle;
+    }
+  }
+}
+
+/* studyHeader tablet */
+@media (max-width: 744px) {
+  .controllsContainer {
+    & .controlls {
+      & button {
+        font-size: var(--font-size-sm);
+      }
+    }
+  }
+  .titleContainer {
+    display: block;
+    & .title {
+      font-size: var(--font-size-2xl);
+    }
+    & .titleButtons {
+      margin-top: 16px;
+    }
+  }
+
+  .label {
+    font-size: var(--font-size-md);
+  }
+
+  .descriptionContainer {
+    & .description {
+      font-size: var(--font-size-sm);
+    }
+  }
+}
+
+/* studyHeader mobile */
+@media (max-width: 375px) {
+  .controllsContainer {
+    display: block;
+    & .reaction {
+      margin-top: 16px;
+      & .addWrapper {
+        & .emojiController {
+          position: absolute;
+          top: 40px;
+          left: auto;
+          right: 0px;
+        }
+      }
+    }
+    & .controlls {
+      text-align: right;
+    }
+  }
+  .titleContainer {
+    display: block;
+    & .title {
+      font-size: var(--font-size-2xl);
+    }
+    & .titleButtons {
+      margin-top: 16px;
+    }
+  }
+
+  .label {
+    font-size: var(--font-size-md);
+  }
+
+  .descriptionContainer {
+    & .description {
+      font-size: var(--font-size-sm);
+    }
+  }
+}
