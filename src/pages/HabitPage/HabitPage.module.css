@@ -1,0 +1,25 @@
+.habitPageDiv{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1248px;
+  margin: 0 auto;
+  max-height: 863px;
+  border-radius: 20px;
+  padding: 40px;
+  gap: 10px;
+  background-color: white;
+}
+
+.habitInnerDiv{
+  display: flex;
+  max-width: 1168px;
+  max-height: 783px;
+  gap: 40px;
+}
+
+.habitHead{
+  display: flex;
+  
+}
