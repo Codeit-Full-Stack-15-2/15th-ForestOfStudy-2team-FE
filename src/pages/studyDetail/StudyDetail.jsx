@@ -2,6 +2,8 @@ import arrowAright from '@/assets/ic_arrow_right.svg';
 import point from '@/assets/ic_point.svg';
 import smile from '@/assets/ic_smile.svg';
 import styles from '@/pages/studyDetail/StudyDetail.module.css';
+import data from '@emoji-mart/data';
+import Picker from '@emoji-mart/react';
 
 function StudyDetailHeader() {
   return (
@@ -27,6 +29,10 @@ function StudyDetailHeader() {
           <button className={styles.add}>
             <img src={smile} alt="스마일 아이콘" />
             <span>추가</span>
+            <Picker
+              data={data}
+              onEmojiSelect={(emoji) => console.log(emoji.native)}
+            />
           </button>
         </div>
       </div>
