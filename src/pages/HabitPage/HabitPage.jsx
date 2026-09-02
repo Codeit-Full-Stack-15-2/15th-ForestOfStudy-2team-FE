@@ -1,9 +1,18 @@
-import styles from './HabitPage.module.css';
+
+import { useState } from 'react';
 import icArrowRight from '/src/assets/ic_arrow_right.svg'
+import { AddHabitForm } from './components/habitForm';
+import styles from './HabitPage.module.css';
 
 function HabitPage(){
 
  const timeNow = new Date().toLocaleString('sv-SE', { timeZone: 'Asia/Seoul' }).replace(' ', ' ');
+ const [isFormOpen, setIsFormOpen] = useState(false);
+
+const handleForm = () =>{
+  setIsFormOpen((prev) => !prev);
+};
+  
 
 return (
 <>
@@ -32,9 +41,16 @@ return (
       <div className ={styles.todayHabitInnerDiv}>
         <div className={styles.todayHabitTitle}>
           <p className={styles.todayHabitP}>오늘의 습관</p>
-           <p className={styles.listModifyP}>목록 수정</p>
+           <button className={styles.listModifyP}
+           onClick={handleForm}
+           >
+            목록 수정</button>
+            {isFormOpen && (
+              <AddHabitForm 
+            onClose={() => setIsFormOpen(false)}
+            />)}
             </div>
-        <div className={styles.todayHabbitBoard}>
+        <div className={styles.todayHabitBoard}>
           <p>아직 습관이 없어요<br/> 목록 수정을 눌러 습관을 생성해보세요</p>
         </div>
        

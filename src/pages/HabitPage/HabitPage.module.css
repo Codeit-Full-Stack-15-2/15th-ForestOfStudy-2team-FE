@@ -148,10 +148,10 @@ transform: translateX(505px);
 
 }
 
-.todayHabbitBoard{
+.todayHabitBoard{
 display: flex;
 flex-direction: column;
-align-items: center;
+align-items: flex-end;
 justify-content: center;
 width: 1248px;
 height: 863px;

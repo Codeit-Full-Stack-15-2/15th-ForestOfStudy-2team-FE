@@ -1,0 +1,141 @@
+.habitFormDiv{
+display: flex;
+flex-direction: column;
+align-items: center;
+width: 648px;
+height: 861px;
+border-radius: 20px;
+border: solid 1px var(--color-gray-500);
+padding: 40px 24px;
+gap: 10px;
+background-color: white;
+}
+
+.habitFormInner{
+  display: flex;
+  flex-direction: column;
+width:600px;
+height: 781px;
+gap: 24px;
+background-color: yellow;
+}
+
+.habitFormTitle{
+  font-size: var(--font-size-2xl);
+  font-weight: 800;
+  text-align: center;
+  color: var(--color-gray-900);
+}
+
+.addHabitDiv{
+  display: flex;
+  flex-direction: column;
+width: 600px;
+height: 728px;
+gap: 24px;
+}
+
+.addHabitInnerDiv{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.habitListField{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+width: 600px;
+height: 646px;
+gap: 20px;
+}
+
+.habit{
+  display: flex;
+  align-items: center;
+ 
+}
+.habitTitle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+   width:400px;
+  height: 54px;
+  border-radius: 20px;
+  background-color: var(--color-gray-100);
+  font-weight: 700;
+  font-size: var(--font-size-md);
+  text-decoration: underline;
+  color: var(--color-gray-500)
+}
+.habitDeleteButtonDiv{
+  display: flex;
+  flex-direction: column;
+  border-radius: 35px;
+  padding: 12px;
+  gap: 10px;
+  background-color: var(--color-pink-light);
+}
+
+.deleteButtonWrapper{
+   width: 48px;
+  height: 48px;
+}
+
+.habitDeleteButton{
+  width: 48px;
+  height: 48px;
+}
+.habitInput{
+  width: 400px;
+  height: 54px;
+  border-radius: 20px;
+  border: solid 2px var(--color-gray-900);
+  background-color: rgba(255,255,255,0);
+  font-size:var(--font-size-md);
+  font-weight: 700;
+  color: var(--color-gray-500);
+  background-image: url('src/assets/ic_plus.svg');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 24px 24px;
+
+}
+.habitInput:focus{
+  background-image: none;
+}
+
+.buttonDiv{
+display: flex;
+width: 600px;
+height: 58px;
+gap: 24px;
+}
+
+.cancleButton{
+width: 288px;
+height: 58px;
+border-radius: 16px;
+padding: 10px;
+gap: 10px;
+background-color: var(--color-gray-300);
+font-family: JejuStoneWall;
+font-weight: 400;
+font-size: var(--font-size-lg);
+color: white;
+}
+
+.fixButton{
+width: 288px;
+height: 58px;
+border-radius: 16px;
+padding: 10px;
+gap: 10px;
+background-color: var(--color-brand-primary);
+font-family: JejuStoneWall;
+font-weight: 400;
+font-size: var(--font-size-lg);
+color: white;
+
+}
