@@ -18,7 +18,8 @@ function App() {
           <Route path="studies/:studyId/edit" element={<StudyEdit />} />
           <Route path="studies/:studyId/habits" element={<HabitPage />} />
           <Route path="studies/:studyId/focus" element={<FocusPage />} />
-        </Route>
+        </Route> 
+        <Route path="*" elemet={<NotFound />} />
       </Routes>
     </>
   );
