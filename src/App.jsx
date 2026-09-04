@@ -1,10 +1,13 @@
 import { Route, Routes } from 'react-router';
 import './App.css';
-import Layout from './components/Layout';
-//import Home from './pages/home/Home';
-import HabitPage from './pages/HabitPage/HabitPage';
-import NotFound from './pages/notFound/NotFound';
-import StudyDetail from './pages/studyDetail/StudyDetail';
+import Layout from '@/components/Layout';
+import Home from '@/pages/home/Home';
+import StudyDetail from '@/pages/studyCreate/StudyCreate';
+import StudyDetail from '@/pages/studyDetail/StudyDetail';
+import StudyDetail from '@/pages/studyEdit/StudyEdit';
+import HabitPage from '@/pages/HabitPage/HabitPage';
+import StudyDetail from '@/pages/focusPage/FocusPage';
+import NotFound from '@/pages/notFound/NotFound';
 import './reset.css';
 
 function App() {
@@ -12,14 +15,14 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="studies/new" element={<StudyCreate />} />
-          <Route path="studies/:studyId" element={<StudyDetail />} />
-          <Route path="studies/:studyId/edit" element={<StudyEdit />} />
-          <Route path="studies/:studyId/habits" element={<HabitPage />} />
-          <Route path="studies/:studyId/focus" element={<FocusPage />} />
+           <Route index element={<Home />} /> 
+           <Route path="studies/new" element={<StudyCreate />} /> 
+           <Route path="studies/:studyId" element={<StudyDetail />} /> 
+           <Route path="studies/:studyId/edit" element={<StudyEdit />} /> 
+           <Route path="studies/:studyId/habits" element={<HabitPage />} /> 
+           <Route path="studies/:studyId/focus" element={<FocusPage />} /> 
         </Route> 
-        <Route path="*" elemet={<NotFound />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </>
   );
