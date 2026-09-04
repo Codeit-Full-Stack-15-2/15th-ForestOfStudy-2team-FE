@@ -1,6 +1,6 @@
-import arrowAright from '@/assets/ic_arrow_right.svg';
 import point from '@/assets/ic_point.svg';
 import smile from '@/assets/ic_smile.svg';
+import ArrowButton from '@/components/ArrowButton';
 import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
 import { useState } from 'react';
@@ -25,6 +25,10 @@ function StudyDetailHeader() {
   const handleToggleAllBadge = () => {
     setIsAllBadgeOpen((prev) => !prev);
   };
+
+  const handleNavigateToHabits = () => {};
+
+  const handleNavigateToFocus = () => {};
   return (
     <section className={styles.headerContainer}>
       <div className={styles.controllsContainer}>
@@ -97,14 +101,10 @@ function StudyDetailHeader() {
       <div className={styles.titleContainer}>
         <h2 className={styles.title}>연우의 개발공장</h2>
         <div className={styles.titleButtons}>
-          <button>
-            <span>오늘의 습관</span>
-            <img src={arrowAright} alt="우측 화살표 아이콘" />
-          </button>
-          <button>
-            <span>오늘의 집중</span>
-            <img src={arrowAright} alt="우측 화살표 아이콘" />
-          </button>
+          <ArrowButton onClick={handleNavigateToHabits}>
+            습관 관리하기
+          </ArrowButton>
+          <ArrowButton onClick={handleNavigateToFocus}>오늘의 집중</ArrowButton>
         </div>
       </div>
       <div className={styles.descriptionContainer}>

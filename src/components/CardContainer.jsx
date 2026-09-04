@@ -1,7 +1,7 @@
 import styles from '@/components/CardContainer.module.css';
 
 function CardContainer({ children }) {
-  return <article className={styles.container}>{children}</article>;
+  return <section className={styles.container}>{children}</section>;
 }
 
 export default CardContainer;
