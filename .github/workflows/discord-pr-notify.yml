@@ -8,9 +8,17 @@ jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
-      - name: Send PR Notification to Discord
-        uses: Ilshidur/action-discord@master
+      - name: Send PR Notification to Discord via curl
         env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_URL }}
-        with:
-          args: "📢 [공부의 숲 FE] 새로운 PR이 등록되었습니다!\n- 제목: ${{ github.event.pull_request.title }}\n- 작성자: ${{ github.event.pull_request.user.login }}\n- 링크: ${{ github.event.pull_request.html_url }}"
+          WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_USER: ${{ github.event.pull_request.user.login }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+        run: |
+          # URL 끝에 /github가 붙어있다면 자동으로 떼어내 순수 웹훅으로 정제
+          TARGET_URL=$(echo "$WEBHOOK_URL" | sed 's|/github$||')
+
+          curl -H "Content-Type: application/json" \
+               -X POST \
+               -d "{\"content\": \"📢 **[공부의 숲 FE] 새로운 PR이 등록되었습니다!**\n- **제목:** ${PR_TITLE}\n- **작성자:** ${PR_USER}\n- **바로가기:** ${PR_URL}\"}" \
+               "$TARGET_URL"
