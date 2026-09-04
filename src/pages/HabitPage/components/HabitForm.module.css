@@ -3,10 +3,9 @@ display: flex;
 flex-direction: column;
 align-items: center;
 width: 648px;
-height: 861px;
+height: 511px;
 border-radius: 20px;
 border: solid 1px var(--color-gray-500);
-padding: 40px 24px;
 gap: 10px;
 background-color: white;
 }
@@ -17,7 +16,7 @@ background-color: white;
 width:600px;
 height: 781px;
 gap: 24px;
-background-color: yellow;
+background-color: white;
 }
 
 .habitFormTitle{
@@ -45,9 +44,8 @@ gap: 24px;
   display: flex;
   flex-direction: column;
   align-items: center;
-
 width: 600px;
-height: 646px;
+height: 435px;
 gap: 20px;
 }
 
@@ -67,26 +65,21 @@ gap: 20px;
   font-weight: 700;
   font-size: var(--font-size-md);
   text-decoration: underline;
-  color: var(--color-gray-500)
+  color: var(--color-gray-500);
 }
-.habitDeleteButtonDiv{
+
+.deleteButtonWrapper{
   display: flex;
   flex-direction: column;
+  width: 48px;
+  height: 48px; 
   border-radius: 35px;
   padding: 12px;
   gap: 10px;
   background-color: var(--color-pink-light);
 }
 
-.deleteButtonWrapper{
-   width: 48px;
-  height: 48px;
-}
 
-.habitDeleteButton{
-  width: 48px;
-  height: 48px;
-}
 .habitInput{
   width: 400px;
   height: 54px;
@@ -96,7 +89,7 @@ gap: 20px;
   font-size:var(--font-size-md);
   font-weight: 700;
   color: var(--color-gray-500);
-  background-image: url('src/assets/ic_plus.svg');
+  background-image: url('./src/assets/ic_plus.svg');
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 24px 24px;
@@ -104,38 +97,4 @@ gap: 20px;
 }
 .habitInput:focus{
   background-image: none;
-}
-
-.buttonDiv{
-display: flex;
-width: 600px;
-height: 58px;
-gap: 24px;
-}
-
-.cancleButton{
-width: 288px;
-height: 58px;
-border-radius: 16px;
-padding: 10px;
-gap: 10px;
-background-color: var(--color-gray-300);
-font-family: JejuStoneWall;
-font-weight: 400;
-font-size: var(--font-size-lg);
-color: white;
-}
-
-.fixButton{
-width: 288px;
-height: 58px;
-border-radius: 16px;
-padding: 10px;
-gap: 10px;
-background-color: var(--color-brand-primary);
-font-family: JejuStoneWall;
-font-weight: 400;
-font-size: var(--font-size-lg);
-color: white;
-
 }

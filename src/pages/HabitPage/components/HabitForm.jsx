@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import styles from './HabitForm.module.css';
 import btnDeterminate from '/src/assets/btn_determinate.svg';
 
+
 export function AddHabitForm(){
 
  
@@ -19,9 +20,15 @@ export function AddHabitForm(){
   //   setIsFormOpen(false);
   // };
 
-  const handleSubmit = async (e) =>{
-    e.preventDefault();
+const handleSubmit = (e) =>{
+   e.preventDefault();
+};
 
+  const handleKeyDown = (e) =>{
+    if (e.key !== 'Enter') return;
+  if(e.key === 'Enter'){
+       e.preventDefault();
+  
     try {
       
       setHabits([...habits, habit]);
@@ -30,11 +37,13 @@ export function AddHabitForm(){
     alert('습관 등록에 실패했습니다. 다시 시도해 주세요.');
   console.error('Failed to add post:');
     }
+  }
   };
 
-  const handleHabitDelete = (e, targetIndex)=>{
-    e.stopPropagation();
-    setHabits((prevhabits) => prevhabits.filter((_, index) => index !== targetIndex));
+  const handleHabitDelete = (deleteHabit)=>{
+
+   setHabits((prevHabit) => prevHabit.filter((habit) => habit !==deleteHabit));
+ 
   }
 
   return (
@@ -44,9 +53,6 @@ export function AddHabitForm(){
     onSubmit={handleSubmit}
     className={styles.habitFormDiv}>
     <div className={styles.habitFormInner}>
-    <h1 className={styles.habitFormTitle}>
-      습관 목록
-    </h1>
     <div className={styles.addHabitDiv}>
    <div className= {styles.addHabitInnerDiv}>
       <ul className={styles.habitListField}>
@@ -61,7 +67,7 @@ export function AddHabitForm(){
           <button
           type="button"
           className={styles.deleteButtonWrapper}
-           onClick={(e) => handleHabitDelete(e, index)}
+           onClick={() => handleHabitDelete(habitItem)}
            >
           <img className={styles.habitDeleteButton}
           src={btnDeterminate}
@@ -75,18 +81,12 @@ export function AddHabitForm(){
         <input
         value={habit}
         onChange={(e) => setHabit(e.target.value)}
+        onKeyDown={handleKeyDown}
         className={styles.habitInput}
         ref={inputRef}
         />
         </div>
-      <div className={styles.buttonDiv}>
-        <button className={styles.cancleButton}>
-        취소
-        </button>
-        <button className={styles.fixButton}>
-         수정완료
-        </button>
-      </div>
+  
 
     </div>
     </div>

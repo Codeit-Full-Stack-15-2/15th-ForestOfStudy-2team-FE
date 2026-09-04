@@ -4,6 +4,7 @@ import icArrowRight from '/src/assets/ic_arrow_right.svg'
 import { AddHabitForm } from './components/habitForm';
 import styles from './HabitPage.module.css';
 
+
 function HabitPage(){
 
  const timeNow = new Date().toLocaleString('sv-SE', { timeZone: 'Asia/Seoul' }).replace(' ', ' ');
@@ -45,20 +46,21 @@ return (
            onClick={handleForm}
            >
             목록 수정</button>
-            {isFormOpen && (
+           
+            </div>
+             {isFormOpen && (
               <AddHabitForm 
             onClose={() => setIsFormOpen(false)}
             />)}
-            </div>
         <div className={styles.todayHabitBoard}>
           <p>아직 습관이 없어요<br/> 목록 수정을 눌러 습관을 생성해보세요</p>
+  
         </div>
-       
+
       </div>
 
     </div>
 
- 
   </div>
 
 </div>
