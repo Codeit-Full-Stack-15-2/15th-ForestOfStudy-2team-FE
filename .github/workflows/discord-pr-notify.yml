@@ -1,0 +1,16 @@
+name: Discord PR Notification
+
+on:
+  pull_request:
+    types: [opened, reopened]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send PR Notification to Discord
+        uses: Ilshidur/action-discord@master
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        with:
+          args: "📢 [공부의 숲 FE] 새로운 PR이 등록되었습니다!\n- 제목: ${{ github.event.pull_request.title }}\n- 작성자: ${{ github.event.pull_request.user.login }}\n- 링크: ${{ github.event.pull_request.html_url }}"
