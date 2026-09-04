@@ -3,10 +3,8 @@ import styles from './HabitForm.module.css';
 import btnDeterminate from '/src/assets/btn_determinate.svg';
 
 
-export function AddHabitForm(){
+export function AddHabitForm({habits = [], setHabits}){
 
- 
-  const [habits, setHabits] = useState([]);
   const [habit, setHabit] = useState('');
   const inputRef = useRef(null);
 
@@ -26,18 +24,18 @@ const handleSubmit = (e) =>{
 
   const handleKeyDown = (e) =>{
     if (e.key !== 'Enter') return;
-  if(e.key === 'Enter'){
-       e.preventDefault();
+        e.preventDefault();
+  
+        if(!habit.trim())return;
   
     try {
-      
       setHabits([...habits, habit]);
       resetForm();
     } catch{
     alert('습관 등록에 실패했습니다. 다시 시도해 주세요.');
   console.error('Failed to add post:');
     }
-  }
+
   };
 
   const handleHabitDelete = (deleteHabit)=>{
@@ -71,7 +69,7 @@ const handleSubmit = (e) =>{
            >
           <img className={styles.habitDeleteButton}
           src={btnDeterminate}
-          alt="예시 이미지 입니다"/>
+          alt="쓰레기통 이미지"/>
           </button>
           </div>
               </li>
