@@ -2,11 +2,11 @@ import { Route, Routes } from 'react-router';
 import './App.css';
 import Layout from '@/components/Layout';
 import Home from '@/pages/home/Home';
-import StudyDetail from '@/pages/studyCreate/StudyCreate';
+import StudyCreate from '@/pages/studyCreate/StudyCreate';
 import StudyDetail from '@/pages/studyDetail/StudyDetail';
-import StudyDetail from '@/pages/studyEdit/StudyEdit';
+import StudyEdit from '@/pages/studyEdit/StudyEdit';
 import HabitPage from '@/pages/HabitPage/HabitPage';
-import StudyDetail from '@/pages/focusPage/FocusPage';
+import FocusPage from '@/pages/focusPage/FocusPage';
 import NotFound from '@/pages/notFound/NotFound';
 import './reset.css';
 
