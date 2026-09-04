@@ -12,12 +12,12 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<Layout />}>
-          {/* <Route index element={<Home />} /> */}
-          {/* <Route path="studies/new" element={<StudyCreate />} /> */}
-          {/* <Route path="studies/:studyId" element={<StudyDetail />} /> */}
-          {/* <Route path="studies/:studyId/edit" element={<StudyEdit />} /> */}
-          {/* <Route path="studies/:studyId/habits" element={<HabitPage />} /> */}
-          {/* <Route path="studies/:studyId/focus" element={<FocusPage />} /> */}
+           <Route index element={<Home />} /> 
+           <Route path="studies/new" element={<StudyCreate />} /> 
+           <Route path="studies/:studyId" element={<StudyDetail />} /> 
+           <Route path="studies/:studyId/edit" element={<StudyEdit />} /> 
+           <Route path="studies/:studyId/habits" element={<HabitPage />} /> 
+           <Route path="studies/:studyId/focus" element={<FocusPage />} /> 
         </Route> 
         <Route path="*" element={<NotFound />} />
       </Routes>
