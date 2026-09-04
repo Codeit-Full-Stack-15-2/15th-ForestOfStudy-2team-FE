@@ -46,14 +46,10 @@ const handleSubmit = (e) =>{
 
   return (
     <>
-    <form
-    id="add-habit-form"
-    onSubmit={handleSubmit}
-    className={styles.habitFormDiv}>
-    <div className={styles.habitFormInner}>
-    <div className={styles.addHabitDiv}>
-   <div className= {styles.addHabitInnerDiv}>
-      <ul className={styles.habitListField}>
+   <div className= {styles.addHabitUlDiv}>
+      <ul 
+      onSubmit = {handleSubmit}
+      className={styles.habitListField}>
        
         {habits.map((habitItem, index) => (
           <li className={styles.habit} key={index}>
@@ -86,9 +82,7 @@ const handleSubmit = (e) =>{
         </div>
   
 
-    </div>
-    </div>
-    </form>
+  
     </>
   )
 

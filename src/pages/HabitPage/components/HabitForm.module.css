@@ -1,40 +1,5 @@
-.habitFormDiv{
-display: flex;
-flex-direction: column;
-align-items: center;
-width: 648px;
-height: 511px;
-border-radius: 20px;
-border: solid 1px var(--color-gray-500);
-gap: 10px;
-background-color: white;
-}
 
-.habitFormInner{
-  display: flex;
-  flex-direction: column;
-width:600px;
-height: 781px;
-gap: 24px;
-background-color: white;
-}
-
-.habitFormTitle{
-  font-size: var(--font-size-2xl);
-  font-weight: 800;
-  text-align: center;
-  color: var(--color-gray-900);
-}
-
-.addHabitDiv{
-  display: flex;
-  flex-direction: column;
-width: 600px;
-height: 728px;
-gap: 24px;
-}
-
-.addHabitInnerDiv{
+.addHabitUlDiv{
   display: flex;
   flex-direction: column;
   align-items: center;

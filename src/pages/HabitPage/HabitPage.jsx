@@ -9,12 +9,26 @@ import styles from './HabitPage.module.css';
 function HabitPage(){
 
  const timeNow = new Date().toLocaleString('sv-SE', { timeZone: 'Asia/Seoul' }).replace(' ', ' ');
- const [isFormOpen, setIsFormOpen] = useState(false);
-   const [habits, setHabits] = useState([]);
+ const [isUlOpen, setIsUlOpen] = useState(false);
+ const [isTextOpen, setIsTextOpen] = useState(false);
+ //const [isFixUIOpen, setFixUIOpen] = useState(false);
+const [habits, setHabits] = useState([]);
 
 const handleForm = () =>{
-  setIsFormOpen((prev) => !prev);
+  if(habits.length === 0){
+ setIsUlOpen((prev) => !prev);
+ setIsTextOpen((prev)=> !prev);
+  }
+  else if(habits. length > 1){
+    setIsUlOpen((prev)=>!prev);
+  }
+ 
 };
+
+const fixUIHandle = () => {
+  setFixUIOpen((prev) => !prev);
+}
+
   
 
 return (
@@ -46,20 +60,20 @@ return (
           <p className={styles.todayHabitP}>오늘의 습관</p>
            <button className={styles.listModifyP}
            onClick={handleForm}
-           >
-            목록 수정</button>
-           
+           > 목록 수정</button> 
             </div>
-             {isFormOpen && (
+             {isUlOpen && (
               <AddHabitForm 
               habits={habits}
               setHabits={setHabits}
-
+              onClick={fixUIHandle}
             />)}
-        <div className={styles.todayHabitBoard}>
+        {!isTextOpen && (
+          <div className={styles.todayHabitBoard}>
           <p>아직 습관이 없어요<br/> 목록 수정을 눌러 습관을 생성해보세요</p>
-  
-        </div>
+            </div>
+  )}
+      
 
       </div>
 
