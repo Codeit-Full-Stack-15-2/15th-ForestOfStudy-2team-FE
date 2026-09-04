@@ -37,14 +37,16 @@ function Home() {
           <li className={styles.studyCard}>
             <article>
               <div className={styles.cardHeader}>
-                <h3>이유디의 UX 스터디</h3>
-                <span>🌿 310P 획득</span>
+                <h3 className={styles.cardTitle}>이유디의 UX 스터디</h3>
+                <span className={styles.pointBadge}>🌿 310P 획득</span>
               </div>
 
-              <p>62일째 진행 중</p>
-              <p>Slow And Steady Wins The Race!!</p>
+              <p className={styles.studyProcess}>62일째 진행 중</p>
+              <p className={styles.studyDescription}>
+                Slow And Steady Wins The Race!!
+              </p>
 
-              <div>
+              <div className={styles.reactions}>
                 <span>🧑🏻 37</span>
                 <span>🔥 26</span>
                 <span>🤍 14</span>
