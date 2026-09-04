@@ -18,3 +18,20 @@
     vertical-align: middle;
   }
 }
+
+/* studyHeader mobile */
+@media (max-width: 375px) {
+  .arrowButton {
+    padding: 8px 6px 8px 10px;
+    & span {
+      display: inline-block;
+      margin-right: 4px;
+      margin-top: 1px;
+      font-size: var(--font-size-md);
+    }
+    & span,
+    img {
+      vertical-align: middle;
+    }
+  }
+}
