@@ -1,13 +1,13 @@
-import styles from '@/pages/studyDetail/StudyDetail.module.css';
+import CardContainer from '@/components/CardContainer';
 import StudyDetailBody from './components/StudyDetailBody';
 import StudyDetailHeader from './components/StudyDetailHeader';
 
 function StudyDetail() {
   return (
-    <article className={styles.container}>
+    <CardContainer>
       <StudyDetailHeader />
       <StudyDetailBody />
-    </article>
+    </CardContainer>
   );
 }
 export default StudyDetail;
