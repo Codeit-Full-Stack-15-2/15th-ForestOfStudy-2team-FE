@@ -4,6 +4,24 @@ import { useParams } from 'react-router';
 import StudyDetailBody from './components/StudyDetailBody';
 import StudyDetailHeader from './components/StudyDetailHeader';
 
+const MOCK_STUDY_HEADER = {
+  studyId: 123,
+  title: '연우의 개발공장',
+  description: 'Slow And Steady Wins The Race! 다들 오늘 하루도 화이팅 :)',
+  totalPoints: 310,
+  reactions: [
+    { id: 1, emoji: '👱‍♀️', count: 37 },
+    { id: 2, emoji: '👍🏻', count: 50 },
+    { id: 3, emoji: '🤩', count: 50 },
+    // 더보기(+5..) 클릭 시 펼쳐질 추가 이모지들
+    { id: 4, emoji: '🔥', count: 12 },
+    { id: 5, emoji: '🎉', count: 8 },
+    { id: 6, emoji: '💻', count: 15 },
+    { id: 7, emoji: '☕', count: 20 },
+    { id: 8, emoji: '💪', count: 9 },
+  ],
+};
+
 const MOCK_HABITS = [
   {
     id: 1,
@@ -123,7 +141,7 @@ function StudyDetail() {
         setIsLoading(true);
         // const data = await getStudyDetailApi(studyId);
         setStudyData({
-          header: null,
+          header: MOCK_STUDY_HEADER,
           habits: MOCK_HABITS,
         });
       } catch (error) {
