@@ -28,14 +28,14 @@ function StudyReactions({ reactions }) {
   return (
     <div className={styles.container}>
       <div className={styles.badges}>
-        {reactions.map((reaction) => (
+        {reactions.slice(0, 3).map((reaction) => (
           <ReactionBadge emoji={reaction.emoji} count={reaction.count} />
         ))}
         <button
           className={`${styles.reactionBadge} ${styles.more}`}
           onClick={handleToggleAllBadge}
         >
-          + 5..
+          + {reactions.length - 3}..
         </button>
         {isAllBadgeOpen && (
           <div className={styles.allReactions}>
