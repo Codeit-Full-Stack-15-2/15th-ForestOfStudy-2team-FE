@@ -1,5 +1,5 @@
-function FocusPage(){
-    return <></>
+function FocusPage() {
+  return <></>;
 }
 
- export default FocusPage;
+export default FocusPage;
