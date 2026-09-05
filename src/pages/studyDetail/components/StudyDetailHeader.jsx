@@ -4,12 +4,15 @@ import ArrowButton from '@/components/ArrowButton';
 import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
 import { useState } from 'react';
+import { useStudyActions } from '../hooks/useStudyActions';
 import StudyActions from './StudyActions';
 import styles from './StudyDetailHeader.module.css';
 
 function StudyDetailHeader() {
   const [isPickerOpen, setIsPickerOpen] = useState(false);
   const [isAllBadgeOpen, setIsAllBadgeOpen] = useState(false);
+  const { handleStudyShare, handleStudyEdit, handleStudyRemove } =
+    useStudyActions();
 
   const handleSelectEmoji = (emoji) => {
     console.log('선택된 이모지:', emoji.native);
@@ -35,19 +38,6 @@ function StudyDetailHeader() {
     console.log('hello world');
   };
 
-  const handleStudyShare = async () => {
-    try {
-      const currentUrl = window.location.href;
-      await navigator.clipboard.writeText(currentUrl);
-      alert('주소가 복사되었습니다!');
-    } catch (error) {
-      console.error('주소 복사 실패:', error);
-      alert('주소 복사에 실패했습니다.');
-    }
-  };
-
-  const handleStudyEdit = () => {};
-  const handleStudyRemove = () => {};
   return (
     <section className={styles.headerContainer}>
       <div className={styles.controlsContainer}>
