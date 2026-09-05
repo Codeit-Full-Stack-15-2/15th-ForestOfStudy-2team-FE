@@ -2,6 +2,39 @@ import searchIcon from '../../assets/search.svg';
 import styles from './Home.module.css';
 import StudyCard from '@/components/StudyCard/StudyCard';
 
+const studies = [
+  {
+    id: 1,
+    title: '이유디의 UX 스터디',
+    point: 310,
+    days: 62,
+    description: 'Slow And Steady Wins The Race!!',
+    participants: 37,
+    focusCount: 26,
+    likes: 14,
+  },
+  {
+    id: 2,
+    title: '프론트엔드 개발 스터디',
+    point: 420,
+    days: 31,
+    description: '매일 조금씩 꾸준히 공부합니다',
+    participants: 24,
+    focusCount: 18,
+    likes: 9,
+  },
+    {
+    id: 3,
+    title: '알고리즘 문제 풀이',
+    point: 250,
+    days: 45,
+    description: '하루 한 문제씩 해결해요!',
+    participants: 19,
+    focusCount: 22,
+    likes: 11,
+  }
+];
+
 function Home() {
   return (
     <main className={styles.home}>
@@ -35,7 +68,20 @@ function Home() {
         </div>
 
         <ul className={styles.studyList}>
-          <StudyCard />
+          {studies.map((study) => {
+            return (
+              <StudyCard
+                key={study.id}
+                title={study.title}
+                point={study.point}
+                days={study.days}
+                description={study.description}
+                participants={study.participants}
+                focusCount={study.focusCount}
+                likes={study.likes}
+              />
+            );
+          })}
         </ul>
       </section>
     </main>

@@ -1,23 +1,25 @@
 import styles from './StudyCard.module.css';
 
-function StudyCard() {
+function StudyCard({ title, point, days, description, participants, focusCount, likes  }) {
   return (
     <li className={styles.studyCard}>
       <article className={styles.cardContent}>
         <div className={styles.cardHeader}>
-          <h3 className={styles.cardTitle}>이유디의 UX 스터디</h3>
-          <span className={styles.pointBadge}>🌿 310P 획득</span>
+          <h3 className={styles.cardTitle}>{title}</h3>
+
+          <span className={styles.pointBadge}>🌿 {point}P 획득</span>
         </div>
 
-        <p className={styles.studyProcess}>62일째 진행 중</p>
+        <p className={styles.studyProcess}>{days}일째 진행 중</p>
+
         <p className={styles.studyDescription}>
-          Slow And Steady Wins The Race!!
+          {description}
         </p>
 
         <div className={styles.reactions}>
-          <span>🧑🏻 37</span>
-          <span>🔥 26</span>
-          <span>🤍 14</span>
+          <span>🧑🏻 {participants}</span>
+          <span>🔥 {focusCount}</span>
+          <span>🤍 {likes}</span>
         </div>
       </article>
     </li>
