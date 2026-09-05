@@ -1,0 +1,11 @@
+.container {
+  padding: 14px 41px;
+  text-align: center;
+}
+
+/*  tablet*/
+@media (max-width: 744px) {
+  .container {
+    padding: 14px;
+  }
+}

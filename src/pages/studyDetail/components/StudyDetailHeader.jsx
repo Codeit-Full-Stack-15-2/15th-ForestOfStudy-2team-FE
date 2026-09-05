@@ -106,7 +106,7 @@ function StudyDetailHeader() {
         <h2 className={styles.title}>연우의 개발공장</h2>
         <div className={styles.titleButtons}>
           <ArrowButton onClick={handleNavigateToHabits}>
-            습관 관리하기
+            습관 달성 기록하기
           </ArrowButton>
           <ArrowButton onClick={handleNavigateToFocus}>오늘의 집중</ArrowButton>
         </div>
