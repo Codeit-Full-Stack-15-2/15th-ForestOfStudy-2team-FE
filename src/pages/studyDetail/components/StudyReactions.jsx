@@ -2,6 +2,7 @@ import smile from '@/assets/ic_smile.svg';
 import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
 import { useState } from 'react';
+import ReactionBadge from './ReactionBadge';
 import styles from './StudyReactions.module.css';
 
 function StudyReactions() {
@@ -27,15 +28,19 @@ function StudyReactions() {
   return (
     <div className={styles.container}>
       <div className={styles.badges}>
-        <button className={styles.reactionBadge}>
-          <span>👩</span> 37
-        </button>
-        <button className={styles.reactionBadge}>
-          <span>👍🏻</span> 50
-        </button>
-        <button className={styles.reactionBadge}>
-          <span>🤩</span> 50
-        </button>
+        {[
+          { id: 1, emoji: '👱‍♀️', count: 37 },
+          { id: 2, emoji: '👍🏻', count: 50 },
+          { id: 3, emoji: '🤩', count: 50 },
+          // 더보기(+5..) 클릭 시 펼쳐질 추가 이모지들
+          { id: 4, emoji: '🔥', count: 12 },
+          { id: 5, emoji: '🎉', count: 8 },
+          { id: 6, emoji: '💻', count: 15 },
+          { id: 7, emoji: '☕', count: 20 },
+          { id: 8, emoji: '💪', count: 9 },
+        ].map((i) => (
+          <ReactionBadge emoji={i.emoji} count={i.count} />
+        ))}
         <button
           className={`${styles.reactionBadge} ${styles.more}`}
           onClick={handleToggleAllBadge}
@@ -44,27 +49,19 @@ function StudyReactions() {
         </button>
         {isAllBadgeOpen && (
           <div className={styles.allReactions}>
-            <button className={styles.reactionBadge}>
-              <span>👩</span> 37
-            </button>
-            <button className={styles.reactionBadge}>
-              <span>👍🏻</span> 50
-            </button>
-            <button className={styles.reactionBadge}>
-              <span>🤩</span> 50
-            </button>
-            <button className={styles.reactionBadge}>
-              <span>🤩</span> 50
-            </button>
-            <button className={styles.reactionBadge}>
-              <span>🤩</span> 50
-            </button>
-            <button className={styles.reactionBadge}>
-              <span>🤩</span> 50
-            </button>
-            <button className={styles.reactionBadge}>
-              <span>🤩</span> 50
-            </button>
+            {[
+              { id: 1, emoji: '👱‍♀️', count: 37 },
+              { id: 2, emoji: '👍🏻', count: 50 },
+              { id: 3, emoji: '🤩', count: 50 },
+              // 더보기(+5..) 클릭 시 펼쳐질 추가 이모지들
+              { id: 4, emoji: '🔥', count: 12 },
+              { id: 5, emoji: '🎉', count: 8 },
+              { id: 6, emoji: '💻', count: 15 },
+              { id: 7, emoji: '☕', count: 20 },
+              { id: 8, emoji: '💪', count: 9 },
+            ].map((i) => (
+              <ReactionBadge emoji={i.emoji} count={i.count} />
+            ))}
           </div>
         )}
       </div>
