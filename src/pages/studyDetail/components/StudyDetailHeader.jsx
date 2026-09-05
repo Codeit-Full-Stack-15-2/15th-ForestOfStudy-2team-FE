@@ -1,32 +1,13 @@
 import point from '@/assets/ic_point.svg';
 import ArrowButton from '@/components/ArrowButton';
-import { useState } from 'react';
 import { useStudyActions } from '../hooks/useStudyActions';
 import StudyActions from './StudyActions';
 import styles from './StudyDetailHeader.module.css';
 import StudyReactions from './StudyReactions';
 
 function StudyDetailHeader() {
-  const [isPickerOpen, setIsPickerOpen] = useState(false);
-  const [isAllBadgeOpen, setIsAllBadgeOpen] = useState(false);
   const { handleStudyShare, handleStudyEdit, handleStudyRemove } =
     useStudyActions();
-
-  const handleSelectEmoji = (emoji) => {
-    console.log('선택된 이모지:', emoji.native);
-    // 활성화된 내부 포커스를 해제하여 부모 숨김 시 충돌 방지
-    if (document.activeElement instanceof HTMLElement) {
-      document.activeElement.blur();
-    }
-  };
-
-  const handleTogglePicker = () => {
-    setIsPickerOpen((prev) => !prev);
-  };
-
-  const handleToggleAllBadge = () => {
-    setIsAllBadgeOpen((prev) => !prev);
-  };
 
   const handleNavigateToHabits = () => {
     console.log('hello world');
