@@ -35,7 +35,7 @@ function Home() {
 
         <ul className={styles.studyList}>
           <li className={styles.studyCard}>
-            <article>
+            <article className={styles.cardContent}>
               <div className={styles.cardHeader}>
                 <h3 className={styles.cardTitle}>이유디의 UX 스터디</h3>
                 <span className={styles.pointBadge}>🌿 310P 획득</span>

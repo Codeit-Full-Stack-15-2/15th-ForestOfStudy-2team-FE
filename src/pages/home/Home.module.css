@@ -88,10 +88,19 @@
   gap: 24px;
 }
 
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
 .studyCard {
+  min-height: 220px;
   background-color: var(--color-green-light);
-  padding: 24px;
+  padding: 30px;
   border-radius: 16px;
+
+  display: flex;
 }
 
 .cardHeader {
@@ -110,6 +119,7 @@
   background-color: #fff;
   padding: 4px 8px;
   border-radius: 12px;
+  font-size: var(--font-size-xs)
 }
 
 .studyProcess {
@@ -119,13 +129,13 @@
 }
 
 .studyDescription {
-  margin-top: 16px;
+  margin-top: 30px;
   font-size: var(--font-size-md);
   color: var(--color-gray-900);
 }
 
 .reactions {
-  margin-top: 16px;
+  margin-top: auto;
 
   display: flex;
   gap: 8px;
@@ -133,7 +143,7 @@
 
 .reactions span {
   background-color: var(--color-gray-500);
-  padding: 4px 8px;
+  padding: 6px 8px;
   border-radius: 12px;
 
   color: #fff;
