@@ -100,6 +100,10 @@
     font-weight: 800;
     color: var(--color-gray-900);
   }
+  & .titleButtons {
+    display: flex;
+    gap: 16px;
+  }
 }
 
 .label {

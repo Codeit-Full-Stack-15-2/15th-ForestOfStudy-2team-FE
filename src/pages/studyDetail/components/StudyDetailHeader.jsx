@@ -105,7 +105,6 @@ function StudyDetailHeader() {
       <div className={styles.titleContainer}>
         <h2 className={styles.title}>연우의 개발공장</h2>
         <div className={styles.titleButtons}>
-          <ArrowButton to="/">홈으로 이동</ArrowButton>
           <ArrowButton onClick={handleNavigateToHabits}>
             습관 관리하기
           </ArrowButton>
