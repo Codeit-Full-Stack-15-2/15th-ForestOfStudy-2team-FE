@@ -1,12 +1,10 @@
 import point from '@/assets/ic_point.svg';
-import smile from '@/assets/ic_smile.svg';
 import ArrowButton from '@/components/ArrowButton';
-import data from '@emoji-mart/data';
-import Picker from '@emoji-mart/react';
 import { useState } from 'react';
 import { useStudyActions } from '../hooks/useStudyActions';
 import StudyActions from './StudyActions';
 import styles from './StudyDetailHeader.module.css';
+import StudyReactions from './StudyReactions';
 
 function StudyDetailHeader() {
   const [isPickerOpen, setIsPickerOpen] = useState(false);
@@ -49,65 +47,7 @@ function StudyDetailHeader() {
           />
         </div>
         <div className={styles.reaction}>
-          <div className={styles.badges}>
-            <button className={styles.reactionBadge}>
-              <span>👩</span> 37
-            </button>
-            <button className={styles.reactionBadge}>
-              <span>👍🏻</span> 50
-            </button>
-            <button className={styles.reactionBadge}>
-              <span>🤩</span> 50
-            </button>
-            <button
-              className={`${styles.reactionBadge} ${styles.more}`}
-              onClick={handleToggleAllBadge}
-            >
-              + 5..
-            </button>
-            {isAllBadgeOpen && (
-              <div className={styles.allReactions}>
-                <button className={styles.reactionBadge}>
-                  <span>👩</span> 37
-                </button>
-                <button className={styles.reactionBadge}>
-                  <span>👍🏻</span> 50
-                </button>
-                <button className={styles.reactionBadge}>
-                  <span>🤩</span> 50
-                </button>
-                <button className={styles.reactionBadge}>
-                  <span>🤩</span> 50
-                </button>
-                <button className={styles.reactionBadge}>
-                  <span>🤩</span> 50
-                </button>
-                <button className={styles.reactionBadge}>
-                  <span>🤩</span> 50
-                </button>
-                <button className={styles.reactionBadge}>
-                  <span>🤩</span> 50
-                </button>
-              </div>
-            )}
-          </div>
-          <div className={styles.addWrapper}>
-            <button className={styles.add} onClick={handleTogglePicker}>
-              <img src={smile} alt="스마일 아이콘" />
-              <span>추가</span>
-            </button>
-            <div className={styles.emojiControler}>
-              {isPickerOpen && (
-                <Picker
-                  data={data}
-                  locale="ko"
-                  theme="light"
-                  skinTonePosition="search"
-                  onEmojiSelect={handleSelectEmoji}
-                />
-              )}
-            </div>
-          </div>
+          <StudyReactions />
         </div>
       </div>
       <div className={styles.titleContainer}>
