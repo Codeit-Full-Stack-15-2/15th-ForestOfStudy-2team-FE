@@ -4,6 +4,7 @@ import ArrowButton from '@/components/ArrowButton';
 import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
 import { useState } from 'react';
+import StudyActions from './StudyActions';
 import styles from './StudyDetailHeader.module.css';
 
 function StudyDetailHeader() {
@@ -33,12 +34,29 @@ function StudyDetailHeader() {
   const handleNavigateToFocus = () => {
     console.log('hello world');
   };
+
+  const handleStudyShare = async () => {
+    try {
+      const currentUrl = window.location.href;
+      await navigator.clipboard.writeText(currentUrl);
+      alert('주소가 복사되었습니다!');
+    } catch (error) {
+      console.error('주소 복사 실패:', error);
+      alert('주소 복사에 실패했습니다.');
+    }
+  };
+
+  const handleStudyEdit = () => {};
+  const handleStudyRemove = () => {};
   return (
     <section className={styles.headerContainer}>
-      <div className={styles.controllsContainer}>
-        <div className={styles.controlls}>
-          <button>공유하기</button>| <button>수정하기</button>|
-          <button>스터디 삭제하기</button>
+      <div className={styles.controlsContainer}>
+        <div className={styles.controls}>
+          <StudyActions
+            onShare={handleStudyShare}
+            onEdit={handleStudyEdit}
+            onRemove={handleStudyRemove}
+          />
         </div>
         <div className={styles.reaction}>
           <div className={styles.badges}>
@@ -88,7 +106,7 @@ function StudyDetailHeader() {
               <img src={smile} alt="스마일 아이콘" />
               <span>추가</span>
             </button>
-            <div className={styles.emojiController}>
+            <div className={styles.emojiControler}>
               {isPickerOpen && (
                 <Picker
                   data={data}

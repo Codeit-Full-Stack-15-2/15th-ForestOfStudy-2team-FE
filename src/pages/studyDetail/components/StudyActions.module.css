@@ -1,0 +1,21 @@
+.container {
+  color: var(--color-gray-500);
+}
+
+button {
+  padding: 0 16px;
+  border: none;
+  background: none;
+  font-size: var(--font-size-md);
+  cursor: pointer;
+  &:first-child {
+    color: var(--color-green-text);
+  }
+  &:nth-child(2) {
+    color: var(--color-green-text);
+  }
+  &:last-child {
+    padding-right: 0;
+    color: var(--color-gray-500);
+  }
+}

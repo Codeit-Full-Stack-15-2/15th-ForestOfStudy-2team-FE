@@ -1,5 +1,5 @@
 /* Header */
-.controllsContainer {
+.controlsContainer {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -58,7 +58,7 @@
           vertical-align: middle;
         }
       }
-      & .emojiController {
+      & .emojiControler {
         position: absolute;
         top: 42px;
         left: 0px;
@@ -69,26 +69,8 @@
       }
     }
   }
-  & .controlls {
-    color: var(--color-gray-500);
+  & .controls {
     order: 1;
-    & button {
-      padding: 0 16px;
-      border: none;
-      background: none;
-      font-size: var(--font-size-md);
-      cursor: pointer;
-      &:last-child {
-        padding-right: 0;
-        color: var(--color-gray-500);
-      }
-      &:first-child {
-        color: var(--color-green-text);
-      }
-      &:nth-child(2) {
-        color: var(--color-green-text);
-      }
-    }
   }
 }
 .titleContainer {
