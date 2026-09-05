@@ -1,0 +1,38 @@
+.button {
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+}
+
+/* 버튼 스타일 정의 */
+.primary {
+  background-color: var(--color-brand-primary);
+  color: #fff;
+}
+
+.outline {
+  background-color: #fff;
+  color: var(--color-green-text);
+  border: 1px solid var(--color-gray-300);
+}
+
+.text {
+  background: none;
+  color: var(--color-green-text);
+}
+
+/* 버튼 사이즈 정의 */
+.medium {
+  padding: 16px;
+  font-size: var(--font-size-xl);
+}
+
+.small {
+  padding: 16px;
+  font-size: var(--font-size-md);
+}
+
+/* 버튼 가로 값 */
+.fullWidth {
+  width: 100%;
+}
