@@ -1,43 +1,21 @@
 import point from '@/assets/ic_point.svg';
 import ArrowButton from '@/components/ArrowButton';
 import PasswordVerificationModal from '@/components/PasswordVerificationModal';
-import { useState } from 'react';
 import { useStudyActions } from '../hooks/useStudyActions';
 import StudyActions from './StudyActions';
 import styles from './StudyDetailHeader.module.css';
 import StudyReactions from './StudyReactions';
 
 function StudyDetailHeader({ data }) {
-  const { handleStudyShare, handleStudyEdit, handleStudyRemove } =
-    useStudyActions();
-  const [activeModal, setActiveModal] = useState(null);
-
-  const handleOpenEditModal = () => {
-    setActiveModal({
-      buttonText: '수정하러 가기',
-      onOk: (password) => {
-        // 수정 권한 검증 및 페이지 이동 로직
-      },
-    });
-  };
-
-  const handleOpenHabitModal = () => {
-    setActiveModal({
-      buttonText: '습관 달성 기록하기',
-      onOk: (password) => {
-        // 습관 기록 모달/페이지 진입 로직
-      },
-    });
-  };
-
-  const handleOpenFocusModal = () => {
-    setActiveModal({
-      buttonText: '오늘의 집중 바로가기',
-      onOk: (password) => {
-        // 습관 기록 모달/페이지 진입 로직
-      },
-    });
-  };
+  const {
+    activeModal,
+    setActiveModal,
+    handleStudyShare,
+    handleOpenEditModal,
+    handleOpenRemoveModal,
+    handleOpenHabitModal,
+    handleOpenFocusModal,
+  } = useStudyActions();
 
   return (
     <>
@@ -46,8 +24,8 @@ function StudyDetailHeader({ data }) {
           <div className={styles.controls}>
             <StudyActions
               onShare={handleStudyShare}
-              onEdit={handleStudyEdit}
-              onRemove={handleStudyRemove}
+              onEdit={handleOpenEditModal}
+              onRemove={handleOpenRemoveModal}
             />
           </div>
           <div className={styles.reaction}>
