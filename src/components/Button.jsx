@@ -29,16 +29,24 @@ function Button({
     ...style,
   };
 
+  const handleClick = (e) => {
+    if (disabled || loading) {
+      e.preventDefault();
+      return;
+    }
+    onClick?.(e);
+  };
+
   return (
     <button
-      disabled={disabled}
-      onClick={onClick}
+      disabled={disabled || loading}
+      onClick={handleClick}
       type={type}
       className={buttonClass}
       style={combinedStyle}
       {...rest}
     >
-      {children}
+      {loading ? <span className={styles.spinner}>...</span> : children}
     </button>
   );
 }

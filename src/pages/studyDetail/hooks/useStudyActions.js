@@ -26,10 +26,12 @@ export function useStudyActions(studyId) {
         setIsModalButtonLoading(true);
         try {
           await verifyStudyPassword(studyId, password);
+          setActiveModal(null);
           // TODO:경로 수정 필요
           navigate('/');
         } catch (error) {
           console.error(error.message);
+          // TODO:토스트 필요
         } finally {
           setIsModalButtonLoading(false);
         }
@@ -41,9 +43,19 @@ export function useStudyActions(studyId) {
   const handleOpenRemoveModal = () => {
     setActiveModal({
       buttonText: '스터디 삭제하기',
-      onOk: (password) => {
-        // 수정 권한 검증 및 페이지 이동 로직
-        console.log('handleRemoveModal');
+      onOk: async (password) => {
+        setIsModalButtonLoading(true);
+        try {
+          await verifyStudyPassword(studyId, password);
+          setActiveModal(null);
+          // TODO:경로 수정 필요
+          navigate('/');
+        } catch (error) {
+          console.error(error.message);
+          // TODO:토스트 필요
+        } finally {
+          setIsModalButtonLoading(false);
+        }
       },
     });
   };
@@ -52,9 +64,19 @@ export function useStudyActions(studyId) {
   const handleOpenHabitModal = () => {
     setActiveModal({
       buttonText: '습관 달성 기록하기',
-      onOk: (password) => {
-        // 습관 기록 모달/페이지 진입 로직
-        console.log('handleHabitModal');
+      onOk: async (password) => {
+        setIsModalButtonLoading(true);
+        try {
+          await verifyStudyPassword(studyId, password);
+          setActiveModal(null);
+          // TODO:경로 수정 필요
+          navigate('/');
+        } catch (error) {
+          console.error(error.message);
+          // TODO:토스트 필요
+        } finally {
+          setIsModalButtonLoading(false);
+        }
       },
     });
   };
@@ -63,9 +85,19 @@ export function useStudyActions(studyId) {
   const handleOpenFocusModal = () => {
     setActiveModal({
       buttonText: '오늘의 집중 바로가기',
-      onOk: (password) => {
-        // 습관 기록 모달/페이지 진입 로직
-        console.log('handleFocusModal');
+      onOk: async (password) => {
+        setIsModalButtonLoading(true);
+        try {
+          await verifyStudyPassword(studyId, password);
+          setActiveModal(null);
+          // TODO:경로 수정 필요
+          navigate('/');
+        } catch (error) {
+          console.error(error.message);
+          // TODO:토스트 필요
+        } finally {
+          setIsModalButtonLoading(false);
+        }
       },
     });
   };

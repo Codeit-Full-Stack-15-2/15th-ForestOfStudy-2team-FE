@@ -10,6 +10,7 @@ function PasswordVerificationModal({
   description,
   okText = '확인',
   onOk,
+  modalButtonLoading,
   onCancel,
 }) {
   const [password, setPassword] = useState('');
@@ -75,7 +76,11 @@ function PasswordVerificationModal({
           />
         </div>
         <div className={styles.footer}>
-          <Button onClick={handleConfirm} fullWidth={true}>
+          <Button
+            onClick={handleConfirm}
+            fullWidth={true}
+            loading={modalButtonLoading}
+          >
             {okText}
           </Button>
           <div className={styles.textButtonContainer}>

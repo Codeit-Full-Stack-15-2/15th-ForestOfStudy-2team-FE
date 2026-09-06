@@ -9,6 +9,7 @@ import StudyReactions from './StudyReactions';
 function StudyDetailHeader({ studyId, data }) {
   const {
     activeModal,
+    isModalButtonLoading,
     setActiveModal,
     handleStudyShare,
     handleOpenEditModal,
@@ -63,6 +64,7 @@ function StudyDetailHeader({ studyId, data }) {
         title={data.title}
         description="권한이 필요해요!"
         okText={activeModal?.buttonText}
+        modalButtonLoading={isModalButtonLoading}
         onOk={(password) => activeModal?.onOk(password)}
         onCancel={() => setActiveModal(null)}
       />
