@@ -68,6 +68,12 @@
   font-size: var(--font-size-md);
 }
 
+.none {
+  min-height: auto;
+  padding: 0;
+  font-size: var(--font-size-md);
+}
+
 /* 버튼 가로 값 */
 .fullWidth {
   width: 100%;

@@ -84,7 +84,7 @@ function PasswordVerificationModal({
             {okText}
           </Button>
           <div className={styles.textButtonContainer}>
-            <Button onClick={handleOnCancelModal} variant="text" size="small">
+            <Button onClick={handleOnCancelModal} variant="text" size="none">
               나가기
             </Button>
           </div>
