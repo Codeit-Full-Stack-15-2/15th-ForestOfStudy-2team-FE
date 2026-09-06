@@ -1,13 +1,15 @@
 import smile from '@/assets/ic_smile.svg';
 import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import ReactionBadge from './ReactionBadge';
 import styles from './StudyReactions.module.css';
 
 function StudyReactions({ reactions }) {
-  const [isPickerOpen, setIsPickerOpen] = useState(false);
-  const [isAllBadgeOpen, setIsAllBadgeOpen] = useState(false);
+  const [isOpenEmojiPicker, setIsOpenEmojiPicker] = useState(false);
+  const [isOpenReactionList, setIsOpenReactionList] = useState(false);
+  const reactionListPopoverRef = useRef(null);
+  const emojiPickerRef = useRef(null);
 
   const handleSelectEmoji = (emoji) => {
     console.log('선택된 이모지:', emoji.native);
@@ -17,41 +19,70 @@ function StudyReactions({ reactions }) {
     }
   };
 
-  const handleTogglePicker = () => {
-    setIsPickerOpen((prev) => !prev);
+  const handleToggleEmojiPicker = () => {
+    setIsOpenEmojiPicker((prev) => !prev);
   };
 
-  const handleToggleAllBadge = () => {
-    setIsAllBadgeOpen((prev) => !prev);
+  const handleToggleReactionList = () => {
+    setIsOpenReactionList((prev) => !prev);
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        reactionListPopoverRef.current &&
+        !reactionListPopoverRef.current.contains(event.target)
+      ) {
+        setIsOpenReactionList(false);
+      }
+
+      if (
+        emojiPickerRef.current &&
+        !emojiPickerRef.current.contains(event.target)
+      ) {
+        setIsOpenEmojiPicker(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   return (
     <div className={styles.container}>
       <div className={styles.badges}>
         {reactions.slice(0, 3).map((reaction) => (
-          <ReactionBadge emoji={reaction.emoji} count={reaction.count} />
+          <ReactionBadge
+            key={reaction.emoji}
+            emoji={reaction.emoji}
+            count={reaction.count}
+          />
         ))}
         <button
           className={`${styles.reactionBadge} ${styles.more}`}
-          onClick={handleToggleAllBadge}
+          onClick={handleToggleReactionList}
         >
           + {reactions.length - 3}..
         </button>
-        {isAllBadgeOpen && (
-          <div className={styles.allReactions}>
+        {isOpenReactionList && (
+          <div ref={reactionListPopoverRef} className={styles.allReactions}>
             {reactions.map((reaction) => (
-              <ReactionBadge emoji={reaction.emoji} count={reaction.count} />
+              <ReactionBadge
+                key={reaction.emoji}
+                emoji={reaction.emoji}
+                count={reaction.count}
+              />
             ))}
           </div>
         )}
       </div>
       <div className={styles.addWrapper}>
-        <button className={styles.add} onClick={handleTogglePicker}>
+        <button className={styles.add} onClick={handleToggleEmojiPicker}>
           <img src={smile} alt="스마일 아이콘" />
           <span>추가</span>
         </button>
-        <div className={styles.emojiControler}>
-          {isPickerOpen && (
+        <div ref={emojiPickerRef} className={styles.emojiControler}>
+          {isOpenEmojiPicker && (
             <Picker
               data={data}
               locale="ko"
