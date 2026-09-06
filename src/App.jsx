@@ -11,14 +11,18 @@ import { ToastProvider } from './components/toast/ToastContext';
 function App() {
   return (
     <>
+        <ToastProvider>
       <Routes>
         <Route path="/" element={<Layout />}>
+    
           <Route index={true} element={<Home />} />
           <Route path="study-detail" element={<StudyDetail />} />
           <Route path="habit-page" element={<HabitPage />}/>
+        
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
+        </ToastProvider>
     </>
   );
 }

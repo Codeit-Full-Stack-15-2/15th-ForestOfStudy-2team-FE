@@ -1,9 +1,12 @@
 import { useState } from "react";
-import styles from './HabitForm.module.css';
 import btnDeterminate from '/src/assets/btn_determinate.svg';
+import { useToast } from '@/components/toast/ToastContext';
+import styles from './HabitForm.module.css';
+
+export function AddHabitForm({habits = [], setHabits, isCheckMode }){
 
 
-export function AddHabitForm({habits = [], setHabits, isFixUIOpen }){
+   const {showToast} = useToast();
 
   const [newhabit, setNewHabit] = useState('');
   const [editingIndex, setEditingIndex] = useState(null);
@@ -67,20 +70,20 @@ setEditHabit(habitItem);
   }
 
   const handleHabitCheck = (habitItem, index) => {
-
-   
-
+  
       setCheckIndexs((prev) => {
-
-
+    
         if (prev.includes(index)) {
           return prev.filter((item) => item !== index);
         }
 
+        
         return [...prev, index];
+
       });
-   
+     showToast(`🎉 ${habitItem}을 선택하셨습니다.`, 'success');
   };
+
 
 
   return (
@@ -92,21 +95,21 @@ setEditHabit(habitItem);
        
         {habits.map((habitItem, index) => (
           <li className={styles.habit} key={index}>
-            {!isFixUIOpen && editingIndex === index ? (<input value={editHabit}
+            {!isCheckMode && editingIndex === index ? (<input value={editHabit}
             onChange={(e)=> setEditHabit(e.target.value)}
           onKeyDown={(e)=> handleEditKeyDown(e, index)}
       className={styles.habitInputEdit}/>
            ):(
            <div 
            className={ `${styles.habitTitle} ${checkIndexs.includes(index)?styles.checked:''}`}
-           onClick={() => {if (!isFixUIOpen){
+           onClick={() => {if (!isCheckMode){
             handleHabitEdit(habitItem, index);
            }else{
             handleHabitCheck(habitItem, index);
            }}}>
             {habitItem}
             </div>)}
-          {!isFixUIOpen &&( <div className={styles.habitDeleteButtonDiv}>
+          {!isCheckMode &&( <div className={styles.habitDeleteButtonDiv}>
            <button
           type="button"
           className={styles.deleteButtonWrapper}
@@ -123,7 +126,7 @@ setEditHabit(habitItem);
         ))}
         
       </ul>
-        {!isFixUIOpen &&(<input
+        {!isCheckMode &&(<input
         value={newhabit}
         onChange={(e) => setNewHabit(e.target.value)}
         onKeyDown={handleKeyDown}

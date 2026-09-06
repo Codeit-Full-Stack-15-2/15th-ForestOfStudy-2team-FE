@@ -2,6 +2,7 @@
 import {  useState } from 'react';
 import icArrowRight from '/src/assets/ic_arrow_right.svg'
 import { AddHabitForm } from './components/habitForm';
+
 import styles from './HabitPage.module.css';
 
 
@@ -11,10 +12,9 @@ function HabitPage(){
  const timeNow = new Date().toLocaleString('sv-SE', { timeZone: 'Asia/Seoul' }).replace(' ', ' ');
  const [isUlOpen, setIsUlOpen] = useState(false);
  const [isIsHabitEmpty, setisIsHabitEmpty] = useState(false);
- const [isFixUIOpen, setIsFixUIOpen] = useState(false);
-
+ const [isCheckMode, setIsCheckMode] = useState(false);
 const [habits, setHabits] = useState([]);
-  
+
  
 
 const handleForm = () =>{
@@ -26,8 +26,8 @@ const handleForm = () =>{
 if(habits.length > 0){
   setIsUlOpen(true);
   setisIsHabitEmpty(true);
-   setIsFixUIOpen((prev)=>!prev);
-
+   setIsCheckMode((prev)=>!prev);
+return ;
   }
 };
 
@@ -69,7 +69,7 @@ return (
               <AddHabitForm 
               habits={habits}
               setHabits={setHabits}
-              isFixUIOpen={isFixUIOpen}
+              isCheckMode={isCheckMode}
          
            
             />)}
