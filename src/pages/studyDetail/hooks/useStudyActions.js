@@ -48,7 +48,7 @@ export function useStudyActions(studyId) {
     });
   };
 
-  // 오늘의 집중 모달 열기
+  // 5. 오늘의 집중 모달 열기
   const handleOpenFocusModal = () => {
     setActiveModal({
       buttonText: '오늘의 집중 바로가기',
