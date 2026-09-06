@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import Button from './Button';
+import PasswordInput from './PasswordInput';
 import styles from './PasswordVerificationModal.module.css';
 
 function PasswordVerificationModal({
@@ -30,17 +31,14 @@ function PasswordVerificationModal({
         className={styles.modalContainer}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className={styles.modalHeader}>
+        <div className={styles.header}>
           <p className={styles.title}>{title}</p>
           <p className={styles.description}>{description}</p>
         </div>
-        <div className={styles.modalBody}>
-          <div className={styles.inputContainer}>
-            <label htmlFor="studyPassword">비밀번호</label>
-            <input id="studyPassword" placeholder="비밀번호를 입력해 주세요" />
-          </div>
+        <div className={styles.body}>
+          <PasswordInput />
         </div>
-        <div className={styles.modalFooter}>
+        <div className={styles.footer}>
           <Button onClick={onOk} fullWidth={true}>
             {okText}
           </Button>
