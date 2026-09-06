@@ -1,6 +1,7 @@
 .button {
   border: none;
   border-radius: 16px;
+  box-sizing: border-box;
   cursor: pointer;
 }
 
@@ -8,6 +9,7 @@
 .primary {
   background-color: var(--color-brand-primary);
   color: #fff;
+  border: 1px solid transparent;
 }
 
 .outline {
@@ -24,6 +26,7 @@
 /* 버튼 사이즈 정의 */
 .medium {
   padding: 16px;
+  min-height: 58px;
   font-size: var(--font-size-xl);
 }
 

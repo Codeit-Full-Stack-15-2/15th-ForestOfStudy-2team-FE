@@ -1,3 +1,4 @@
+import { BeatLoader } from 'react-spinners';
 import styles from './Button.module.css';
 
 function Button({
@@ -46,7 +47,14 @@ function Button({
       style={combinedStyle}
       {...rest}
     >
-      {loading ? <span className={styles.spinner}>...</span> : children}
+      {loading ? (
+        <BeatLoader
+          size={8}
+          color={variant === 'primary' ? '#ffffff' : '#99c08e'}
+        />
+      ) : (
+        children
+      )}
     </button>
   );
 }
