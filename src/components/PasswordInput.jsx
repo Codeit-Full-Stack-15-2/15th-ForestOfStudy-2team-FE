@@ -5,11 +5,12 @@ import styles from './PasswordInput.module.css';
 
 function PasswordInput({
   isFocus = true,
+  label = '비밀번호',
   value,
   onChange,
   onKeyDown,
   errorMessage,
-  id = 'studyPassword',
+  id = 'password',
 }) {
   const [showPassword, setShowPassword] = useState(false);
   const passwordInputRef = useRef(null);
@@ -18,7 +19,7 @@ function PasswordInput({
 
   const displayError =
     errorMessage ||
-    (isTypingInvalid ? '*비밀번호는 4자 이상 입력해주세요.' : '');
+    (isTypingInvalid ? '*비밀번호는 4자 이상 입력해 주세요.' : '');
   const hasError = Boolean(displayError);
 
   const handleTogglePassword = () => {
@@ -33,7 +34,9 @@ function PasswordInput({
 
   return (
     <div className={styles.container}>
-      <label htmlFor={id}>비밀번호</label>
+      <label className={styles.label} htmlFor={id}>
+        {label}
+      </label>
       <div className={styles.inputContainer}>
         <input
           ref={passwordInputRef}
