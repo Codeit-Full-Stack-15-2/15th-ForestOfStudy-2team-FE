@@ -7,6 +7,7 @@ function Button({
   size = 'medium',
   disabled = false,
   fullWidth = false,
+  loading = false,
   width,
   style,
   type = 'button',

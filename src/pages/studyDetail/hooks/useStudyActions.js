@@ -1,8 +1,11 @@
+import { verifyStudyPassword } from '@/api/studyApi';
 import { useState } from 'react';
+import { useNavigate } from 'react-router';
 
 export function useStudyActions(studyId) {
   const [activeModal, setActiveModal] = useState(null);
-
+  const [isModalButtonLoading, setIsModalButtonLoading] = useState(false);
+  const navigate = useNavigate();
   // 1. 공유하기
   const handleStudyShare = async () => {
     try {
@@ -19,9 +22,17 @@ export function useStudyActions(studyId) {
   const handleOpenEditModal = () => {
     setActiveModal({
       buttonText: '수정하러 가기',
-      onOk: (password) => {
-        // 수정 권한 검증 및 페이지 이동 로직
-        console.log('handleEditModal');
+      onOk: async (password) => {
+        setIsModalButtonLoading(true);
+        try {
+          await verifyStudyPassword(studyId, password);
+          // TODO:경로 수정 필요
+          navigate('/');
+        } catch (error) {
+          console.error(error.message);
+        } finally {
+          setIsModalButtonLoading(false);
+        }
       },
     });
   };
@@ -61,6 +72,7 @@ export function useStudyActions(studyId) {
 
   return {
     activeModal,
+    isModalButtonLoading,
     setActiveModal,
     handleStudyShare,
     handleOpenEditModal,

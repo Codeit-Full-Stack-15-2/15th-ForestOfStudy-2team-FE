@@ -29,7 +29,10 @@ function StudyDetailHeader({ studyId, data }) {
             />
           </div>
           <div className={styles.reaction}>
-            <StudyReactions studyId={studyId} initialReactions={data.reactions} />
+            <StudyReactions
+              studyId={studyId}
+              initialReactions={data.reactions}
+            />
           </div>
         </div>
         <div className={styles.titleContainer}>
@@ -60,7 +63,7 @@ function StudyDetailHeader({ studyId, data }) {
         title={data.title}
         description="권한이 필요해요!"
         okText={activeModal?.buttonText}
-        onOk={() => activeModal?.onOk()}
+        onOk={(password) => activeModal?.onOk(password)}
         onCancel={() => setActiveModal(null)}
       />
     </>
