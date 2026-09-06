@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import StudyDetailBody from './components/StudyDetailBody';
 import StudyDetailHeader from './components/StudyDetailHeader';
+import styles from './StudyDetail.module.css';
 
 function StudyDetail() {
   const { studyId } = useParams();
@@ -37,7 +38,9 @@ function StudyDetail() {
   return (
     <CardContainer>
       {isLoading ? (
-        <Spinner/>
+        <div className={styles.spinnerContainer}>
+          <Spinner />
+        </div>
       ) : (
         <>
           <StudyDetailHeader studyId={studyId} data={studyData.header} />
