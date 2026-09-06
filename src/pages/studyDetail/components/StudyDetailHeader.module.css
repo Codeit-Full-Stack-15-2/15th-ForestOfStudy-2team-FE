@@ -90,12 +90,12 @@
 
 /* studyHeader mobile */
 @media (max-width: 375px) {
-  .controllsContainer {
+  .controlsContainer {
     display: block;
     & .reaction {
       margin-top: 16px;
       & .addWrapper {
-        & .emojiController {
+        & .emojiControler {
           position: absolute;
           top: 40px;
           left: auto;
@@ -103,7 +103,7 @@
         }
       }
     }
-    & .controlls {
+    & .controls {
       text-align: right;
     }
   }
