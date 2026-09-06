@@ -6,7 +6,7 @@ import StudyActions from './StudyActions';
 import styles from './StudyDetailHeader.module.css';
 import StudyReactions from './StudyReactions';
 
-function StudyDetailHeader({ data }) {
+function StudyDetailHeader({ studyId, data }) {
   const {
     activeModal,
     setActiveModal,
@@ -29,7 +29,7 @@ function StudyDetailHeader({ data }) {
             />
           </div>
           <div className={styles.reaction}>
-            <StudyReactions reactions={data.reactions} />
+            <StudyReactions studyId={studyId} initialReactions={data.reactions} />
           </div>
         </div>
         <div className={styles.titleContainer}>

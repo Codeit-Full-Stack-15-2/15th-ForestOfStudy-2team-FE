@@ -5,7 +5,9 @@ import { useEffect, useRef, useState } from 'react';
 import ReactionBadge from './ReactionBadge';
 import styles from './StudyReactions.module.css';
 
-function StudyReactions({ reactions }) {
+const VISIBLE_LIMIT = 3;
+
+function StudyReactions({ studyId, initialReactions }) {
   const [isOpenEmojiPicker, setIsOpenEmojiPicker] = useState(false);
   const [isOpenReactionList, setIsOpenReactionList] = useState(false);
   const reactionListPopoverRef = useRef(null);
@@ -51,7 +53,7 @@ function StudyReactions({ reactions }) {
   return (
     <div className={styles.container}>
       <div className={styles.badges}>
-        {reactions.slice(0, 3).map((reaction) => (
+        {initialReactions.slice(0, VISIBLE_LIMIT).map((reaction) => (
           <ReactionBadge
             key={reaction.emoji}
             emoji={reaction.emoji}
@@ -62,11 +64,11 @@ function StudyReactions({ reactions }) {
           className={`${styles.reactionBadge} ${styles.more}`}
           onClick={handleToggleReactionList}
         >
-          + {reactions.length - 3}..
+          + {initialReactions.length - VISIBLE_LIMIT}..
         </button>
         {isOpenReactionList && (
           <div ref={reactionListPopoverRef} className={styles.allReactions}>
-            {reactions.map((reaction) => (
+            {initialReactions.map((reaction) => (
               <ReactionBadge
                 key={reaction.emoji}
                 emoji={reaction.emoji}
