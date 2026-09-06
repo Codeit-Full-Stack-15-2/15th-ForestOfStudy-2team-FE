@@ -13,6 +13,8 @@ function PasswordVerificationModal({
   onCancel,
 }) {
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+
   useEffect(() => {
     if (!open) return;
 
@@ -26,15 +28,36 @@ function PasswordVerificationModal({
 
   const handleChangePassword = (event) => {
     setPassword(event.target.value);
+    if (errorMessage) {
+      setErrorMessage(''); // 타이핑 시작 시 기존 에러 초기화
+    }
   };
-  const handleOnkeyDownPassword = () => {
-    onOk();
+
+  const handleOnCancelModal = () => {
+    onCancel();
+    setPassword('');
+    setErrorMessage('');
+  };
+
+  const handleConfirm = () => {
+    if (!password.trim()) {
+      setErrorMessage('*비밀번호를 입력해 주세요.');
+      return;
+    }
+
+    if (password.length < 4) {
+      setErrorMessage('*비밀번호는 4자 이상 입력해 주세요.');
+      return;
+    }
+
+    setErrorMessage('');
+    onOk(password);
   };
 
   if (!open) return null;
 
   return createPortal(
-    <div className={styles.dimOverlay} onClick={onCancel}>
+    <div className={styles.dimOverlay} onClick={handleOnCancelModal}>
       <div
         className={styles.modalContainer}
         onClick={(e) => e.stopPropagation()}
@@ -46,16 +69,17 @@ function PasswordVerificationModal({
         <div className={styles.body}>
           <PasswordInput
             value={password}
+            errorMessage={errorMessage}
             onChange={handleChangePassword}
-            onKeyDown={handleOnkeyDownPassword}
+            onKeyDown={(event) => event.key === 'Enter' && handleConfirm()}
           />
         </div>
         <div className={styles.footer}>
-          <Button onClick={onOk} fullWidth={true}>
+          <Button onClick={handleConfirm} fullWidth={true}>
             {okText}
           </Button>
           <div className={styles.textButtonContainer}>
-            <Button onClick={onCancel} variant="text" size="small">
+            <Button onClick={handleOnCancelModal} variant="text" size="small">
               나가기
             </Button>
           </div>

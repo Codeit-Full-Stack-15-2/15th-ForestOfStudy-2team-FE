@@ -8,12 +8,18 @@ function PasswordInput({
   value,
   onChange,
   onKeyDown,
+  errorMessage,
   id = 'studyPassword',
 }) {
   const [showPassword, setShowPassword] = useState(false);
   const passwordInputRef = useRef(null);
 
-  const isInvalid = value && value.length < 4;
+  const isTypingInvalid = Boolean(value && value.length < 4);
+
+  const displayError =
+    errorMessage ||
+    (isTypingInvalid ? '*비밀번호는 4자 이상 입력해주세요.' : '');
+  const hasError = Boolean(displayError);
 
   const handleTogglePassword = () => {
     setShowPassword((prev) => !prev);
@@ -37,7 +43,7 @@ function PasswordInput({
           onChange={onChange}
           onKeyDown={onKeyDown}
           placeholder="비밀번호를 입력해 주세요"
-          className={isInvalid ? styles.errorBorder : ''}
+          className={hasError ? styles.errorBorder : ''}
         />
         <button
           type="button"
@@ -47,11 +53,7 @@ function PasswordInput({
           <img src={showPassword ? visibilityOff : visibilityOn} />
         </button>
       </div>
-      {isInvalid && (
-        <p className={styles.errorMessage}>
-          *비밀번호는 4자 이상 입력해주세요.
-        </p>
-      )}{' '}
+      {hasError && <p className={styles.errorMessage}>{displayError}</p>}
     </div>
   );
 }
