@@ -29,7 +29,7 @@ function PasswordVerificationModal({
   const handleChangePassword = (event) => {
     setPassword(event.target.value);
     if (errorMessage) {
-      setErrorMessage(''); // 타이핑 시작 시 기존 에러 초기화
+      setErrorMessage('');
     }
   };
 
