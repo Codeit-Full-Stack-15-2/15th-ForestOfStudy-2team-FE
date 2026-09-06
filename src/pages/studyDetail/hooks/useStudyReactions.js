@@ -1,3 +1,4 @@
+import { toggleStudyReaction } from '@/api/studyApi';
 import { getOrCreateUserId } from '@/utils/userAuth';
 import { useEffect, useRef, useState } from 'react';
 
@@ -51,7 +52,7 @@ export function useStudyReactions(studyId, initialReactions) {
 
     try {
       setIsSubmitting(true);
-      // const serverUpdateData = await toggleStudyReaction(studyId, selectedEmoji, currentUserId)
+      await toggleStudyReaction(studyId, targetEmoji, currentUserId);
     } catch (error) {
       console.error('서버 동기화 실패, 롤백 실행', error);
       setReactions(previousReactions);
