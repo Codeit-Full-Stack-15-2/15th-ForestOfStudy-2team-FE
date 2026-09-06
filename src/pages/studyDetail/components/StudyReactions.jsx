@@ -12,22 +12,21 @@ function StudyReactions({ studyId, initialReactions }) {
   const [isOpenEmojiPicker, setIsOpenEmojiPicker] = useState(false);
   const [isOpenReactionList, setIsOpenReactionList] = useState(false);
   const [reactions, setReactions] = useState(initialReactions);
-  const currentUserId = getOrCreateUserId();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const reactionListPopoverRef = useRef(null);
   const emojiPickerRef = useRef(null);
+  const currentUserId = getOrCreateUserId();
 
-  const handleSelectEmoji = (emoji) => {
-    const selectedEmoji = emoji.native;
-
+  const applyOptimisticUpdate = (targetEmoji, currentUserId) => {
     setReactions((prev) => {
-      const target = prev.find((item) => item.emoji === selectedEmoji);
+      const target = prev.find((item) => item.emoji === targetEmoji);
       if (target) {
         const hasReacted = target.reactedUserIds.includes(currentUserId);
 
         return prev
           .map((item) => {
-            if (item.emoji !== selectedEmoji) return item;
+            if (item.emoji !== targetEmoji) return item;
 
             return {
               ...item,
@@ -43,14 +42,35 @@ function StudyReactions({ studyId, initialReactions }) {
         ...prev,
         {
           id: Date.now(),
-          emoji: selectedEmoji,
+          emoji: targetEmoji,
           count: 1,
           reactedUserIds: [currentUserId],
         },
       ];
     });
+  };
 
-    // 활성화된 내부 포커스를 해제하여 부모 숨김 시 충돌 방지
+  const handleToggleReaction = async (targetEmoji) => {
+    if (isSubmitting) return;
+
+    const previousReactions = [...reactions];
+    applyOptimisticUpdate(targetEmoji, currentUserId);
+
+    try {
+      setIsSubmitting(true);
+      // const serverUpdateData = await toggleStudyReaction(studyId, selectedEmoji, currentUserId)
+    } catch (error) {
+      console.error('서버 동기화 실패, 롤백 실행', error);
+      setReactions(previousReactions);
+      alert('네트워크 연결이 원활하지 않습니다.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleSelectEmojiFromPicker = (emoji) => {
+    handleToggleReaction(emoji.native);
+
     if (document.activeElement instanceof HTMLElement) {
       document.activeElement.blur();
     }
@@ -63,6 +83,10 @@ function StudyReactions({ studyId, initialReactions }) {
 
   const handleToggleReactionList = () => {
     setIsOpenReactionList((prev) => !prev);
+  };
+
+  const handleSelectEmojiFromBadge = (reaction) => {
+    handleToggleReaction(reaction.emoji);
   };
 
   useEffect(() => {
@@ -89,13 +113,20 @@ function StudyReactions({ studyId, initialReactions }) {
   return (
     <div className={styles.container}>
       <div className={styles.badges}>
-        {reactions.slice(0, VISIBLE_LIMIT).map((reaction) => (
-          <ReactionBadge
-            key={reaction.emoji}
-            emoji={reaction.emoji}
-            count={reaction.count}
-          />
-        ))}
+        {reactions.slice(0, VISIBLE_LIMIT).map((reaction) => {
+          const isSelected = reaction.reactedUserIds.includes(currentUserId);
+          return (
+            <ReactionBadge
+              key={reaction.emoji}
+              emoji={reaction.emoji}
+              count={reaction.count}
+              onClick={() => {
+                handleSelectEmojiFromBadge(reaction);
+              }}
+              isSelected={isSelected}
+            />
+          );
+        })}
         {reactions.length > VISIBLE_LIMIT && (
           <button
             className={`${styles.reactionBadge} ${styles.more}`}
@@ -106,13 +137,21 @@ function StudyReactions({ studyId, initialReactions }) {
         )}
         {isOpenReactionList && (
           <div ref={reactionListPopoverRef} className={styles.allReactions}>
-            {reactions.map((reaction) => (
-              <ReactionBadge
-                key={reaction.emoji}
-                emoji={reaction.emoji}
-                count={reaction.count}
-              />
-            ))}
+            {reactions.map((reaction) => {
+              const isSelected =
+                reaction.reactedUserIds.includes(currentUserId);
+              return (
+                <ReactionBadge
+                  key={reaction.emoji}
+                  emoji={reaction.emoji}
+                  count={reaction.count}
+                  onClick={() => {
+                    handleSelectEmojiFromBadge(reaction);
+                  }}
+                  isSelected={isSelected}
+                />
+              );
+            })}
           </div>
         )}
       </div>
@@ -128,7 +167,7 @@ function StudyReactions({ studyId, initialReactions }) {
               locale="ko"
               theme="light"
               skinTonePosition="search"
-              onEmojiSelect={handleSelectEmoji}
+              onEmojiSelect={handleSelectEmojiFromPicker}
             />
           )}
         </div>

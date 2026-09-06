@@ -1,4 +1,4 @@
-.reactionBadge {
+.badge {
   padding: 7.5px 8px;
   background-color: rgba(0, 0, 0, 0.5);
   border-radius: 50px;
@@ -8,4 +8,8 @@
   font-weight: 400;
   color: #fff;
   cursor: pointer;
+}
+
+.selected {
+  background-color: rgba(153, 192, 142, 0.9);
 }
