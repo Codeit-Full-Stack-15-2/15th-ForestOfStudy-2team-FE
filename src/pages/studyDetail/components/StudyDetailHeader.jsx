@@ -30,6 +30,15 @@ function StudyDetailHeader({ data }) {
     });
   };
 
+  const handleOpenFocusModal = () => {
+    setActiveModal({
+      buttonText: '오늘의 집중 바로가기',
+      onOk: (password) => {
+        // 습관 기록 모달/페이지 진입 로직
+      },
+    });
+  };
+
   return (
     <>
       <section className={styles.headerContainer}>
@@ -48,10 +57,10 @@ function StudyDetailHeader({ data }) {
         <div className={styles.titleContainer}>
           <h2 className={styles.title}>{data.title}</h2>
           <div className={styles.titleButtons}>
-            <ArrowButton onClick={handleOpenEditModal}>
+            <ArrowButton onClick={handleOpenHabitModal}>
               습관 달성 기록하기
             </ArrowButton>
-            <ArrowButton onClick={handleOpenHabitModal}>
+            <ArrowButton onClick={handleOpenFocusModal}>
               오늘의 집중
             </ArrowButton>
           </div>

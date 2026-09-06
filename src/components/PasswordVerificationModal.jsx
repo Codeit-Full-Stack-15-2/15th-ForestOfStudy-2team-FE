@@ -7,6 +7,7 @@ function PasswordVerificationModal({
   open = false,
   title,
   description,
+  okText = '확인',
   onOk,
   onCancel,
 }) {
@@ -41,7 +42,7 @@ function PasswordVerificationModal({
         </div>
         <div className={styles.modalFooter}>
           <Button onClick={onOk} fullWidth={true}>
-            수정하러 가기
+            {okText}
           </Button>
           <div className={styles.textButtonContainer}>
             <Button onClick={onCancel} variant="text" size="small">
