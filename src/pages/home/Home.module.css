@@ -1,7 +1,7 @@
 .home {
   width: 100%;
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 40px auto 120px;
   padding: 0 24px;
 
   display: flex;
@@ -21,6 +21,12 @@
   font-size: var(--font-size-2xl);
   font-weight: 700;
   color: var(--color-gray-900);
+}
+
+.recentStudyList {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
 }
 
 .searchInput {
@@ -58,20 +64,82 @@
   color: var(--color-gray-500);
 }
 
-.sortSelect {
+.sortDropdown {
+  position: relative;
   width: 160px;
+}
+
+.sortButton {
+  width: 100%;
   height: 42px;
   padding: 0 16px;
 
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background-color: #fff;
   border: 1px solid var(--color-gray-300);
   border-radius: 12px;
-  outline: none;
 
   font-size: var(--font-size-md);
+  color: var(--color-gray-900);
+
+  cursor: pointer;
 }
 
-.sortSelect:focus {
-  border-color: var(--color-gray-500);
+.sortArrow {
+  width: 7px;
+  height: 7px;
+
+  border-right: 1px solid var(--color-gray-500);
+  border-bottom: 1px solid var(--color-gray-500);
+
+  transform: rotate(45deg);
+}
+
+.sortArrowOpen {
+  transform: rotate(225deg);
+}
+
+.sortMenu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 10;
+
+  width: 100%;
+
+  background-color: #fff;
+  border: 1px solid var(--color-gray-300);
+  border-radius: 12px;
+
+  overflow: hidden;
+}
+
+.sortOption {
+  width: 100%;
+  height: 40px;
+  padding: 0 16px;
+
+  background-color: #fff;
+  border: none;
+
+  text-align: left;
+  font-size: var(--font-size-md);
+  color: var(--color-gray-900);
+
+  cursor: pointer;
+}
+
+.sortOption:hover {
+  background-color: var(--color-gray-100);
+}
+
+.sortButton:focus-visible,
+.sortOption:focus-visible {
+  outline: 2px solid var(--color-green-text);
+  outline-offset: 2px;
 }
 
 .studyControls {
@@ -92,7 +160,7 @@
   display: block;
   width: 260px;
   height: 46px;
-  margin: 24px auto 0;
+  margin: 40px auto 0;
 
   background-color: #fff;
   border: 1px solid var(--color-gray-300);
@@ -108,4 +176,4 @@
 .loadMoreButton:focus-visible {
   outline: 2px solid var(--color-green-text);
   outline-offset: 2px;
-} 
+}

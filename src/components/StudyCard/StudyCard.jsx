@@ -1,8 +1,21 @@
 import styles from './StudyCard.module.css';
 
-function StudyCard({ title, point, days, description, participants, focusCount, likes  }) {
+function StudyCard({
+  title,
+  point,
+  days,
+  description,
+  participants,
+  focusCount,
+  likes,
+  variant,
+  image,
+}) {
   return (
-    <li className={styles.studyCard}>
+    <li
+      className={`${styles.studyCard} ${styles[variant]}`}
+      style={image ? { backgroundImage: `url(${image})` } : undefined}
+    >
       <article className={styles.cardContent}>
         <div className={styles.cardHeader}>
           <h3 className={styles.cardTitle}>{title}</h3>
@@ -12,9 +25,7 @@ function StudyCard({ title, point, days, description, participants, focusCount, 
 
         <p className={styles.studyProcess}>{days}일째 진행 중</p>
 
-        <p className={styles.studyDescription}>
-          {description}
-        </p>
+        <p className={styles.studyDescription}>{description}</p>
 
         <div className={styles.reactions}>
           <span>🧑🏻 {participants}</span>

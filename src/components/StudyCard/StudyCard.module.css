@@ -1,16 +1,62 @@
 .studyCard {
   min-height: 220px;
-  background-color: var(--color-green-light);
   padding: 30px;
   border-radius: 16px;
 
   display: flex;
 }
 
+.green {
+  background-color: var(--color-green-light);
+}
+
+.yellow {
+  background-color: var(--color-yellow-light);
+}
+
+.image {
+  position: relative;
+  overflow: hidden;
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.image::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.image .cardTitle,
+.image .studyProcess,
+.image .studyDescription {
+  color: #fff;
+}
+
+.image .studyDescription {
+  font-weight: 300;
+}
+
+.image .pointBadge {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+}
+
+.image .reactions span {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
 .cardContent {
   display: flex;
   flex-direction: column;
   flex: 1;
+
+  position: relative;
+  z-index: 1;
 }
 
 .cardHeader {
@@ -26,21 +72,23 @@
 }
 
 .pointBadge {
-  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.5);
   padding: 4px 8px;
   border-radius: 12px;
-  font-size: var(--font-size-xs)
+  font-size: var(--font-size-xs);
 }
 
 .studyProcess {
-  margin-top: 4px;
+  margin-top: 8px;
   font-size: var(--font-size-sm);
+  font-weight: 300;
   color: var(--color-gray-500);
 }
 
 .studyDescription {
   margin-top: 30px;
   font-size: var(--font-size-md);
+  font-weight: 400;
   color: var(--color-gray-900);
 }
 
@@ -52,10 +100,11 @@
 }
 
 .reactions span {
-  background-color: var(--color-gray-500);
+  background-color: rgba(129, 129, 129, 0.65);
   padding: 6px 8px;
   border-radius: 12px;
 
   color: #fff;
   font-size: var(--font-size-xs);
+  font-weight: 200;
 }
