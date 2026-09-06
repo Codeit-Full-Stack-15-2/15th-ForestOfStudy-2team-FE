@@ -1,5 +1,6 @@
 import { getStudyDetail, getStudyHabits } from '@/api/studyApi';
 import CardContainer from '@/components/CardContainer';
+import Spinner from '@/components/Spinner';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import StudyDetailBody from './components/StudyDetailBody';
@@ -36,7 +37,7 @@ function StudyDetail() {
   return (
     <CardContainer>
       {isLoading ? (
-        '로딩중...'
+        <Spinner/>
       ) : (
         <>
           <StudyDetailHeader studyId={studyId} data={studyData.header} />
