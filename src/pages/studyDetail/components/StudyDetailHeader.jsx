@@ -16,7 +16,7 @@ function StudyDetailHeader({ studyId, data }) {
     handleOpenRemoveModal,
     handleOpenHabitModal,
     handleOpenFocusModal,
-  } = useStudyActions();
+  } = useStudyActions(studyId);
 
   return (
     <>
