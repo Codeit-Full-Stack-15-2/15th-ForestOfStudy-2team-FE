@@ -60,7 +60,20 @@
       border-radius: 15px;
       border: 1px solid var(--color-gray-300);
       box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.08);
-      overflow: hidden;
+      overflow: scroll;
+    }
+  }
+}
+
+/* container mobile*/
+@media (max-width: 375px) {
+  .container {
+    & .addWrapper {
+      & .emojiControler {
+        width: 80vw;
+        left: auto;
+        right: 0px;
+      }
     }
   }
 }
