@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import Button from './Button';
 import PasswordInput from './PasswordInput';
@@ -12,6 +12,7 @@ function PasswordVerificationModal({
   onOk,
   onCancel,
 }) {
+  const [password, setPassword] = useState('');
   useEffect(() => {
     if (!open) return;
 
@@ -22,6 +23,13 @@ function PasswordVerificationModal({
       document.body.style.overflow = originalOverflow;
     };
   }, [open]);
+
+  const handleChangePassword = (event) => {
+    setPassword(event.target.value);
+  };
+  const handleOnkeyDownPassword = () => {
+    onOk();
+  };
 
   if (!open) return null;
 
@@ -36,7 +44,11 @@ function PasswordVerificationModal({
           <p className={styles.description}>{description}</p>
         </div>
         <div className={styles.body}>
-          <PasswordInput />
+          <PasswordInput
+            value={password}
+            onChange={handleChangePassword}
+            onKeyDown={handleOnkeyDownPassword}
+          />
         </div>
         <div className={styles.footer}>
           <Button onClick={onOk} fullWidth={true}>

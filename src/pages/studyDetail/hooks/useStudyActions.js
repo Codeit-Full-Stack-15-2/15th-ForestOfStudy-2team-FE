@@ -21,6 +21,7 @@ export function useStudyActions(studyId) {
       buttonText: '수정하러 가기',
       onOk: (password) => {
         // 수정 권한 검증 및 페이지 이동 로직
+        console.log('handleEditModal');
       },
     });
   };
@@ -31,6 +32,7 @@ export function useStudyActions(studyId) {
       buttonText: '스터디 삭제하기',
       onOk: (password) => {
         // 수정 권한 검증 및 페이지 이동 로직
+        console.log('handleRemoveModal');
       },
     });
   };
@@ -41,6 +43,7 @@ export function useStudyActions(studyId) {
       buttonText: '습관 달성 기록하기',
       onOk: (password) => {
         // 습관 기록 모달/페이지 진입 로직
+        console.log('handleHabitModal');
       },
     });
   };
@@ -51,6 +54,7 @@ export function useStudyActions(studyId) {
       buttonText: '오늘의 집중 바로가기',
       onOk: (password) => {
         // 습관 기록 모달/페이지 진입 로직
+        console.log('handleFocusModal');
       },
     });
   };
