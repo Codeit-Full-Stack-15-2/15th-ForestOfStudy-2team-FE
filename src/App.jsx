@@ -6,6 +6,7 @@ import HabitPage from './pages/habitPage/HabitPage';
 import NotFound from './pages/notFound/NotFound';
 import StudyDetail from './pages/studyDetail/StudyDetail';
 import './reset.css';
+import { ToastProvider } from './components/toast/ToastContext';
 
 function App() {
   return (
