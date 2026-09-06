@@ -23,7 +23,7 @@ const studies = [
     focusCount: 18,
     likes: 9,
   },
-    {
+  {
     id: 3,
     title: '알고리즘 문제 풀이',
     point: 250,
@@ -32,7 +32,7 @@ const studies = [
     participants: 19,
     focusCount: 22,
     likes: 11,
-  }
+  },
 ];
 
 function Home() {
@@ -83,6 +83,10 @@ function Home() {
             );
           })}
         </ul>
+
+        <button type="button" className={styles.loadMoreButton}>
+          더보기
+        </button>
       </section>
     </main>
   );
