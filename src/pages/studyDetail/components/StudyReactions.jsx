@@ -21,15 +21,33 @@ function StudyReactions({ studyId, initialReactions }) {
     const selectedEmoji = emoji.native;
 
     setReactions((prev) => {
-      const exist = prev.find((item) => item.emoji === selectedEmoji);
-      if (exist) {
-        return prev.map((item) =>
-          item.emoji === selectedEmoji
-            ? { ...item, count: item.count + 1 }
-            : item,
-        );
+      const target = prev.find((item) => item.emoji === selectedEmoji);
+      if (target) {
+        const hasReacted = target.reactedUserIds.includes(currentUserId);
+
+        return prev
+          .map((item) => {
+            if (item.emoji !== selectedEmoji) return item;
+
+            return {
+              ...item,
+              count: hasReacted ? item.count - 1 : item.count + 1,
+              reactedUserIds: hasReacted
+                ? item.reactedUserIds.filter((id) => id !== currentUserId)
+                : [...item.reactedUserIds, currentUserId],
+            };
+          })
+          .filter((item) => item.count > 0);
       }
-      return [...prev, { emoji: selectedEmoji, count: 1, reactedUserIds: [] }];
+      return [
+        ...prev,
+        {
+          id: Date.now(),
+          emoji: selectedEmoji,
+          count: 1,
+          reactedUserIds: [currentUserId],
+        },
+      ];
     });
 
     // 활성화된 내부 포커스를 해제하여 부모 숨김 시 충돌 방지
