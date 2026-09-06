@@ -11,9 +11,11 @@ export function useStudyActions(studyId) {
     try {
       const currentUrl = window.location.href;
       await navigator.clipboard.writeText(currentUrl);
+      // TODO:토스트
       alert('주소가 복사되었습니다!');
     } catch (error) {
       console.error('주소 복사 실패:', error);
+      // TODO:토스트
       alert('주소 복사에 실패했습니다.');
     }
   };
