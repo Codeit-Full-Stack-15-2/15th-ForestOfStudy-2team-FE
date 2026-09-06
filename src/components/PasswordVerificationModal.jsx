@@ -1,18 +1,34 @@
+import { useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import Button from './Button';
 import styles from './PasswordVerificationModal.module.css';
 
 function PasswordVerificationModal({
-  open = true,
+  open = false,
   title,
   description,
   onOk,
   onCancel,
 }) {
+  useEffect(() => {
+    if (!open) return;
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+    };
+  }, [open]);
+
   if (!open) return null;
 
-  return (
-    <div className={styles.container}>
-      <div className={styles.modalContainer}>
+  return createPortal(
+    <div className={styles.dimOverlay} onClick={onCancel}>
+      <div
+        className={styles.modalContainer}
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className={styles.modalHeader}>
           <p className={styles.title}>{title}</p>
           <p className={styles.description}>{description}</p>
@@ -34,7 +50,8 @@ function PasswordVerificationModal({
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
 

@@ -56,7 +56,12 @@ function StudyDetailHeader({ data }) {
           </div>
         </div>
       </section>
-      <PasswordVerificationModal />
+      <PasswordVerificationModal
+        title={data.title}
+        description="권한이 필요해요!"
+        onOk={() => {}}
+        onCancel={() => {}}
+      />
     </>
   );
 }
