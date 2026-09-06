@@ -1,0 +1,28 @@
+/* 전체 컨테이너 */
+.container {
+  margin: 0 auto;
+  margin-top: 40px;
+  padding: 40px;
+  max-width: 1200px;
+
+  border-radius: 20px;
+  background-color: #fff;
+}
+
+/* 반응형 */
+
+/* container tablet*/
+@media (max-width: 744px) {
+  .container {
+    margin: 16px 24px;
+    padding: 24px;
+  }
+}
+
+/* container mobile*/
+@media (max-width: 375px) {
+  .container {
+    margin: 20px 16px;
+    padding: 16px;
+  }
+}

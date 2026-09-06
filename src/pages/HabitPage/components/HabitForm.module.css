@@ -7,6 +7,7 @@
 
 .habitListField{
   display: flex;
+  overflow-y: auto;
   flex-direction: column;
   align-items: center;
 width: 600px;
@@ -31,6 +32,11 @@ gap: 20px;
   font-size: var(--font-size-md);
   text-decoration: underline;
   color: var(--color-gray-500);
+}
+
+.checked {
+
+  background-color: red;
 }
 
 .deleteButtonWrapper{
@@ -58,8 +64,19 @@ gap: 20px;
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 24px 24px;
-
 }
+
+.habitInputEdit{
+  width: 400px;
+  height: 54px;
+  border-radius: 20px;
+  border: solid 2px var(--color-gray-900);
+  background-color: rgba(255,255,255,0);
+  font-size:var(--font-size-md);
+  font-weight: 700;
+  color: var(--color-gray-500);
+}
+
 .habitInput:focus{
   background-image: none;
 }

@@ -1,4 +1,13 @@
+import CardContainer from '@/components/CardContainer';
+import StudyDetailBody from './components/StudyDetailBody';
+import StudyDetailHeader from './components/StudyDetailHeader';
+
 function StudyDetail() {
-  return <div>study detail</div>;
+  return (
+    <CardContainer>
+      <StudyDetailHeader />
+      <StudyDetailBody />
+    </CardContainer>
+  );
 }
 export default StudyDetail;

@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import {  useState } from 'react';
 import icArrowRight from '/src/assets/ic_arrow_right.svg'
 import { AddHabitForm } from './components/habitForm';
 import styles from './HabitPage.module.css';
@@ -10,24 +10,27 @@ function HabitPage(){
 
  const timeNow = new Date().toLocaleString('sv-SE', { timeZone: 'Asia/Seoul' }).replace(' ', ' ');
  const [isUlOpen, setIsUlOpen] = useState(false);
- const [isTextOpen, setIsTextOpen] = useState(false);
- //const [isFixUIOpen, setFixUIOpen] = useState(false);
+ const [isIsHabitEmpty, setisIsHabitEmpty] = useState(false);
+ const [isFixUIOpen, setIsFixUIOpen] = useState(false);
+
 const [habits, setHabits] = useState([]);
+  
+ 
 
 const handleForm = () =>{
-  if(habits.length === 0){
+
  setIsUlOpen((prev) => !prev);
- setIsTextOpen((prev)=> !prev);
-  }
-  else if(habits. length > 1){
-    setIsUlOpen((prev)=>!prev);
-  }
+ setisIsHabitEmpty((prev)=> !prev);
  
+
+if(habits.length > 0){
+  setIsUlOpen(true);
+  setisIsHabitEmpty(true);
+   setIsFixUIOpen((prev)=>!prev);
+
+  }
 };
 
-const fixUIHandle = () => {
-  setFixUIOpen((prev) => !prev);
-}
 
   
 
@@ -62,13 +65,15 @@ return (
            onClick={handleForm}
            > 목록 수정</button> 
             </div>
-             {isUlOpen && (
+             {isUlOpen &&(
               <AddHabitForm 
               habits={habits}
               setHabits={setHabits}
-              onClick={fixUIHandle}
+              isFixUIOpen={isFixUIOpen}
+         
+           
             />)}
-        {!isTextOpen && (
+        {!isIsHabitEmpty && (
           <div className={styles.todayHabitBoard}>
           <p>아직 습관이 없어요<br/> 목록 수정을 눌러 습관을 생성해보세요</p>
             </div>
