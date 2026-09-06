@@ -1,10 +1,57 @@
+import visibilityOff from '@/assets/btn_visibility_off.svg';
+import visibilityOn from '@/assets/btn_visibility_on.svg';
+import { useEffect, useRef, useState } from 'react';
 import styles from './PasswordInput.module.css';
 
-function PasswordInput() {
+function PasswordInput({
+  isFocus = true,
+  value,
+  onChange,
+  onKeyDown,
+  id = 'studyPassword',
+}) {
+  const [showPassword, setShowPassword] = useState(false);
+  const passwordInputRef = useRef(null);
+
+  const isInvalid = value && value.length < 4;
+
+  const handleTogglePassword = () => {
+    setShowPassword((prev) => !prev);
+  };
+
+  useEffect(() => {
+    if (isFocus && passwordInputRef.current) {
+      passwordInputRef.current.focus();
+    }
+  }, [isFocus]);
+
   return (
     <div className={styles.container}>
-      <label htmlFor="studyPassword">비밀번호</label>
-      <input id="studyPassword" placeholder="비밀번호를 입력해 주세요" />
+      <label htmlFor={id}>비밀번호</label>
+      <div className={styles.inputContainer}>
+        <input
+          ref={passwordInputRef}
+          id={id}
+          type={showPassword ? 'text' : 'password'}
+          value={value}
+          onChange={onChange}
+          onKeyDown={onKeyDown}
+          placeholder="비밀번호를 입력해 주세요"
+          className={isInvalid ? styles.errorBorder : ''}
+        />
+        <button
+          type="button"
+          onClick={handleTogglePassword}
+          className={styles.visibilityBtn}
+        >
+          <img src={showPassword ? visibilityOff : visibilityOn} />
+        </button>
+      </div>
+      {isInvalid && (
+        <p className={styles.errorMessage}>
+          *비밀번호는 4자 이상 입력해주세요.
+        </p>
+      )}{' '}
     </div>
   );
 }
