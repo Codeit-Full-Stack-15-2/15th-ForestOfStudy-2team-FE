@@ -11,7 +11,10 @@ function StudyActions({ onShare, onEdit, onRemove }) {
       <Button variant="text" size="none" onClick={onEdit}>
         수정하기
       </Button>
-      |<button onClick={onRemove}>스터디 삭제하기</button>
+      |
+      <Button variant="textGray" size="none" onClick={onRemove}>
+        스터디 삭제하기
+      </Button>
     </div>
   );
 }

@@ -56,6 +56,20 @@
   color: var(--color-brand-700);
 }
 
+.textGray {
+  background: none;
+  border: 1px solid transparent;
+  color: var(--color-gray-500);
+}
+
+.textGray:hover {
+  color: var(--color-gray-900);
+}
+
+.textGray:active {
+  color: #000000;
+}
+
 /* 버튼 사이즈 정의 */
 .medium {
   padding: 16px;
