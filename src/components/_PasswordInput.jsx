@@ -1,7 +1,7 @@
 import visibilityOff from '@/assets/btn_visibility_off.svg';
 import visibilityOn from '@/assets/btn_visibility_on.svg';
 import { useEffect, useRef, useState } from 'react';
-import styles from './PasswordInput.module.css';
+import styles from './_PasswordInput.module.css';
 
 function PasswordInput({
   isFocus = true,
