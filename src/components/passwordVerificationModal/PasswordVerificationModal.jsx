@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import BaseButton from './BaseButton';
-import PasswordInput from './_PasswordInput';
+import BaseButton from '@/components/baseButton/BaseButton';
+import PasswordInput from '@/components/_passwordInput/_PasswordInput';
 import styles from './PasswordVerificationModal.module.css';
 
 function PasswordVerificationModal({
@@ -84,7 +84,11 @@ function PasswordVerificationModal({
             {okText}
           </BaseButton>
           <div className={styles.textButtonContainer}>
-            <BaseButton onClick={handleOnCancelModal} variant="text" size="none">
+            <BaseButton
+              onClick={handleOnCancelModal}
+              variant="text"
+              size="none"
+            >
               나가기
             </BaseButton>
           </div>

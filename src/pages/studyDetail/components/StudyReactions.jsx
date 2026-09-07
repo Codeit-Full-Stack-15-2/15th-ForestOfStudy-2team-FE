@@ -1,4 +1,4 @@
-import smile from '@/assets/ic_smile.svg';
+import smile from '@/assets/studyDetailPage/ic_smile.svg';
 import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
 import { useStudyReactions } from '../hooks/useStudyReactions';

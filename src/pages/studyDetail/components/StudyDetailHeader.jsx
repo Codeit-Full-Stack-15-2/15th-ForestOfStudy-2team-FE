@@ -1,6 +1,6 @@
-import point from '@/assets/ic_point.svg';
-import ArrowButton from '@/components/ArrowButton';
-import PasswordVerificationModal from '@/components/PasswordVerificationModal';
+import point from '@/assets/common/ic_point.svg';
+import ArrowButton from '@/components/arrowButton/ArrowButton';
+import PasswordVerificationModal from '@/components/passwordVerificationModal/PasswordVerificationModal';
 import { useStudyActions } from '../hooks/useStudyActions';
 import StudyActions from './StudyActions';
 import styles from './StudyDetailHeader.module.css';

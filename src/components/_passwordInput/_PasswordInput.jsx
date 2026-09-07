@@ -1,5 +1,5 @@
-import visibilityOff from '@/assets/btn_visibility_off.svg';
-import visibilityOn from '@/assets/btn_visibility_on.svg';
+import visibilityOff from '@/assets/common/btn_visibility_off.svg';
+import visibilityOn from '@/assets/common/btn_visibility_on.svg';
 import { useEffect, useRef, useState } from 'react';
 import styles from './_PasswordInput.module.css';
 

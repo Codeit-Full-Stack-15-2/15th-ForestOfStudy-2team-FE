@@ -1,4 +1,4 @@
-import BaseButton from '@/components/BaseButton';
+import BaseButton from '@/components/baseButton/BaseButton';
 import styles from './StudyActions.module.css';
 
 function StudyActions({ onShare, onEdit, onRemove }) {

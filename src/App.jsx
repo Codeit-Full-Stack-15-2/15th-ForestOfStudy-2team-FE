@@ -18,7 +18,7 @@ function App() {
           <Route index={true} element={<Home />} />
           <Route path="study-detail" element={<StudyDetail />} />
           <Route path="habit-page" element={<HabitPage />}/>
-        
+          
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

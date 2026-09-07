@@ -1,5 +1,5 @@
 import { getStudyDetail, getStudyHabits } from '@/api/studyApi';
-import CardContainer from '@/components/CardContainer';
+import CardContainer from '@/components/cardContainer/CardContainer';
 import Spinner from '@/components/Spinner';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
