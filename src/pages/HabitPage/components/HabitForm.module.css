@@ -1,0 +1,82 @@
+
+.addHabitUlDiv{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.habitListField{
+  display: flex;
+  overflow-y: auto;
+  flex-direction: column;
+  align-items: center;
+width: 600px;
+height: 435px;
+gap: 20px;
+}
+
+.habit{
+  display: flex;
+  align-items: center;
+ 
+}
+.habitTitle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+   width:400px;
+  height: 54px;
+  border-radius: 20px;
+  background-color: var(--color-gray-100);
+  font-weight: 700;
+  font-size: var(--font-size-md);
+  text-decoration: underline;
+  color: var(--color-gray-500);
+}
+
+.checked {
+  
+  background-color: greenyellow;
+}
+
+.deleteButtonWrapper{
+  display: flex;
+  flex-direction: column;
+  width: 48px;
+  height: 48px; 
+  border-radius: 35px;
+  padding: 12px;
+  gap: 10px;
+  background-color: var(--color-pink-light);
+}
+
+
+.habitInput{
+  width: 400px;
+  height: 54px;
+  border-radius: 20px;
+  border: solid 2px var(--color-gray-900);
+  background-color: rgba(255,255,255,0);
+  font-size:var(--font-size-md);
+  font-weight: 700;
+  color: var(--color-gray-500);
+  background-image: url('./src/assets/ic_plus.svg');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 24px 24px;
+}
+
+.habitInputEdit{
+  width: 400px;
+  height: 54px;
+  border-radius: 20px;
+  border: solid 2px var(--color-gray-900);
+  background-color: rgba(255,255,255,0);
+  font-size:var(--font-size-md);
+  font-weight: 700;
+  color: var(--color-gray-500);
+}
+
+.habitInput:focus{
+  background-image: none;
+}
