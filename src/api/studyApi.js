@@ -1,5 +1,5 @@
 // src/api/studyApi.js
-import { MOCK_HABITS, MOCK_STUDY_HEADER } from '@/mocks/studyMockData';
+import { MOCK_HABITS_RESPONSE, MOCK_STUDY_HEADER } from '@/mocks/studyMockData';
 
 // ==========================================
 // 1. 스터디 헤더 정보 조회 API
@@ -33,7 +33,7 @@ export async function getStudyHabits(studyId, startDate) {
 
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve(MOCK_HABITS);
+      resolve(MOCK_HABITS_RESPONSE);
     }, 200);
   });
 }
