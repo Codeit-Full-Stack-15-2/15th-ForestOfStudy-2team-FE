@@ -3,6 +3,7 @@ import searchIcon from '@/assets/homePage/search.svg';
 import styles from './Home.module.css';
 import StudyCard from '@/pages/home/components/studyCard/StudyCard';
 import studyCardBg from '@/assets/homePage/study-card-bg.webp';
+import BaseButton from '@/components/baseButton/BaseButton';
 
 const sortOptions = [
   { value: 'recent', label: '최근 순' },
@@ -182,10 +183,14 @@ function Home() {
             );
           })}
         </ul>
-
-        <button type="button" className={styles.loadMoreButton}>
+        <BaseButton
+          variant="outline"
+          size="none"
+          width="260px"
+          className={styles.loadMoreButton}
+        >
           더보기
-        </button>
+        </BaseButton>
       </section>
     </main>
   );
