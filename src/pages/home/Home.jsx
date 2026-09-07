@@ -7,7 +7,7 @@ import BaseButton from '@/components/baseButton/BaseButton';
 
 const sortOptions = [
   { value: 'recent', label: '최근 순' },
-  { value: 'oldedst', label: '오래된 순' },
+  { value: 'oldest', label: '오래된 순' },
   { value: 'highPoint', label: '많은 포인트 순' },
   { value: 'lowPoint', label: '작은 포인트 순' },
 ];
@@ -94,6 +94,22 @@ function Home() {
     study.title.toLowerCase().includes(normalizedSearchValue),
   );
 
+  const sortedStudies = [...filteredStudies].sort((a, b) => {
+    if (sortValue === 'highPoint') {
+      return b.point - a.point;
+    }
+
+    if (sortValue === 'lowPoint') {
+      return a.point - b.point;
+    }
+
+    if (sortValue === 'oldest') {
+      return a.id - b.id;
+    }
+
+    return b.id - a.id;
+  });
+
   return (
     <main className={styles.home}>
       <section className={styles.recentStudies}>
@@ -174,7 +190,7 @@ function Home() {
         </div>
 
         <ul className={styles.studyList}>
-          {filteredStudies.map((study) => {
+          {sortedStudies.map((study) => {
             return (
               <StudyCard
                 key={study.id}
