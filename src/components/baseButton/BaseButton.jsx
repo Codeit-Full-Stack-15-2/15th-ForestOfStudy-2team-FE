@@ -4,7 +4,7 @@ import styles from './BaseButton.module.css';
 function BaseButton({
   children,
   onClick,
-  variant = 'primary',
+  variant = 'primary', // primary, outline, text, textGray
   size = 'medium',
   disabled = false,
   fullWidth = false,
