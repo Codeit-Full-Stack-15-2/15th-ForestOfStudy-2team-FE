@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import icArrowRight from '/src/assets/ic_arrow_right.svg';
+import icArrowRight from '@/assets/common/ic_arrow_right.svg';
 import { AddHabitForm } from './components/habitForm';
 
 import styles from './HabitPage.module.css';

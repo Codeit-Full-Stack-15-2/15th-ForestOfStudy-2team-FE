@@ -1,5 +1,5 @@
-import icnActive from '@/assets/subtract_active.svg';
-import icnDefault from '@/assets/subtract_default.svg';
+import icnActive from '@/assets/studyDetailPage/subtract_active.svg';
+import icnDefault from '@/assets/studyDetailPage/subtract_default.svg';
 import styles from './StampIcon.module.css';
 
 function StampIcon({ isCompleted }) {

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import btnDeterminate from '/src/assets/btn_determinate.svg';
+import btnDeterminate from '@/assets/habitPage/btn_determinate.svg';
 import { useToast } from '@/components/toast/ToastContext';
 import styles from './HabitForm.module.css';
 

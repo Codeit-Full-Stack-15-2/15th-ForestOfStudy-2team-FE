@@ -1,5 +1,5 @@
-import logo from '@/assets/logo.svg';
-import styles from '@/components/GlobalHeader.module.css';
+import logo from '@/assets/common/logo.svg';
+import styles from './GlobalHeader.module.css';
 import { Link, useLocation, useNavigate } from 'react-router';
 
 function GlobalHeader() {

@@ -1,5 +1,5 @@
-import arrowAright from '@/assets/ic_arrow_right.svg';
-import styles from '@/components/ArrowButton.module.css';
+import arrowAright from '@/assets/common/ic_arrow_right.svg';
+import styles from './ArrowButton.module.css';
 import { Link } from 'react-router';
 
 function ArrowButton({ children, onClick, ...props }) {

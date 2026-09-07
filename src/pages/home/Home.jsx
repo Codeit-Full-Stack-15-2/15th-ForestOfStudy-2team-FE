@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import searchIcon from '../../assets/search.svg';
+import searchIcon from '@/assets/homePage/search.svg';
 import styles from './Home.module.css';
 import StudyCard from '@/components/studyCard/StudyCard';
 import studyCardBg from '../../assets/study-card-bg.webp';
