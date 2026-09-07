@@ -108,3 +108,20 @@
   font-size: var(--font-size-xs);
   font-weight: 200;
 }
+
+@media (max-width: 375px) {
+  .studyCard {
+    min-height: 180px;
+    padding: 16px;
+  }
+
+  .cardHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .pointBadge {
+    order: -1;
+  }
+}

@@ -172,6 +172,7 @@
   outline-offset: 2px;
 }
 
+/* Tablet */
 @media (max-width: 744px) {
   .studyList {
     grid-template-columns: repeat(2, 1fr);
@@ -190,5 +191,46 @@
 
   .recentStudyList > li {
     flex: 0 0 360px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 375px) {
+  .sectionTitle {
+    font-size: var(--font-size-lg);
+  }
+
+  .studyList {
+    margin-top: 12px;
+
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .studyControls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .searchBox {
+    max-width: none;
+  }
+
+  .sortDropdown {
+    align-self: flex-end;
+  }
+
+  .recentStudyList {
+    gap: 16px;
+  }
+
+  .recentStudyList > li {
+    flex: 0 0 240px;
+  }
+
+  .recentStudies,
+  .studyBrowse {
+    padding: 16px;
   }
 }
