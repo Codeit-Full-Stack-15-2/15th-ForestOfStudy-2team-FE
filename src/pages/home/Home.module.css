@@ -171,3 +171,24 @@
   outline: 2px solid var(--color-green-text);
   outline-offset: 2px;
 }
+
+@media (max-width: 744px) {
+  .studyList {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .recentStudyList {
+    display: flex;
+    overflow-x: auto;
+
+    scrollbar-width: none;
+  }
+
+  .recentStudyList::-webkit-scrollbar {
+    display: none;
+  }
+
+  .recentStudyList > li {
+    flex: 0 0 360px;
+  }
+}
