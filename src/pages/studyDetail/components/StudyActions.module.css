@@ -1,0 +1,6 @@
+.container {
+  color: var(--color-gray-500);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}

@@ -1,0 +1,165 @@
+export const CURRENT_MOCK_USER_ID = 'user-current-uuid-001';
+
+export const MOCK_STUDY_HEADER = {
+  studyId: 123,
+  title: '연우의 개발공장',
+  description: 'Slow And Steady Wins The Race! 다들 오늘 하루도 화이팅 :)',
+  totalPoints: 310,
+  reactions: [
+    {
+      id: 1,
+      emoji: '👱‍♀️',
+      count: 37,
+      reactedUserIds: ['user-other-001', 'user-other-002'],
+    },
+    {
+      id: 2,
+      emoji: '👍🏻',
+      count: 50,
+      reactedUserIds: [CURRENT_MOCK_USER_ID, 'user-other-003'],
+    },
+    {
+      id: 3,
+      emoji: '🤩',
+      count: 50,
+      reactedUserIds: ['user-other-004', 'user-other-005'],
+    },
+    {
+      id: 4,
+      emoji: '🔥',
+      count: 12,
+      reactedUserIds: ['user-other-006'],
+    },
+    {
+      id: 5,
+      emoji: '🎉',
+      count: 8,
+      reactedUserIds: ['user-other-007'],
+    },
+    {
+      id: 6,
+      emoji: '💻',
+      count: 15,
+      reactedUserIds: [CURRENT_MOCK_USER_ID, 'user-other-008'],
+    },
+    {
+      id: 7,
+      emoji: '☕',
+      count: 20,
+      reactedUserIds: ['user-other-009'],
+    },
+    {
+      id: 8,
+      emoji: '💪',
+      count: 9,
+      reactedUserIds: ['user-other-010'],
+    },
+  ],
+};
+
+export const MOCK_HABITS = [
+  {
+    id: 1,
+    title: '미라클모닝 6시 기상',
+    records: [
+      { day: 'mon', date: '2026-08-31', isCompleted: true },
+      { day: 'tue', date: '2026-09-01', isCompleted: false },
+      { day: 'wed', date: '2026-09-02', isCompleted: true },
+      { day: 'thu', date: '2026-09-03', isCompleted: true },
+      { day: 'fri', date: '2026-09-04', isCompleted: false },
+      { day: 'sat', date: '2026-09-05', isCompleted: true },
+      { day: 'sun', date: '2026-09-06', isCompleted: false },
+    ],
+  },
+  {
+    id: 2,
+    title: '아침 챙겨 먹기',
+    records: [
+      { day: 'mon', date: '2026-08-31', isCompleted: true },
+      { day: 'tue', date: '2026-09-01', isCompleted: true },
+      { day: 'wed', date: '2026-09-02', isCompleted: false },
+      { day: 'thu', date: '2026-09-03', isCompleted: false },
+      { day: 'fri', date: '2026-09-04', isCompleted: false },
+      { day: 'sat', date: '2026-09-05', isCompleted: false },
+      { day: 'sun', date: '2026-09-06', isCompleted: false },
+    ],
+  },
+  {
+    id: 3,
+    title: 'React 스터디 책 1챕터 읽기',
+    records: [
+      { day: 'mon', date: '2026-08-31', isCompleted: true },
+      { day: 'tue', date: '2026-09-01', isCompleted: false },
+      { day: 'wed', date: '2026-09-02', isCompleted: false },
+      { day: 'thu', date: '2026-09-03', isCompleted: false },
+      { day: 'fri', date: '2026-09-04', isCompleted: false },
+      { day: 'sat', date: '2026-09-05', isCompleted: false },
+      { day: 'sun', date: '2026-09-06', isCompleted: false },
+    ],
+  },
+  {
+    id: 4,
+    title: '스트레칭',
+    records: [
+      { day: 'mon', date: '2026-08-31', isCompleted: false },
+      { day: 'tue', date: '2026-09-01', isCompleted: false },
+      { day: 'wed', date: '2026-09-02', isCompleted: false },
+      { day: 'thu', date: '2026-09-03', isCompleted: false },
+      { day: 'fri', date: '2026-09-04', isCompleted: false },
+      { day: 'sat', date: '2026-09-05', isCompleted: false },
+      { day: 'sun', date: '2026-09-06', isCompleted: false },
+    ],
+  },
+  {
+    id: 5,
+    title: '미라클모닝 6시 기상 2',
+    records: [
+      { day: 'mon', date: '2026-08-31', isCompleted: true },
+      { day: 'tue', date: '2026-09-01', isCompleted: false },
+      { day: 'wed', date: '2026-09-02', isCompleted: true },
+      { day: 'thu', date: '2026-09-03', isCompleted: true },
+      { day: 'fri', date: '2026-09-04', isCompleted: false },
+      { day: 'sat', date: '2026-09-05', isCompleted: true },
+      { day: 'sun', date: '2026-09-06', isCompleted: false },
+    ],
+  },
+  {
+    id: 6,
+    title: '아침 챙겨 먹기 2',
+    records: [
+      { day: 'mon', date: '2026-08-31', isCompleted: true },
+      { day: 'tue', date: '2026-09-01', isCompleted: true },
+      { day: 'wed', date: '2026-09-02', isCompleted: false },
+      { day: 'thu', date: '2026-09-03', isCompleted: false },
+      { day: 'fri', date: '2026-09-04', isCompleted: false },
+      { day: 'sat', date: '2026-09-05', isCompleted: false },
+      { day: 'sun', date: '2026-09-06', isCompleted: false },
+    ],
+  },
+  {
+    id: 7,
+    title: 'React 스터디 책 1챕터 읽기 2',
+    records: [
+      { day: 'mon', date: '2026-08-31', isCompleted: true },
+      { day: 'tue', date: '2026-09-01', isCompleted: false },
+      { day: 'wed', date: '2026-09-02', isCompleted: false },
+      { day: 'thu', date: '2026-09-03', isCompleted: false },
+      { day: 'fri', date: '2026-09-04', isCompleted: false },
+      { day: 'sat', date: '2026-09-05', isCompleted: false },
+      { day: 'sun', date: '2026-09-06', isCompleted: false },
+    ],
+  },
+  {
+    id: 8,
+    title: '스트레칭 2',
+    records: [
+      { day: 'mon', date: '2026-08-31', isCompleted: false },
+      { day: 'tue', date: '2026-09-01', isCompleted: false },
+      { day: 'wed', date: '2026-09-02', isCompleted: false },
+      { day: 'thu', date: '2026-09-03', isCompleted: false },
+      { day: 'fri', date: '2026-09-04', isCompleted: false },
+      { day: 'sat', date: '2026-09-05', isCompleted: false },
+      { day: 'sun', date: '2026-09-06', isCompleted: false },
+    ],
+  },
+];
