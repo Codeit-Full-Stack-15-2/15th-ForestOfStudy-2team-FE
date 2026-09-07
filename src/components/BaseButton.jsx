@@ -1,7 +1,7 @@
 import { BeatLoader } from 'react-spinners';
-import styles from './Button.module.css';
+import styles from './BaseButton.module.css';
 
-function Button({
+function BaseButton({
   children,
   onClick,
   variant = 'primary',
@@ -59,4 +59,4 @@ function Button({
   );
 }
 
-export default Button;
+export default BaseButton;
