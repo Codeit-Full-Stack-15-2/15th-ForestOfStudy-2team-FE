@@ -88,6 +88,12 @@ function Home() {
   const [sortValue, setSortValue] = useState('recent');
   const selectedSort = sortOptions.find((option) => option.value === sortValue);
 
+  const [searchValue, setSearchValue] = useState('');
+  const normalizedSearchValue = searchValue.trim().toLowerCase();
+  const filteredStudies = studies.filter((study) =>
+    study.title.toLowerCase().includes(normalizedSearchValue),
+  );
+
   return (
     <main className={styles.home}>
       <section className={styles.recentStudies}>
@@ -124,6 +130,8 @@ function Home() {
               type="search"
               placeholder="검색"
               aria-label="스터디 검색"
+              value={searchValue}
+              onChange={(e) => setSearchValue(e.target.value)}
             />
           </div>
           <div className={styles.sortDropdown}>
@@ -166,7 +174,7 @@ function Home() {
         </div>
 
         <ul className={styles.studyList}>
-          {studies.map((study) => {
+          {filteredStudies.map((study) => {
             return (
               <StudyCard
                 key={study.id}
