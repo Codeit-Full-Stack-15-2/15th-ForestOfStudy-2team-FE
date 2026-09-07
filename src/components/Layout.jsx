@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router';
-import GlobalHeader from './GlobalHeader';
+import GlobalHeader from '@/components/globalHeader/GlobalHeader';
 
 function Layout() {
   return (
