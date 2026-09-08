@@ -4,6 +4,7 @@ import icTimer from '@/assets/focusPage/ic_timer.svg';
 import { useTimer } from '@/pages/focusPage/hooks/useTimer';
 import { useState } from 'react';
 import { formatTime } from '@/utils/formatTime';
+import clsx from 'clsx';
 
 const PRESET_TIMES = [15, 25, 35];
 
@@ -41,20 +42,27 @@ function Timer({ totalSeconds }) {
       </div>
 
       <span
-        className={`${styles.timerNumber} ${isRunning ? styles.timerNumberRunning : ''} ${isOverTime ? styles.timerNumberOverTime : ''}`}
+        className={clsx(
+          styles.timerNumber,
+          isRunning && styles.timerNumberRunning,
+          isOverTime && styles.timerNumberOverTime,
+        )}
       >
         {formattedTime}
       </span>
 
       <div className={styles.timerSettingButtonsContainer}>
         <div
-          className={`${styles.timerPresetContainer} ${isRunning ? styles.hidden : ''}`}
+          className={clsx(
+            styles.timerPresetContainer,
+            isRunning && styles.hidden,
+          )}
         >
           {PRESET_TIMES.map((minutes) => (
             <button
               key={minutes}
               type="button"
-              className={`${styles.timerPresetChip} ${duration === minutes * 60 ? styles.timerPresetChipActive : ''}`}
+              className={`${styles.timerPresetChip}`}
               onClick={() => selectPresetTime(minutes)}
             >
               {minutes}분
