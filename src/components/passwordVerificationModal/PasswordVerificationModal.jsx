@@ -1,6 +1,6 @@
 import BaseButton from '@/components/baseButton/BaseButton';
 import PasswordInput from '@/components/passwordInput/PasswordInput';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import styles from './PasswordVerificationModal.module.css';
 
@@ -15,6 +15,25 @@ function PasswordVerificationModal({
 }) {
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+
+  const modalRef = useRef(null);
+
+  const handleOnCancelModal = useCallback(() => {
+    onCancel();
+    setPassword('');
+    setErrorMessage('');
+  }, [onCancel]);
+
+  useEffect(() => {
+    if (!open) return;
+    const handleOutsideClick = (event) => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        handleOnCancelModal();
+      }
+    };
+    document.addEventListener('mousedown', handleOutsideClick);
+    return () => document.removeEventListener('mousedown', handleOutsideClick);
+  }, [open, handleOnCancelModal]);
 
   useEffect(() => {
     if (!open) return;
@@ -32,12 +51,6 @@ function PasswordVerificationModal({
     if (errorMessage) {
       setErrorMessage('');
     }
-  };
-
-  const handleOnCancelModal = () => {
-    onCancel();
-    setPassword('');
-    setErrorMessage('');
   };
 
   const handleConfirm = () => {
@@ -58,11 +71,8 @@ function PasswordVerificationModal({
   if (!open) return null;
 
   return createPortal(
-    <div className={styles.dimOverlay} onClick={handleOnCancelModal}>
-      <div
-        className={styles.modalContainer}
-        onClick={(e) => e.stopPropagation()}
-      >
+    <div className={styles.dimOverlay}>
+      <div ref={modalRef} className={styles.modalContainer}>
         <div className={styles.header}>
           <p className={styles.title}>{title}</p>
           <p className={styles.description}>{description}</p>
