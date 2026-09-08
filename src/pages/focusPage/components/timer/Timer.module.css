@@ -1,0 +1,104 @@
+.timerContainer {
+  border: 1px solid var(--color-gray-300);
+  border-radius: 20px;
+  padding: 40px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 80px;
+
+  h3 {
+    font-weight: 800;
+    font-size: var(--font-size-2xl);
+    color: var(--color-gray-900);
+  }
+}
+
+.timerHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.timerSettedTimeBadge {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50px;
+  color: var(--color-gray-900);
+  font-weight: 500;
+  padding: 6px 8px;
+  gap: 8px;
+}
+
+.timerNumber {
+  font-weight: 800;
+  font-size: var(--font-size-display-lg);
+  color: var(--color-gray-900);
+  font-variant-numeric: tabular-nums;
+}
+
+.timerNumberRunning {
+  color: var(--color-red-primary);
+}
+
+.timerNumberOverTime {
+  color: var(--color-gray-500);
+}
+
+
+.timerSettingButtonsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.timerPresetContainer {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  height: 36px;
+}
+
+.timerPresetChip {
+  border: 1px solid var(--color-gray-300);
+  background: none;
+  border-radius: 999px;
+  padding: 6px 16px;
+  font-size: 14px;
+  color: var(--color-gray-700);
+  cursor: pointer;
+}
+
+.timerAdjustButtonContainer {
+  display: flex;
+  align-items: center;
+  height: 48px;
+  gap: 16px;
+
+  button {
+    background-color: var(--color-brand-primary);
+    font-weight: bold;
+    color: white;
+    border-radius: 50%;
+    border: none;
+    width: 48px;
+    height: 48px;
+    padding: 8px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: var(--font-size-lg);
+  }
+
+  button:hover {
+    background-color: color-mix(in srgb, var(--color-brand-primary), black 15%);
+  }
+}
+
+.hidden {
+  visibility: hidden;
+}
