@@ -122,12 +122,10 @@
 .listModifyButton {
   position: absolute;
   display: inline-block;
-
   left: 100%;
   transform: translateX(-100%);
   border-radius: 2rem;
   border: none;
-
   cursor: pointer;
   font-size: var(--font-size-sm);
   font-weight: 500;

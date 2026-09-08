@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { AddHabitForm } from './components/HabitForm';
+import HabitForm from './components/habitForm/HabitForm';
 import ArrowButton from '@/components/arrowButton/ArrowButton';
 import CardContainer from '@/components/cardContainer/CardContainer';
 import styles from './HabitPage.module.css';
-
+import HabitList from './components/habitForm/HabitList';
 
 function HabitPage() {
   const TEMP_STUDY_ID = 123;
@@ -15,6 +15,33 @@ function HabitPage() {
   const [isIsHabitEmpty, setisIsHabitEmpty] = useState(false);
   const [isCheckMode, setIsCheckMode] = useState(false);
   const [habits, setHabits] = useState([]);
+
+  const handleAddHabit = (habitName) => {
+    setHabits((prevHabits) => [
+      ...prevHabits,
+      {
+        id: Date.now(),
+        name: habitName,
+        isCompleted: false,
+      },
+    ]);
+  };
+
+  const handleDeleteHabit = (habitId) => {
+    setHabits((prevHabits) =>
+      prevHabits.filter((habit) => habit.id !== habitId),
+    );
+  };
+
+  const handleCheckHabit = (habitId) => {
+    setHabits((prevHabits) =>
+      prevHabits.map((habit) =>
+        habit.id === habitId
+          ? { ...habit, isCompleted: !habit.isCompleted }
+          : habit,
+      ),
+    );
+  };
 
   const handleForm = () => {
     setIsUlOpen((prev) => !prev);
@@ -30,7 +57,7 @@ function HabitPage() {
 
   return (
     <section className={styles.wrapper}>
-     <CardContainer>
+      <CardContainer>
         <div className={styles.habitInnerDiv}>
           <div className={styles.habitHead}>
             <div className={styles.titleContainer}>
@@ -63,11 +90,16 @@ function HabitPage() {
                 </button>
               </div>
               {isUlOpen && (
-                <AddHabitForm
-                  habits={habits}
-                  setHabits={setHabits}
-                  isCheckMode={isCheckMode}
-                />
+                <>
+                
+                  <HabitList
+                    habits={habits}
+                    isCheckMode={isCheckMode}
+                    onDeleteHabit={handleDeleteHabit}
+                    onCheckHabit={handleCheckHabit}
+                  />
+                    <HabitForm onAddHabit={handleAddHabit} />
+                </>
               )}
               {!isIsHabitEmpty && (
                 <div className={styles.todayHabitBoard}>
@@ -80,7 +112,7 @@ function HabitPage() {
             </div>
           </div>
         </div>
-     </CardContainer>
+      </CardContainer>
     </section>
   );
 }
