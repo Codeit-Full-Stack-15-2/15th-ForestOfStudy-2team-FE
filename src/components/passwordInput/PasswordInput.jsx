@@ -34,33 +34,37 @@ function PasswordInput({
 
   return (
     <div className={styles.wrapper}>
-      <label className={styles.label} htmlFor={id}>
-        {label}
-      </label>
+      <div className={styles.fieldGroup}>
+        <label className={styles.label} htmlFor={id}>
+          {label}
+        </label>
 
-      <div className={hasError ? styles.inputBoxError : styles.inputBox}>
-        <input
-          ref={passwordInputRef}
-          id={id}
-          className={styles.input}
-          type={isVisible ? 'text' : 'password'}
-          placeholder={placeholder}
-          value={value}
-          onChange={onChange}
-          onKeyDown={onKeyDown}
-        />
-
-        <button
-          className={styles.visibilityButton}
-          type="button"
-          onClick={handleToggleVisibility}
+        <div
+          className={`${styles.inputBox} ${hasError ? styles.inputBoxError : ''}`}
         >
-          <img
-            className={styles.visibilityIcon}
-            src={isVisible ? visibilityOff : visibilityOn}
-            alt=""
+          <input
+            ref={passwordInputRef}
+            id={id}
+            className={styles.input}
+            type={isVisible ? 'text' : 'password'}
+            placeholder={placeholder}
+            value={value}
+            onChange={onChange}
+            onKeyDown={onKeyDown}
           />
-        </button>
+
+          <button
+            className={styles.visibilityButton}
+            type="button"
+            onClick={handleToggleVisibility}
+          >
+            <img
+              className={styles.visibilityIcon}
+              src={isVisible ? visibilityOff : visibilityOn}
+              alt=""
+            />
+          </button>
+        </div>
       </div>
 
       {hasError && <p className={styles.errorMessage}>{displayError}</p>}
