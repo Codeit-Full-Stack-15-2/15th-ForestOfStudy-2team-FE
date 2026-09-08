@@ -8,7 +8,7 @@ function GlobalHeader() {
 
   const handleMakeStudy = () => {
     //  TODO: 스터디 만들기 페이지 경로 필요
-    navigate('/');
+    navigate('/studies/new');
   };
   return (
     <nav className={styles.container}>
