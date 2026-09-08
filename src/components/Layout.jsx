@@ -5,9 +5,7 @@ function Layout() {
   return (
     <>
       <GlobalHeader />
-      <main>
         <Outlet />
-      </main>
     </>
   );
 }

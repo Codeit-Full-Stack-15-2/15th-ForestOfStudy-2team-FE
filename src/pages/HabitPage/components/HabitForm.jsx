@@ -2,9 +2,9 @@ import { useState } from 'react';
 import btnDeterminate from '@/assets/habitPage/btn_determinate.svg';
 import { useToast } from '@/components/toast/ToastContext';
 import styles from './HabitForm.module.css';
+import clsx from 'clsx';
 
 export function AddHabitForm({ habits = [], setHabits, isCheckMode }) {
-  
   const { showToast } = useToast();
   const [newhabit, setNewHabit] = useState('');
   const [editingIndex, setEditingIndex] = useState(null);
@@ -83,46 +83,55 @@ export function AddHabitForm({ habits = [], setHabits, isCheckMode }) {
       <div className={styles.wrapper}>
         <div className={styles.addHabitUlDiv}>
           <ul onSubmit={handleSubmit} className={styles.habitListField}>
-            {habits.map((habitItem, index) => (
-              <li className={styles.habit} key={index}>
-                {!isCheckMode && editingIndex === index ? (
-                  <input
-                    value={editHabit}
-                    onChange={(e) => setEditHabit(e.target.value)}
-                    onKeyDown={(e) => handleEditKeyDown(e, index)}
-                    onClick={(e) => e.stopPropagation()}
-                    className={styles.habitInputEdit}
-                    autoFocus
-                  />
-                ) : (
-                  <div
-                    className={`${styles.habit} ${checkIndexs.includes(index) ? styles.checked : ''}`}
-                    onClick={() => {
-                      if (!isCheckMode) {
-                        handleHabitEdit(habitItem, index);
-                      } else {
-                        handleHabitCheck(habitItem, index);
-                      }
-                    }}
-                  >
-                    {habitItem}
-                  </div>
-                )}
-                {!isCheckMode && (
-                  <button
-                    type="button"
-                    className={`${styles.deleteButton} ${styles.deleteButtonOuter}`}
-                    onClick={() => handleHabitDelete(habitItem)}
-                  >
-                    <img
-                      className={styles.habitDeleteButton}
-                      src={btnDeterminate}
-                      alt="쓰레기통 이미지"
+            {habits.map((habitItem, index) => {
+              const isEditing = !isCheckMode && editingIndex === index;
+              return (
+                <li className={styles.habit} key={index}>
+                  {isEditing ? (
+                    <input
+                      value={editHabit}
+                      onChange={(e) => setEditHabit(e.target.value)}
+                      onKeyDown={(e) => handleEditKeyDown(e, index)}
+                      onClick={(e) => e.stopPropagation()}
+                      className={styles.habitInputEdit}
+                      autoFocus
                     />
-                  </button>
-                )}
-              </li>
-            ))}
+                  ) : (
+                    <div
+                      className={clsx(
+                        styles.habit,
+                        checkIndexs.includes(index) && styles.checked,
+                      )}
+                      onClick={() => {
+                        if (!isCheckMode) {
+                          handleHabitEdit(habitItem, index);
+                          return;
+                        }
+                        handleHabitCheck(habitItem, index);
+                      }}
+                    >
+                      {habitItem}
+                    </div>
+                  )}
+                  {!isCheckMode && (
+                    <button
+                      type="button"
+                      className={clsx(
+                        styles.deleteButton,
+                        styles.deleteButtonOuter,
+                      )}
+                      onClick={() => handleHabitDelete(habitItem)}
+                    >
+                      <img
+                        className={styles.habitDeleteButton}
+                        src={btnDeterminate}
+                        alt="쓰레기통 이미지"
+                      />
+                    </button>
+                  )}
+                </li>
+              );
+            })}
           </ul>
           {!isCheckMode && (
             <input
