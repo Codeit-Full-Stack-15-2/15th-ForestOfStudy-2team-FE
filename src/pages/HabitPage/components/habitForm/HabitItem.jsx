@@ -1,11 +1,25 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import styles from './HabitForm.module.css';
 import btnDeterminate from '@/assets/habitPage/btn_determinate.svg';
+import { useToast } from '@/components/toast/ToastContext';
 
-function HabitItem({ habit, isCheckMode, onDeleteHabit, onCheckHabit }) {
+function HabitItem({
+  habit,
+  isCheckMode,
+  onDeleteHabit,
+  onCheckHabit,
+  onUpdateHabit,
+}) {
   const [isEditing, setIsEditing] = useState(false);
   const [editHabit, setEditHabit] = useState(habit.name);
+  const { showToast } = useToast();
+
+  useEffect(() => {
+    if (isCheckMode) {
+      setIsEditing(false);
+    }
+  }, [isCheckMode]);
 
   const handleEditKeyDown = (e) => {
     if (e.key !== 'Enter') return;
@@ -17,7 +31,7 @@ function HabitItem({ habit, isCheckMode, onDeleteHabit, onCheckHabit }) {
     if (!habitName) return;
 
     // 나중에 Patch 부분
-    console.log('수정:', habit.id, habitName);
+    onUpdateHabit(habit.id, habitName);
 
     setIsEditing(false);
   };
@@ -27,8 +41,8 @@ function HabitItem({ habit, isCheckMode, onDeleteHabit, onCheckHabit }) {
       setIsEditing(true);
       return;
     }
-
     onCheckHabit(habit.id);
+    showToast(`${habit.name}을 선택했습니다`, 'success');
   };
 
   return (
@@ -38,12 +52,16 @@ function HabitItem({ habit, isCheckMode, onDeleteHabit, onCheckHabit }) {
           value={editHabit}
           onChange={(e) => setEditHabit(e.target.value)}
           onKeyDown={handleEditKeyDown}
+          onClick={(e) => e.stopPropagation()}
           autoFocus
           className={styles.habitInputEdit}
         />
       ) : (
         <div
-          className={clsx(styles.habit, habit.isCompleted && styles.checked)}
+          className={clsx(
+            styles.habitItem,
+            habit.isCompleted && styles.checked,
+          )}
           onClick={handleClick}
         >
           {habit.name}
@@ -52,10 +70,14 @@ function HabitItem({ habit, isCheckMode, onDeleteHabit, onCheckHabit }) {
       {!isCheckMode && (
         <button
           type="button"
-          className={styles.deleteButton}
+          className={clsx(styles.deleteButton, styles.deleteButtonOuter)}
           onClick={() => onDeleteHabit(habit.id)}
         >
-          <img src={btnDeterminate} alt="쓰레기통 이미지" />
+          <img
+            src={btnDeterminate}
+            alt="쓰레기통 이미지"
+            className={styles.habitDeleteButton}
+          />
         </button>
       )}
     </li>

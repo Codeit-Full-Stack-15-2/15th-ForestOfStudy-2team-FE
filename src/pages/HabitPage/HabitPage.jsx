@@ -5,15 +5,15 @@ import CardContainer from '@/components/cardContainer/CardContainer';
 import styles from './HabitPage.module.css';
 import HabitList from './components/habitForm/HabitList';
 
+
 function HabitPage() {
   const TEMP_STUDY_ID = 123;
 
   const timeNow = new Date()
     .toLocaleString('sv-SE', { timeZone: 'Asia/Seoul' })
     .replace(' ', ' ');
-  const [isUlOpen, setIsUlOpen] = useState(false);
-  const [isIsHabitEmpty, setisIsHabitEmpty] = useState(false);
-  const [isCheckMode, setIsCheckMode] = useState(false);
+
+  const [isCheckMode, setIsCheckMode] = useState(true);
   const [habits, setHabits] = useState([]);
 
   const handleAddHabit = (habitName) => {
@@ -27,6 +27,16 @@ function HabitPage() {
     ]);
   };
 
+const handleUpdateHabit = (id, newName) => {
+  setHabits((prevHabits) =>
+    prevHabits.map((habit) =>
+      habit.id === id
+        ? { ...habit, name: newName }
+        : habit
+    )
+  );
+};
+
   const handleDeleteHabit = (habitId) => {
     setHabits((prevHabits) =>
       prevHabits.filter((habit) => habit.id !== habitId),
@@ -34,6 +44,8 @@ function HabitPage() {
   };
 
   const handleCheckHabit = (habitId) => {
+    
+
     setHabits((prevHabits) =>
       prevHabits.map((habit) =>
         habit.id === habitId
@@ -44,15 +56,8 @@ function HabitPage() {
   };
 
   const handleForm = () => {
-    setIsUlOpen((prev) => !prev);
-    setisIsHabitEmpty((prev) => !prev);
-
-    if (habits.length > 0) {
-      setIsUlOpen(true);
-      setisIsHabitEmpty(true);
-      setIsCheckMode((prev) => !prev);
-      return;
-    }
+    setIsCheckMode((prev) => !prev);
+    return;
   };
 
   return (
@@ -86,28 +91,29 @@ function HabitPage() {
                   className={styles.listModifyButton}
                   onClick={handleForm}
                 >
-                  목록 수정
+                  {isCheckMode ? '목록 수정' : '완료'}
                 </button>
               </div>
-              {isUlOpen && (
-                <>
-                
-                  <HabitList
-                    habits={habits}
-                    isCheckMode={isCheckMode}
-                    onDeleteHabit={handleDeleteHabit}
-                    onCheckHabit={handleCheckHabit}
-                  />
-                    <HabitForm onAddHabit={handleAddHabit} />
-                </>
-              )}
-              {!isIsHabitEmpty && (
+
+              {habits.length === 0 && isCheckMode && (
                 <div className={styles.todayHabitBoard}>
                   <p>
                     아직 습관이 없어요
                     <br /> 목록 수정을 눌러 습관을 생성해보세요
                   </p>
                 </div>
+              )}
+              {(habits.length > 0 || !isCheckMode) && (
+                <>
+                  <HabitList
+                    habits={habits}
+                    isCheckMode={isCheckMode}
+                    onDeleteHabit={handleDeleteHabit}
+                    onCheckHabit={handleCheckHabit}
+                    onUpdateHabit={handleUpdateHabit}
+                  />
+                  {!isCheckMode && <HabitForm onAddHabit={handleAddHabit} />}
+                </>
               )}
             </div>
           </div>

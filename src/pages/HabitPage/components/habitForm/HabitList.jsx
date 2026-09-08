@@ -1,7 +1,13 @@
 import HabitItem from './HabitItem';
 import styles from './HabitForm.module.css';
 
-function HabitList({ habits, isCheckMode, onDeleteHabit, onCheckHabit }) {
+function HabitList({
+  habits,
+  isCheckMode,
+  onDeleteHabit,
+  onCheckHabit,
+  onUpdateHabit,
+}) {
   return (
     <div className={styles.addHabitUlDiv}>
       <ul className={styles.habitListField}>
@@ -12,6 +18,7 @@ function HabitList({ habits, isCheckMode, onDeleteHabit, onCheckHabit }) {
             isCheckMode={isCheckMode}
             onDeleteHabit={onDeleteHabit}
             onCheckHabit={onCheckHabit}
+            onUpdateHabit={onUpdateHabit}
           />
         ))}
       </ul>
