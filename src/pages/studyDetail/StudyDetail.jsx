@@ -1,4 +1,4 @@
-import { getStudyDetail, getStudyHabits } from '@/api/studyApi';
+import { getStudyDetail } from '@/api/studyApi';
 import CardContainer from '@/components/cardContainer/CardContainer';
 import Spinner from '@/components/Spinner';
 import { useEffect, useState } from 'react';
@@ -9,28 +9,22 @@ import styles from './StudyDetail.module.css';
 
 function StudyDetail() {
   const { studyId } = useParams();
-  const [studyData, setStudyData] = useState(null);
+  const [headerData, setHeaderData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   useEffect(() => {
-    async function fetchDetail() {
+    const fetchHeader = async () => {
       try {
         setIsLoading(true);
-        const [header, habits] = await Promise.all([
-          getStudyDetail(studyId),
-          getStudyHabits(studyId, new Date()),
-        ]);
-        setStudyData({
-          header,
-          habits,
-        });
+        const header = await getStudyDetail(studyId);
+        setHeaderData(header);
       } catch (error) {
         setError(error.message);
       } finally {
         setIsLoading(false);
       }
-    }
-    fetchDetail();
+    };
+    fetchHeader();
   }, [studyId]);
 
   if (error) return <>에러 발생: {error}</>;
@@ -43,8 +37,8 @@ function StudyDetail() {
         </div>
       ) : (
         <>
-          <StudyDetailHeader studyId={studyId} data={studyData.header} />
-          <StudyDetailBody habits={studyData.habits} />
+          <StudyDetailHeader studyId={studyId} data={headerData} />
+          <StudyDetailBody studyId={studyId} />
         </>
       )}
     </CardContainer>

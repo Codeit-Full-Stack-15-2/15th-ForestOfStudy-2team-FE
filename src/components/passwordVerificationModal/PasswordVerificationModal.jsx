@@ -1,7 +1,7 @@
+import PasswordInput from '@/components/_passwordInput/_PasswordInput';
+import BaseButton from '@/components/baseButton/BaseButton';
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import BaseButton from '@/components/baseButton/BaseButton';
-import PasswordInput from '@/components/_passwordInput/_PasswordInput';
 import styles from './PasswordVerificationModal.module.css';
 
 function PasswordVerificationModal({
