@@ -1,7 +1,34 @@
+import { getStudyHabits } from '@/api/studyApi';
+import Spinner from '@/components/Spinner';
+import { useEffect, useState } from 'react';
 import HabitTrackerTable from './HabitTrackerTable';
 import styles from './StudyDetailBody.module.css';
 
-function StudyDetailBody({ habits }) {
+function StudyDetailBody({ studyId }) {
+  const [isLoading, setIsLoading] = useState(false);
+  const [page, setPage] = useState(1);
+  const [habits, setHabits] = useState([]);
+
+  useEffect(() => {
+    const initHabits = async () => {
+      try {
+        setIsLoading(true);
+        const data = await getStudyHabits(studyId, new Date(), {
+          page: 1,
+          pageSize: 7,
+        });
+        setHabits(data.list);
+      } catch (error) {
+        console.error(error.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    initHabits();
+  }, [studyId]);
+
+  if (isLoading) <Spinner />;
+
   return (
     <section className={styles.bodyContainer}>
       <h2 className={styles.title}>습관 기록표</h2>

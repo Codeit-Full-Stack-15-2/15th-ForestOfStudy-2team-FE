@@ -1,71 +1,76 @@
-.habitPageDiv{
+.wrapper {
+  width: 100%;
+  max-width: 1480px;
+  margin: 0 auto;
+}
+
+.habitPageDiv {
+  width: 100%;
+  max-width: 1248px;
+
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 80vh;
-  max-width: 1248px;
-  min-height: 80vh;
-  max-height: 863px;
-  margin: 0 auto;
-  border-radius: 20px;
-  padding: 40px;
-  gap: 10px;
-  background-color: white;
 
+  margin: 0 auto;
+  padding: 40px;
+
+  border-radius: 20px;
+  gap: 10px;
+
+  background-color: white;
 }
 
-.habitInnerDiv{
+.habitInnerDiv {
   display: flex;
   flex-direction: column;
- width:1168px;
- height: 783;
+  width: 100%;
+
   gap: 40px;
 }
 
-.habitHead{
+.habitHead {
   display: flex;
- flex-direction: column;
- width:1168px;
+  flex-direction: column;
+  width: 100%;
   height: 124px;
- gap: 16px;
+  gap: 16px;
 }
-.habitTitle{
+.habitTitle {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width:1168px;
+  width: 100%;
   height: 48px;
-  
 }
 
-.habitTitle > h1{
-font-size: var(--font-size-3xl);
-font-weight: 800;
+.habitTitle > h1 {
+  font-size: var(--font-size-3xl);
+  font-weight: 800;
 }
 
-.habitTitleButtonDiv{
-display: flex;
-gap: 16px;
-height: 48px;
-width: 242px;
+.habitTitleButtonDiv {
+  display: flex;
+  gap: 16px;
+  height: 48px;
+  width: 242px;
 }
 
-.nowTimeDiv
-{
+.nowTimeDiv {
   display: flex;
   flex-direction: column;
-  gap:24px;
+  gap: 24px;
 }
 
-.nowTimeP{
+.nowTimeP {
   display: flex;
   font-size: var(--font-size-lg);
   font-weight: 400;
   align-items: center;
-   color : var(--color-gray-500);
+  color: var(--color-gray-500);
 }
 
-.timeBox{
+.timeBox {
   width: 184px;
   height: 35px;
   border-radius: 50px;
@@ -73,93 +78,114 @@ width: 242px;
   padding: 8px 12px;
   gap: 8px;
   background-color: rgba(255, 255, 255, 0.3);
-
 }
 
-.time{
+.time {
   white-space: nowrap;
 }
 
-.todayFocusButton{
-display: flex;
-  justify-content: center;
-  align-items: center;
-   height: 48px;
-  width: 144px;
-  background-color: white;
-  border : solid 1px var(--color-gray-300);
-  border-radius: 15px;
-  font-size: var(--font-size-md);
-  color : var(--color-gray-500);
-}
-
-.homeButton{
+.titleContainer {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 48px;
-  width: 82px;
-  background-color: white;
-  border : solid 1px var(--color-gray-300);
-  border-radius: 15px;
-  font-size: var(--font-size-md);
-  color : var(--color-gray-500);
+  margin-top: 24px;
+  justify-content: space-between;
+  & .title {
+    font-size: var(--font-size-3xl);
+    font-weight: 800;
+    color: var(--color-gray-900);
+  }
+  & .titleButtons {
+    display: flex;
+    gap: 16px;
+  }
 }
 
-.todayHabitDiv{
-display: flex;
-flex-direction: column;
-width: 1168px;
-height: 631px;
-border: solid 1px var(--color-gray-300);
-border-radius: 20px;
-padding: 40px 24px;
-gap: 10px;
-background-color: white;
-}
-
-.todayHabitInnerDiv{
-display: flex;
-flex-direction: column;
- align-items: center;
-width: 1120px;
-height: 551px;
-gap: 24px;
-}
-
-.todayHabitTitle{
+.todayHabitDiv {
   display: flex;
- 
-width: 1120px;
-height: 29px;
+  flex-direction: column;
+  width: 100%;
+  height: 631px;
+  border: solid 1px var(--color-gray-300);
+  border-radius: 20px;
+  padding: 40px 24px;
+  gap: 10px;
+  background-color: white;
+}
+
+.todayHabitInnerDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1120px;
+  gap: 24px;
 }
 
 .todayHabitP {
-  font-size: var(--font-size-2xl);
+  font-size: clamp(var(--font-size-lg), 4vw, var(--font-size-2xl));
   font-weight: 800;
-transform: translateX(505px);
-}
-.listModifyP{
-
-  width: 52px;
-  height: 17px;
-   font-size: var(--font-size-sm);
-   font-weight: 500;
-   transform: translateX(707px) translateY(6px);
-
+  margin: 0 auto;
 }
 
-.todayHabitBoard{
-display: flex;
-flex-direction: column;
-justify-content: center;
-width: 1248px;
-height: 863px;
-border-radius: 20px;
-padding: 40px;
-gap:10px;
-text-align: center;
-font-size: var(--font-size-xl);
-font-weight: 500;
- color : var(--color-gray-500);
+.todayHabitTitle {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 1120px;
+  height: 29px;
+}
+
+.listModifyButton {
+  position: absolute;
+  display: inline-block;
+
+  left: 100%;
+  transform: translateX(-100%);
+  border-radius: 2rem;
+  border: none;
+
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  text-decoration: none;
+
+  white-space: nowrap;
+}
+
+.todayHabitBoard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 100%;
+  border-radius: 20px;
+  padding: 40px;
+  gap: 10px;
+  text-align: center;
+  font-size: var(--font-size-xl);
+  font-weight: 500;
+  color: var(--color-gray-500);
+}
+
+@media (max-width: 1280px) {
+  .habitPageDiv {
+    max-width: 90%;
+    padding: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .wrapper {
+    padding: 0 16px;
+  }
+}
+
+@media (max-width: 440px) {
+  .wrapper {
+    padding: 0 16px;
+  }
+
+  .listModifyButton {
+    transform: translateX(-80%);
+  }
 }
