@@ -46,3 +46,12 @@
     }
   }
 }
+
+.endMessage {
+  text-align: center;
+  color: var(--color-gray-500);
+}
+
+.loaderContainer {
+  text-align: center;
+}
