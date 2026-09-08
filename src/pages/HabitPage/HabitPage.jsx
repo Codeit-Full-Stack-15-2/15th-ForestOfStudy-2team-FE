@@ -2,10 +2,9 @@ import { useState } from 'react';
 import { AddHabitForm } from './components/habitForm';
 import ArrowButton from '@/components/arrowButton/ArrowButton';
 import styles from './HabitPage.module.css';
-import { useStudyActions } from '../studyDetail/hooks/useStudyActions';
 
-function HabitPage({ studyId, data }) {
-  const { handleOpenFocusModal, } = useStudyActions(studyId);
+function HabitPage() {
+  const TEMP_STUDY_ID = 123;
 
   const timeNow = new Date()
     .toLocaleString('sv-SE', { timeZone: 'Asia/Seoul' })
@@ -38,10 +37,10 @@ function HabitPage({ studyId, data }) {
                 <div className={styles.habitTitleButtonDiv}>
                   <div className={styles.titleContainer}>
                     <div className={styles.titleButtons}>
-                      <ArrowButton onClick={handleOpenFocusModal}>
-                        오늘의 집중
+                      <ArrowButton to={`/studies/${TEMP_STUDY_ID}`}>
+                        홈
                       </ArrowButton>
-                      <ArrowButton onClick={handleOpenFocusModal}>
+                      <ArrowButton to={`/studies/${TEMP_STUDY_ID}/focus`}>
                         오늘의 집중
                       </ArrowButton>
                     </div>
@@ -59,7 +58,10 @@ function HabitPage({ studyId, data }) {
               <div className={styles.todayHabitInnerDiv}>
                 <div className={styles.todayHabitTitle}>
                   <p className={styles.todayHabitP}>오늘의 습관</p>
-                  <button className={styles.listModifyButton} onClick={handleForm}>
+                  <button
+                    className={styles.listModifyButton}
+                    onClick={handleForm}
+                  >
                     목록 수정
                   </button>
                 </div>

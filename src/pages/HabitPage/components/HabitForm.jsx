@@ -4,8 +4,8 @@ import { useToast } from '@/components/toast/ToastContext';
 import styles from './HabitForm.module.css';
 
 export function AddHabitForm({ habits = [], setHabits, isCheckMode }) {
+  
   const { showToast } = useToast();
-
   const [newhabit, setNewHabit] = useState('');
   const [editingIndex, setEditingIndex] = useState(null);
   const [editHabit, setEditHabit] = useState('');

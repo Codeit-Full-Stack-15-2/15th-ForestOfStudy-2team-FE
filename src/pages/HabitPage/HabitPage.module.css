@@ -174,13 +174,13 @@
   }
 }
 
-@media (max-width: 744px) {
+@media (max-width: 768px) {
   .wrapper {
     padding: 0 16px;
   }
 }
 
-@media (max-width: 375px) {
+@media (max-width: 440px) {
   .wrapper {
     padding: 0 16px;
   }
