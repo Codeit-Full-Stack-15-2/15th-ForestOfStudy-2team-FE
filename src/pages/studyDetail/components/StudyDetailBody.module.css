@@ -26,7 +26,7 @@
 }
 
 /* studyBody tablet */
-@media (max-width: 744px) {
+@media (max-width: 768px) {
   .bodyContainer {
     & .contentDefault {
       & p {
@@ -37,7 +37,7 @@
 }
 
 /* studyBody mobile */
-@media (max-width: 375px) {
+@media (max-width: 440px) {
   .bodyContainer {
     & .contentDefault {
       & p {

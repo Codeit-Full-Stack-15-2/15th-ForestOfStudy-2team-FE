@@ -4,7 +4,7 @@
 }
 
 /*  tablet*/
-@media (max-width: 744px) {
+@media (max-width: 768px) {
   .container {
     padding: 14px;
   }
