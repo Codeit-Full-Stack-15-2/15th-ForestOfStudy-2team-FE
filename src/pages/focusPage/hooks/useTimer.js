@@ -1,15 +1,17 @@
 import { useState, useEffect, useRef } from 'react';
 import { formatTime } from '@/utils/formatTime';
 
-export function useTimer(duration) {
+export function useTimer(duration, onComplete) {
   const [remainingSeconds, setRemainingSeconds] = useState(duration);
   const [isRunning, setIsRunning] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const intervalRef = useRef(null);
   const isOverTime = remainingSeconds < 0;
+  const hasCompleteRef = useRef(null);
 
   useEffect(() => {
     setRemainingSeconds(duration);
+    hasCompleteRef.current = false;
   }, [duration]);
 
   useEffect(() => {
@@ -21,6 +23,13 @@ export function useTimer(duration) {
 
     return () => clearInterval(intervalRef.current);
   }, [isRunning, isPaused]);
+
+  useEffect(() => {
+    if (remainingSeconds === 0 && isRunning && !hasCompleteRef.current) {
+      hasCompleteRef.current = true;
+      onComplete?.();
+    }
+  }, [remainingSeconds, isRunning, hasCompleteRef]);
 
   const startTimer = () => {
     if (!isRunning) {
@@ -37,6 +46,7 @@ export function useTimer(duration) {
     setIsRunning(false);
     setIsPaused(false);
     setRemainingSeconds(duration);
+    hasCompleteRef.current = false;
   };
 
   return {
