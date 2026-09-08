@@ -1,5 +1,5 @@
-import PasswordInput from '@/components/_passwordInput/_PasswordInput';
 import BaseButton from '@/components/baseButton/BaseButton';
+import PasswordInput from '@/components/passwordInput/PasswordInput';
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import styles from './PasswordVerificationModal.module.css';
@@ -70,6 +70,7 @@ function PasswordVerificationModal({
         <div className={styles.body}>
           <PasswordInput
             value={password}
+            placeholder="비밀번호를 입력해 주세요"
             errorMessage={errorMessage}
             onChange={handleChangePassword}
             onKeyDown={(event) => event.key === 'Enter' && handleConfirm()}
