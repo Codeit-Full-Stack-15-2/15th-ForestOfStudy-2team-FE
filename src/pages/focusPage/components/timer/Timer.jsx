@@ -4,12 +4,35 @@ import icTimer from '@/assets/focusPage/ic_timer.svg';
 import { useTimer } from '@/pages/focusPage/hooks/useTimer';
 import { useState } from 'react';
 import { formatTime } from '@/utils/formatTime';
+import { useToast } from '@/components/toast/ToastContext';
 import clsx from 'clsx';
 
 const PRESET_TIMES = [15, 25, 35];
+const MIN_MINUTES = 15;
 
-function Timer({ totalSeconds }) {
-  const [duration, setDuration] = useState(totalSeconds);
+const calculateEarnedPoints = (durationInSeconds) => {
+  const BASE_POINT = 3;
+  const targetMinutes = Math.floor(durationInSeconds / 60);
+  const BONUS_POINT = Math.floor(targetMinutes / 10);
+
+  return BASE_POINT + BONUS_POINT;
+};
+
+function Timer({ totalSeconds, onComplete }) {
+  const [duration, setDuration] = useState(() =>
+    Math.max(totalSeconds || 0, MIN_MINUTES * 60),
+  );
+
+  const { showToast } = useToast();
+
+  const handleTimerComplete = () => {
+    const earnedPoints = calculateEarnedPoints(duration);
+    if (onComplete && earnedPoints > 0) {
+      onComplete(earnedPoints);
+      showToast(`🎉 ${earnedPoints}포인트를 획득했습니다!`, 'success');
+    }
+  };
+
   const {
     formattedTime,
     isRunning,
@@ -18,17 +41,17 @@ function Timer({ totalSeconds }) {
     startTimer,
     pauseTimer,
     resetTimer,
-  } = useTimer(duration);
+  } = useTimer(duration, handleTimerComplete);
 
   const adjustTime = (amountInMinutes) => {
     setDuration((prev) => {
       const next = prev + amountInMinutes * 60;
-      return Math.max(next, 0);
+      return Math.max(next, MIN_MINUTES * 60);
     });
   };
 
   const selectPresetTime = (minutes) => {
-    setDuration(minutes * 60);
+    setDuration(Math.max(minutes, MIN_MINUTES) * 60);
   };
 
   return (
@@ -71,7 +94,10 @@ function Timer({ totalSeconds }) {
         </div>
 
         <div
-          className={`${styles.timerAdjustButtonContainer} ${isRunning ? styles.hidden : ''}`}
+          className={clsx(
+            styles.timerAdjustButtonContainer,
+            isRunning && styles.hidden,
+          )}
         >
           <button type="button" onClick={() => adjustTime(-5)}>
             - 5
