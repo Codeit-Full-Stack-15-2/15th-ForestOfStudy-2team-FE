@@ -80,36 +80,38 @@ export function AddHabitForm({ habits = [], setHabits, isCheckMode }) {
 
   return (
     <>
-      <div className={styles.addHabitUlDiv}>
-        <ul onSubmit={handleSubmit} className={styles.habitListField}>
-          {habits.map((habitItem, index) => (
-            <li className={styles.habit} key={index}>
-              {!isCheckMode && editingIndex === index ? (
-                <input
-                  value={editHabit}
-                  onChange={(e) => setEditHabit(e.target.value)}
-                  onKeyDown={(e) => handleEditKeyDown(e, index)}
-                  className={styles.habitInputEdit}
-                />
-              ) : (
-                <div
-                  className={`${styles.habitTitle} ${checkIndexs.includes(index) ? styles.checked : ''}`}
-                  onClick={() => {
-                    if (!isCheckMode) {
-                      handleHabitEdit(habitItem, index);
-                    } else {
-                      handleHabitCheck(habitItem, index);
-                    }
-                  }}
-                >
-                  {habitItem}
-                </div>
-              )}
-              {!isCheckMode && (
-                <div className={styles.habitDeleteButtonDiv}>
+      <div className={styles.wrapper}>
+        <div className={styles.addHabitUlDiv}>
+          <ul onSubmit={handleSubmit} className={styles.habitListField}>
+            {habits.map((habitItem, index) => (
+              <li className={styles.habit} key={index}>
+                {!isCheckMode && editingIndex === index ? (
+                  <input
+                    value={editHabit}
+                    onChange={(e) => setEditHabit(e.target.value)}
+                    onKeyDown={(e) => handleEditKeyDown(e, index)}
+                    onClick={(e) => e.stopPropagation()}
+                    className={styles.habitInputEdit}
+                    autoFocus
+                  />
+                ) : (
+                  <div
+                    className={`${styles.habit} ${checkIndexs.includes(index) ? styles.checked : ''}`}
+                    onClick={() => {
+                      if (!isCheckMode) {
+                        handleHabitEdit(habitItem, index);
+                      } else {
+                        handleHabitCheck(habitItem, index);
+                      }
+                    }}
+                  >
+                    {habitItem}
+                  </div>
+                )}
+                {!isCheckMode && (
                   <button
                     type="button"
-                    className={styles.deleteButtonWrapper}
+                    className={`${styles.deleteButton} ${styles.deleteButtonOuter}`}
                     onClick={() => handleHabitDelete(habitItem)}
                   >
                     <img
@@ -118,19 +120,19 @@ export function AddHabitForm({ habits = [], setHabits, isCheckMode }) {
                       alt="쓰레기통 이미지"
                     />
                   </button>
-                </div>
-              )}
-            </li>
-          ))}
-        </ul>
-        {!isCheckMode && (
-          <input
-            value={newhabit}
-            onChange={(e) => setNewHabit(e.target.value)}
-            onKeyDown={handleKeyDown}
-            className={styles.habitInput}
-          />
-        )}
+                )}
+              </li>
+            ))}
+          </ul>
+          {!isCheckMode && (
+            <input
+              value={newhabit}
+              onChange={(e) => setNewHabit(e.target.value)}
+              onKeyDown={handleKeyDown}
+              className={styles.habitInput}
+            />
+          )}
+        </div>
       </div>
     </>
   );

@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import searchIcon from '@/assets/homePage/search.svg';
 import styles from './Home.module.css';
-import StudyCard from '@/components/studyCard/StudyCard';
-import studyCardBg from '../../assets/study-card-bg.webp';
-
+import StudyCard from '@/pages/home/components/studyCard/StudyCard';
+import studyCardBg from '@/assets/homePage/study-card-bg.webp';
 const sortOptions = [
   { value: 'recent', label: '최근 순' },
   { value: 'oldedst', label: '오래된 순' },
