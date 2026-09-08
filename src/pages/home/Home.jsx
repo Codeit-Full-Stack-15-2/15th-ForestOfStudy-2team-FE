@@ -120,6 +120,7 @@ function Home() {
             return (
               <StudyCard
                 key={study.id}
+                id={study.id}
                 title={study.title}
                 point={study.point}
                 days={study.days}
@@ -194,6 +195,7 @@ function Home() {
             return (
               <StudyCard
                 key={study.id}
+                id={study.id}
                 title={study.title}
                 point={study.point}
                 days={study.days}
