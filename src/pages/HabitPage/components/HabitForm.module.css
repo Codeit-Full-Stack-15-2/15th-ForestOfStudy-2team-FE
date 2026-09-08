@@ -4,24 +4,6 @@
   margin: 0 auto;
 }
 
-@media (max-width: 1280px) {
-  .habitPageDiv {
-    max-width: 90%;
-    padding: 24px;
-  }
-}
-
-@media (max-width: 744px) {
-  .wrapper {
-    padding: 0 16px;
-  }
-}
-
-@media (max-width: 375px) {
-  .wrapper {
-    padding: 0 16px;
-  }
-}
 
 .addHabitUlDiv {
   display: flex;
@@ -159,4 +141,20 @@
 .deleteButtonOuter {
   border-color: #f50e0e;
   transition: transform 0.2s cubic-bezier(0.235, 0, 0.05, 0.95);
+}
+
+@media (max-width: 1280px) {
+  .habitPageDiv {
+    max-width: 90%;
+    padding: 24px;
+  }
+}
+
+@media (max-width: 744px) {
+  .wrapper {
+    padding: 0 16px;
+  }
+}
+
+@media (max-width: 375px) {
 }
