@@ -158,22 +158,79 @@
 
 .loadMoreButton {
   display: block;
-  width: 260px;
-  height: 46px;
+  height: 52px;
   margin: 40px auto 0;
 
-  background-color: #fff;
-  border: 1px solid var(--color-gray-300);
   border-radius: 18px;
 
-  color: var(--color-green-text);
   font-size: var(--font-size-sm);
   font-weight: 500;
-
-  cursor: pointer;
 }
 
 .loadMoreButton:focus-visible {
   outline: 2px solid var(--color-green-text);
   outline-offset: 2px;
+}
+
+/* Tablet */
+@media (max-width: 744px) {
+  .studyList {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .recentStudyList {
+    display: flex;
+    overflow-x: auto;
+
+    scrollbar-width: none;
+  }
+
+  .recentStudyList::-webkit-scrollbar {
+    display: none;
+  }
+
+  .recentStudyList > li {
+    flex: 0 0 360px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 375px) {
+  .sectionTitle {
+    font-size: var(--font-size-lg);
+  }
+
+  .studyList {
+    margin-top: 12px;
+
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .studyControls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .searchBox {
+    max-width: none;
+  }
+
+  .sortDropdown {
+    align-self: flex-end;
+  }
+
+  .recentStudyList {
+    gap: 16px;
+  }
+
+  .recentStudyList > li {
+    flex: 0 0 240px;
+  }
+
+  .recentStudies,
+  .studyBrowse {
+    padding: 16px;
+  }
 }

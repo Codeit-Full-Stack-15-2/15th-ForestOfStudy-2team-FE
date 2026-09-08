@@ -3,9 +3,11 @@ import searchIcon from '@/assets/homePage/search.svg';
 import styles from './Home.module.css';
 import StudyCard from '@/pages/home/components/studyCard/StudyCard';
 import studyCardBg from '@/assets/homePage/study-card-bg.webp';
+import BaseButton from '@/components/baseButton/BaseButton';
+
 const sortOptions = [
   { value: 'recent', label: '최근 순' },
-  { value: 'oldedst', label: '오래된 순' },
+  { value: 'oldest', label: '오래된 순' },
   { value: 'highPoint', label: '많은 포인트 순' },
   { value: 'lowPoint', label: '작은 포인트 순' },
 ];
@@ -86,6 +88,28 @@ function Home() {
   const [sortValue, setSortValue] = useState('recent');
   const selectedSort = sortOptions.find((option) => option.value === sortValue);
 
+  const [searchValue, setSearchValue] = useState('');
+  const normalizedSearchValue = searchValue.trim().toLowerCase();
+  const filteredStudies = studies.filter((study) =>
+    study.title.toLowerCase().includes(normalizedSearchValue),
+  );
+
+  const sortedStudies = [...filteredStudies].sort((a, b) => {
+    if (sortValue === 'highPoint') {
+      return b.point - a.point;
+    }
+
+    if (sortValue === 'lowPoint') {
+      return a.point - b.point;
+    }
+
+    if (sortValue === 'oldest') {
+      return a.id - b.id;
+    }
+
+    return b.id - a.id;
+  });
+
   return (
     <main className={styles.home}>
       <section className={styles.recentStudies}>
@@ -122,6 +146,8 @@ function Home() {
               type="search"
               placeholder="검색"
               aria-label="스터디 검색"
+              value={searchValue}
+              onChange={(e) => setSearchValue(e.target.value)}
             />
           </div>
           <div className={styles.sortDropdown}>
@@ -164,7 +190,7 @@ function Home() {
         </div>
 
         <ul className={styles.studyList}>
-          {studies.map((study) => {
+          {sortedStudies.map((study) => {
             return (
               <StudyCard
                 key={study.id}
@@ -181,10 +207,14 @@ function Home() {
             );
           })}
         </ul>
-
-        <button type="button" className={styles.loadMoreButton}>
+        <BaseButton
+          variant="outline"
+          size="none"
+          width="260px"
+          className={styles.loadMoreButton}
+        >
           더보기
-        </button>
+        </BaseButton>
       </section>
     </main>
   );
