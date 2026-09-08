@@ -1,0 +1,54 @@
+.timerControlButtonsContainer {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+
+.timerPauseButton,
+.timerRestartButton {
+  border: none;
+  background: none;
+}
+
+.timerPauseButton:not(:disabled),
+.timerRestartButton:not(:disabled) {
+  cursor: pointer;
+}
+
+.timerPauseButton:disabled img,
+.timerRestartButton:disabled img {
+  filter: grayscale(100%);
+  opacity: 0.4;
+}
+
+.timerPauseButton:not(:disabled):hover img,
+.timerRestartButton:not(:disabled):hover img {
+  filter: brightness(0.7);
+}
+
+.timerStartButton {
+  background-color: var(--color-brand-primary);
+  border-radius: 50px;
+  border: none;
+  width: 333px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  color: white;
+  font-weight: 800;
+  font-size: 28px;
+}
+
+.timerStartButton:disabled {
+  background-color: var(--color-gray-500);
+}
+
+.timerStartButton:not(:disabled) {
+  cursor: pointer;
+}
+
+.timerStartButton:not(:disabled):hover {
+  filter: brightness(0.7);
+}

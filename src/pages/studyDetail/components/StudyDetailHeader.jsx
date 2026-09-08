@@ -43,7 +43,7 @@ function StudyDetailHeader({ studyId, data }) {
               습관 달성 기록하기
             </ArrowButton>
             <ArrowButton onClick={handleOpenFocusModal}>
-              오늘의 집중
+              오늘의 집중 타이머
             </ArrowButton>
           </div>
         </div>
