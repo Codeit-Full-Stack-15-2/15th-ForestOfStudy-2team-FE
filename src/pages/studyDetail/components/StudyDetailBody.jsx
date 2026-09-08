@@ -41,13 +41,12 @@ function StudyDetailBody({ studyId }) {
         page: nextPage,
         pageSize: 7,
       });
-
       if (data.list.length === 0) {
         setHasMore(false);
         return;
       }
 
-      setHabits((prev) => [...prev, data.list]);
+      setHabits((prev) => [...prev, ...data.list]);
       setPage(nextPage);
 
       if (habits.length + data.list.length >= data.totalCount) {
@@ -76,7 +75,7 @@ function StudyDetailBody({ studyId }) {
           hasMore={hasMore}
           loader={
             <div className={styles.loaderContainer}>
-              <Spinner size="small" />
+              <Spinner />
             </div>
           }
           endMessage={
