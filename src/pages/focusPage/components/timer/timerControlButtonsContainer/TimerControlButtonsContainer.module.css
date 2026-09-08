@@ -52,7 +52,3 @@
 .timerStartButton:not(:disabled):hover {
   filter: brightness(0.7);
 }
-
-.hidden {
-  visibility: hidden;
-}

@@ -2,7 +2,6 @@ import icStartButton from '@/assets/focusPage/ic_start_button.svg';
 import icPauseButton from '@/assets/focusPage/ic_pause_button.svg';
 import icRestartButton from '@/assets/focusPage/ic_restart_button.svg';
 import styles from './TimerControlButtonsContainer.module.css';
-import clsx from 'clsx';
 
 function TimerControlButtonsContainer({
   isRunning,
@@ -14,7 +13,7 @@ function TimerControlButtonsContainer({
   return (
     <div className={styles.timerControlButtonsContainer}>
       <button
-        className={clsx(styles.timerPauseButton, !isRunning && styles.hidden)}
+        className={styles.timerPauseButton}
         type="button"
         onClick={pauseTimer}
         disabled={!isRunning || isPaused}
@@ -35,7 +34,7 @@ function TimerControlButtonsContainer({
       </button>
 
       <button
-        className={clsx(styles.timerRestartButton, !isRunning && styles.hidden)}
+        className={styles.timerRestartButton}
         type="button"
         onClick={resetTimer}
         disabled={!isRunning}
