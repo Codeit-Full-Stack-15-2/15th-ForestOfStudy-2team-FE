@@ -38,7 +38,7 @@ function HabitPage() {
                   <div className={styles.titleContainer}>
                     <div className={styles.titleButtons}>
                       <ArrowButton to={`/studies/${TEMP_STUDY_ID}`}>
-                        홈
+                        대시보드
                       </ArrowButton>
                       <ArrowButton to={`/studies/${TEMP_STUDY_ID}/focus`}>
                         오늘의 집중
