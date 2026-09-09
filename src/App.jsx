@@ -10,12 +10,10 @@ import FocusPage from '@/pages/focusPage/FocusPage';
 import NotFound from '@/pages/notFound/NotFound';
 import './reset.css';
 import { Toaster } from 'react-hot-toast';
-import { ToastProvider } from './components/toast/ToastContext';
 
 function App() {
   return (
     <>
-      <ToastProvider>
         <Toaster position="bottom-center" toastOptions={{ duration: 1000 }} />
         <Routes>
           <Route path="/" element={<Layout />}>
@@ -28,7 +26,6 @@ function App() {
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
-      </ToastProvider>
     </>
   );
 }
