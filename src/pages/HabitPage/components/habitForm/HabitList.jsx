@@ -1,5 +1,5 @@
 import HabitItem from './HabitItem';
-import styles from './HabitForm.module.css';
+import styles from './HabitList.module.css';
 
 function HabitList({
   habits,

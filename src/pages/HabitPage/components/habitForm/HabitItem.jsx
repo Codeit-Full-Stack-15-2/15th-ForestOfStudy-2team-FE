@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import clsx from 'clsx';
-import styles from './HabitForm.module.css';
+import styles from './HabitItem.module.css';
 import btnDeterminate from '@/assets/habitPage/btn_determinate.svg';
 import { useToast } from '@/components/toast/ToastContext';
 
@@ -42,31 +42,36 @@ function HabitItem({
       return;
     }
     onCheckHabit(habit.id);
-    showToast(`${habit.name}을 선택했습니다`, 'success');
+    showToast(`${habit.name} 달성을 축하합니다!`, 'success');
   };
 
   return (
-    <li className={styles.habitItem}>
-      {isEditing ? (
-        <input
-          value={editHabit}
-          onChange={(e) => setEditHabit(e.target.value)}
-          onKeyDown={handleEditKeyDown}
-          onClick={(e) => e.stopPropagation()}
-          autoFocus
-          className={styles.habitInputEdit}
-        />
-      ) : (
-        <div
-          className={clsx(
-            styles.habitItem,
-            habit.isCompleted && styles.checked,
-          )}
-          onClick={handleClick}
-        >
-          {habit.name}
-        </div>
-      )}
+    <li className={styles.habitRow}>
+      <div
+        className={clsx(styles.habitBox, habit.isCompleted && styles.checked)}
+        onClick={handleClick}
+      >
+        {isEditing ? (
+          <input
+            value={editHabit}
+            onChange={(e) => setEditHabit(e.target.value)}
+            onKeyDown={handleEditKeyDown}
+            onClick={(e) => e.stopPropagation()}
+            className={styles.habitInputEdit}
+            autoFocus
+          />
+        ) : (
+          <span
+            className={clsx(
+              styles.habitText,
+              habit.isCompleted && styles.checked,
+            )}
+            onClick={handleClick}
+          >
+            {habit.name}
+          </span>
+        )}
+      </div>
       {!isCheckMode && (
         <button
           type="button"
