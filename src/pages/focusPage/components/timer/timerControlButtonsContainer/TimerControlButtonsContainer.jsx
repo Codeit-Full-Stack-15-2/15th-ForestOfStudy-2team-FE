@@ -29,11 +29,7 @@ function TimerControlButtonsContainer({
       >
         <img src={icStartButton} alt="스타트 아이콘" />
         <span className={styles.timerStartText}>
-          {isRunning && !isPaused
-            ? 'Start!'
-            : isRunning && isPaused
-              ? 'Resume'
-              : 'Start!'}
+          {isRunning && isPaused ? 'Resume' : 'Start!'}
         </span>
       </button>
 

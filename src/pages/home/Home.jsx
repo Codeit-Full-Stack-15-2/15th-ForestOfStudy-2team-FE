@@ -88,12 +88,14 @@ function Home() {
   const [sortValue, setSortValue] = useState('recent');
   const selectedSort = sortOptions.find((option) => option.value === sortValue);
 
+  // 검색 기능 구현
   const [searchValue, setSearchValue] = useState('');
   const normalizedSearchValue = searchValue.trim().toLowerCase();
   const filteredStudies = studies.filter((study) =>
     study.title.toLowerCase().includes(normalizedSearchValue),
   );
 
+  // 정렬 기능 구현
   const sortedStudies = [...filteredStudies].sort((a, b) => {
     if (sortValue === 'highPoint') {
       return b.point - a.point;
@@ -109,6 +111,13 @@ function Home() {
 
     return b.id - a.id;
   });
+
+  // 더보기 버튼 기능 구현
+  const [visibleCount, setVisibleCount] = useState(6);
+  const visibleStudies = sortedStudies.slice(0, visibleCount);
+  const handleLoadMore = () => {
+    setVisibleCount((prev) => prev + 6);
+  };
 
   return (
     <main className={styles.home}>
@@ -148,7 +157,10 @@ function Home() {
               placeholder="검색"
               aria-label="스터디 검색"
               value={searchValue}
-              onChange={(e) => setSearchValue(e.target.value)}
+              onChange={(e) => {
+                setSearchValue(e.target.value);
+                setVisibleCount(6);
+              }}
             />
           </div>
           <div className={styles.sortDropdown}>
@@ -178,6 +190,7 @@ function Home() {
                       className={styles.sortOption}
                       onClick={() => {
                         setSortValue(option.value);
+                        setVisibleCount(6);
                         setIsSortOpen(false);
                       }}
                     >
@@ -191,7 +204,7 @@ function Home() {
         </div>
 
         <ul className={styles.studyList}>
-          {sortedStudies.map((study) => {
+          {visibleStudies.map((study) => {
             return (
               <StudyCard
                 key={study.id}
@@ -209,14 +222,17 @@ function Home() {
             );
           })}
         </ul>
-        <BaseButton
-          variant="outline"
-          size="none"
-          width="260px"
-          className={styles.loadMoreButton}
-        >
-          더보기
-        </BaseButton>
+        {visibleCount < sortedStudies.length && (
+          <BaseButton
+            variant="outline"
+            size="none"
+            width="260px"
+            className={styles.loadMoreButton}
+            onClick={handleLoadMore}
+          >
+            더보기
+          </BaseButton>
+        )}
       </section>
     </main>
   );

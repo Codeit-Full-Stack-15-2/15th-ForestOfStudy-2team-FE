@@ -19,6 +19,7 @@
   & .titleButtons {
     display: flex;
     gap: 16px;
+    flex-wrap: wrap;
   }
 }
 
@@ -34,6 +35,7 @@
     font-size: var(--font-size-lg);
     line-height: 1.333333;
     color: var(--color-gray-900);
+    word-break: break-all;
   }
 }
 
@@ -59,7 +61,7 @@
 }
 
 /* studyHeader tablet */
-@media (max-width: 744px) {
+@media (max-width: 768px) {
   .controllsContainer {
     & .controlls {
       & button {
@@ -89,7 +91,7 @@
 }
 
 /* studyHeader mobile */
-@media (max-width: 375px) {
+@media (max-width: 440px) {
   .controlsContainer {
     display: block;
     & .reaction {

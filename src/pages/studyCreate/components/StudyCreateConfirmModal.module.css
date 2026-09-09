@@ -1,0 +1,61 @@
+.dimOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 98;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modalContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  width: calc(100% - 48px);
+  max-width: 648px;
+  padding: 48px 24px;
+  background-color: white;
+  border-radius: 20px;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  text-align: center;
+}
+
+.title {
+  color: var(--color-gray-900);
+  font-size: var(--font-size-2xl);
+  font-weight: 800;
+}
+
+.description {
+  color: var(--color-gray-500);
+  font-size: var(--font-size-lg);
+  font-weight: 500;
+}
+
+.buttonArea {
+  display: flex;
+  gap: 24px;
+}
+
+@media (max-width: 768px) {
+  .modalContainer {
+    padding: 40px 24px;
+  }
+}
+
+@media (max-width: 440px) {
+  .modalContainer {
+    width: calc(100% - 32px);
+    padding: 32px 24px;
+  }
+
+  .buttonArea {
+    gap: 16px;
+  }
+}

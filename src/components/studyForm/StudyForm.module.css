@@ -1,0 +1,151 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.fieldArea {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--color-gray-900);
+}
+
+.errorMessage {
+  font-size: var(--font-size-sm);
+  color: var(--color-red-dark);
+}
+
+.input {
+  width: 100%;
+  height: 48px;
+  padding: 0 20px;
+  border: 1px solid var(--color-gray-300);
+  border-radius: 15px;
+  background-color: white;
+  font-size: var(--font-size-md);
+  color: var(--color-gray-900);
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: var(--color-gray-500);
+}
+
+.nicknameInputBox {
+  display: flex;
+  gap: 8px;
+}
+
+.nicknameInput {
+  flex: 1;
+  min-width: 0;
+}
+
+.nicknameCheckButton {
+  flex-shrink: 0;
+  min-width: 80px;
+  height: 48px;
+  padding: 0 12px;
+}
+
+.textarea {
+  height: 98px;
+  resize: none;
+  overflow-y: auto;
+  padding: 16px 20px;
+  border: 1px solid var(--color-gray-300);
+  border-radius: 15px;
+  background-color: white;
+  font-size: var(--font-size-md);
+  color: var(--color-gray-900);
+}
+
+.backgroundGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.backgroundOptions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.backgroundOption {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+}
+
+.selected {
+  outline: 2px solid var(--color-green-text);
+  outline-offset: -2px;
+}
+
+.selectedIcon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 32px;
+  height: 32px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.backgroundOptionFirst {
+  background-color: var(--color-green-light);
+}
+
+.backgroundOptionSecond {
+  background-color: var(--color-yellow-light);
+}
+
+.backgroundOptionThird {
+  background-color: var(--color-blue-light);
+}
+
+.backgroundOptionFourth {
+  background-color: var(--color-pink-light);
+}
+
+.backgroundOptionFifth,
+.backgroundOptionSixth,
+.backgroundOptionSeventh,
+.backgroundOptionEighth {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-color: lightgray;
+}
+
+.backgroundOptionFifth {
+  background-image: url(https://plus.unsplash.com/premium_photo-1663100722417-6e36673fe0ed?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+}
+
+.backgroundOptionSixth {
+  background-image: url(https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+}
+
+.backgroundOptionSeventh {
+  background-image: url(https://images.unsplash.com/photo-1614741118887-7a4ee193a5fa?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+}
+
+.backgroundOptionEighth {
+  background-image: url(https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+}

@@ -17,6 +17,7 @@
 
 .habitTitle {
   padding: 21.5px 24px;
+  white-space: nowrap;
   text-align: right;
   color: var(--color-gray-900);
   font-weight: 700;
