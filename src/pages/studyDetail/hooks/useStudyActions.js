@@ -16,12 +16,10 @@ export function useStudyActions(studyId) {
     try {
       const currentUrl = window.location.href;
       await navigator.clipboard.writeText(currentUrl);
-      //TODO:토스트 대체 필요
-      showToast('주소가 복사되었습니다.', 'success');
+      showToast('주소가 복사되었습니다.');
     } catch (error) {
       console.error('주소 복사 실패:', error);
-      //TODO:토스트 대체 필요
-      showToast('주소 복사에 실패했습니다.');
+      showToast('주소 복사에 실패했습니다.', 'warning');
     }
   };
 
@@ -41,12 +39,13 @@ export function useStudyActions(studyId) {
           await verifyStudyPassword(studyId, password);
           saveStudyVerified(studyId);
           setActiveModal(null);
-          // TODO:경로 수정 필요
           navigate('/');
         } catch (error) {
           console.error(error.message);
-          //TODO:토스트 대체 필요
-          showToast('🚨 비밀번호가 일치하지 않습니다. 다시 입력해주세요.');
+          showToast(
+            '🚨 비밀번호가 일치하지 않습니다. 다시 입력해주세요.',
+            'warning',
+          );
         } finally {
           setIsModalButtonLoading(false);
         }
@@ -71,8 +70,10 @@ export function useStudyActions(studyId) {
           navigate('/');
         } catch (error) {
           console.error(error.message);
-          //TODO:토스트 대체 필요
-          showToast('🚨 비밀번호가 일치하지 않습니다. 다시 입력해주세요.');
+          showToast(
+            '🚨 비밀번호가 일치하지 않습니다. 다시 입력해주세요.',
+            'warning',
+          );
         } finally {
           setIsModalButtonLoading(false);
         }
@@ -97,8 +98,10 @@ export function useStudyActions(studyId) {
           navigate(`/studies/${studyId}/habits`);
         } catch (error) {
           console.error(error.message);
-          //TODO:토스트 대체 필요
-          showToast('🚨 비밀번호가 일치하지 않습니다. 다시 입력해주세요.');
+          showToast(
+            '🚨 비밀번호가 일치하지 않습니다. 다시 입력해주세요.',
+            'warning',
+          );
         } finally {
           setIsModalButtonLoading(false);
         }
@@ -124,8 +127,10 @@ export function useStudyActions(studyId) {
         } catch (error) {
           console.error(error.message);
 
-          //TODO:토스트 대체 필요
-          showToast('🚨 비밀번호가 일치하지 않습니다. 다시 입력해주세요.');
+          showToast(
+            '🚨 비밀번호가 일치하지 않습니다. 다시 입력해주세요.',
+            'warning',
+          );
         } finally {
           setIsModalButtonLoading(false);
         }
