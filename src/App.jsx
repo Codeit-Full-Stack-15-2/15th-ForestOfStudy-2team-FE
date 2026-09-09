@@ -9,23 +9,27 @@ import HabitPage from '@/pages/HabitPage/HabitPage';
 import FocusPage from '@/pages/focusPage/FocusPage';
 import NotFound from '@/pages/notFound/NotFound';
 import './reset.css';
+import { Toaster } from 'react-hot-toast';
 import { ToastProvider } from './components/toast/ToastContext';
 
 function App() {
   return (
-    <ToastProvider>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="studies/new" element={<StudyCreate />} />
-          <Route path="studies/:studyId" element={<StudyDetail />} />
-          <Route path="studies/:studyId/edit" element={<StudyEdit />} />
-          <Route path="studies/:studyId/habits" element={<HabitPage />} />
-          <Route path="studies/:studyId/focus" element={<FocusPage />} />
-        </Route>
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </ToastProvider>
+    <>
+      <ToastProvider>
+        <Toaster position="bottom-center" toastOptions={{ duration: 1000 }} />
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="studies/new" element={<StudyCreate />} />
+            <Route path="studies/:studyId" element={<StudyDetail />} />
+            <Route path="studies/:studyId/edit" element={<StudyEdit />} />
+            <Route path="studies/:studyId/habits" element={<HabitPage />} />
+            <Route path="studies/:studyId/focus" element={<FocusPage />} />
+          </Route>
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </ToastProvider>
+    </>
   );
 }
 

@@ -4,12 +4,19 @@ import Timer from './components/timer/Timer';
 import CardContainer from '@/components/cardContainer/CardContainer';
 import PointBadge from './components/PointBadge';
 import { useFocusPoints } from '@/pages/focusPage/hooks/useFocusPoints';
+import { showToast } from '@/utils/showToast';
+
+
+const handleClick = () => {
+  showToast('테스트 토스트입니다', 'success');
+};
 
 function FocusPage({ studyId = 123 }) {
   const { points, addPoints } = useFocusPoints(studyId);
-  
+
   return (
     <CardContainer>
+      <button onClick={handleClick}>토스트 띄우기</button>
       <div className={styles.titleContainer}>
         <h3>연우의 개발공장</h3>
         <div className={styles.buttonContainer}>
