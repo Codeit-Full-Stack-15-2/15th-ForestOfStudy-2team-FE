@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import HabitForm from './components/habitForm/HabitForm';
+import HabitForm from './components/habitForm/HabitInput';
 import ArrowButton from '@/components/arrowButton/ArrowButton';
 import CardContainer from '@/components/cardContainer/CardContainer';
 import styles from './HabitPage.module.css';
