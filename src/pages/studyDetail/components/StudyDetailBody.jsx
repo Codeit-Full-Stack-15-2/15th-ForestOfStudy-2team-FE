@@ -1,7 +1,6 @@
 import { getStudyHabits } from '@/api/studyApi';
 import Spinner from '@/components/Spinner';
-import { useState } from 'react';
-import { useInfiniteScroll } from 'react-infinite-scroll-component';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import HabitTrackerTable from './HabitTrackerTable';
 import styles from './StudyDetailBody.module.css';
 
@@ -9,46 +8,75 @@ function StudyDetailBody({ studyId }) {
   const [page, setPage] = useState(1);
   const [habits, setHabits] = useState([]);
   const [hasMore, setHasMore] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const fetchHabitsByPage = async (targetPage) => {
-    try {
-      const data = await getStudyHabits(studyId, new Date(), {
-        page: targetPage,
-        pageSize: 7,
-      });
+  const sentinelRef = useRef(null);
 
-      const incomingList = Array.isArray(data?.list) ? data.list : [];
+  const loadHabits = useCallback(
+    async (targetPage) => {
+      if (isLoading) return;
+      setIsLoading(true);
 
-      setHabits((prev) =>
-        targetPage === 1 ? incomingList : [...prev, ...incomingList],
-      );
-      setPage(targetPage + 1);
+      try {
+        const data = await getStudyHabits(studyId, new Date(), {
+          page: targetPage,
+          pageSize: 7,
+        });
 
-      const totalLoaded =
-        targetPage === 1
-          ? incomingList.length
-          : habits.length + incomingList.length;
+        const incomingList = Array.isArray(data?.list) ? data.list : [];
 
-      if (incomingList.length === 0 || totalLoaded >= data.totalCount) {
+        setHabits((prev) =>
+          targetPage === 1 ? incomingList : [...prev, ...incomingList],
+        );
+        setPage(targetPage + 1);
+
+        const totalLoaded =
+          targetPage === 1
+            ? incomingList.length
+            : habits.length + incomingList.length;
+
+        if (incomingList.length === 0 || totalLoaded >= data.totalCount) {
+          setHasMore(false);
+        }
+      } catch (error) {
+        console.error('습관 데이터 로딩 실패:', error.message);
         setHasMore(false);
+      } finally {
+        setIsLoading(false);
       }
-    } catch (error) {
-      console.error('습관 데이터 로딩 실패', error.message);
-      setHasMore(false);
-    }
-  };
+    },
+    [studyId, habits.length, isLoading],
+  );
 
-  const { sentinelRef, isLoading } = useInfiniteScroll({
-    next: () => fetchHabitsByPage(page),
-    hasMore,
-    dataLength: habits.length,
-  });
+  useEffect(() => {
+    if (!hasMore || isLoading) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          loadHabits(page);
+        }
+      },
+      { threshold: 0.1 },
+    );
+
+    const currentSentinel = sentinelRef.current;
+    if (currentSentinel) {
+      observer.observe(currentSentinel);
+    }
+
+    return () => {
+      if (currentSentinel) observer.unobserve(currentSentinel);
+    };
+  }, [hasMore, isLoading, page, loadHabits]);
 
   return (
     <section className={styles.bodyContainer}>
       <h2 className={styles.title}>습관 기록표</h2>
       <HabitTrackerTable habits={habits} />
-      <div ref={sentinelRef} aria-hidden="true" />
+
+      <div ref={sentinelRef} style={{ height: '10px' }} aria-hidden="true" />
+
       {!hasMore && (
         <p className={styles.endMessage}>모든 습관 데이터를 불러왔습니다.</p>
       )}
