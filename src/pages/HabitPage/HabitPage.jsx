@@ -5,13 +5,12 @@ import CardContainer from '@/components/cardContainer/CardContainer';
 import styles from './HabitPage.module.css';
 import HabitList from './components/habitForm/HabitList';
 
-
 function HabitPage() {
   const TEMP_STUDY_ID = 123;
 
   const timeNow = new Date()
     .toLocaleString('sv-SE', { timeZone: 'Asia/Seoul' })
-    .replace(' ', ' ');
+    .split(' ')[0];
 
   const [isCheckMode, setIsCheckMode] = useState(true);
   const [habits, setHabits] = useState([]);
@@ -27,15 +26,13 @@ function HabitPage() {
     ]);
   };
 
-const handleUpdateHabit = (id, newName) => {
-  setHabits((prevHabits) =>
-    prevHabits.map((habit) =>
-      habit.id === id
-        ? { ...habit, name: newName }
-        : habit
-    )
-  );
-};
+  const handleUpdateHabit = (id, newName) => {
+    setHabits((prevHabits) =>
+      prevHabits.map((habit) =>
+        habit.id === id ? { ...habit, name: newName } : habit,
+      ),
+    );
+  };
 
   const handleDeleteHabit = (habitId) => {
     setHabits((prevHabits) =>
@@ -44,8 +41,6 @@ const handleUpdateHabit = (id, newName) => {
   };
 
   const handleCheckHabit = (habitId) => {
-    
-
     setHabits((prevHabits) =>
       prevHabits.map((habit) =>
         habit.id === habitId

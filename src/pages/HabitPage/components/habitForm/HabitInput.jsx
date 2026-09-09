@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import styles from './HabitForm.module.css';
+import styles from './HabitInput.module.css';
 
 function HabitForm({ onAddHabit }) {
   const [newHabit, setNewHabit] = useState('');
