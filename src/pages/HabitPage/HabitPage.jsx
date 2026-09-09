@@ -72,7 +72,7 @@ const handleUpdateHabit = (id, newName) => {
                   대시보드
                 </ArrowButton>
                 <ArrowButton to={`/studies/${TEMP_STUDY_ID}/focus`}>
-                  오늘의 집중
+                  오늘의 집중 타이머
                 </ArrowButton>
               </div>
             </div>
