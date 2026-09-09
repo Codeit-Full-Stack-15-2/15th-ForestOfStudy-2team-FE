@@ -6,13 +6,13 @@
   align-items: center;
 }
 
-@media (max-width: 744px) {
+@media (max-width: 768px) {
   .wrapper {
     padding: 0 24px;
   }
 }
 
-@media (max-width: 375px) {
+@media (max-width: 440px) {
   .wrapper {
     padding: 0 16px;
     & img {
