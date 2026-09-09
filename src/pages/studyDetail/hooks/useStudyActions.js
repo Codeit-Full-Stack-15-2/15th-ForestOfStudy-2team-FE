@@ -1,5 +1,5 @@
 import { verifyStudyPassword } from '@/api/studyApi';
-import { useToast } from '@/components/toast/ToastContext';
+import { showToast } from '@/utils/showToast';
 import {
   checkIsStudyVerified,
   saveStudyVerified,
@@ -11,16 +11,15 @@ export function useStudyActions(studyId) {
   const [activeModal, setActiveModal] = useState(null);
   const [isModalButtonLoading, setIsModalButtonLoading] = useState(false);
   const navigate = useNavigate();
-  const { showToast } = useToast();
   // 1. 공유하기
   const handleStudyShare = async () => {
     try {
       const currentUrl = window.location.href;
       await navigator.clipboard.writeText(currentUrl);
-      showToast('주소가 복사되었습니다.', 'success');
+      showToast('주소가 복사되었습니다.');
     } catch (error) {
       console.error('주소 복사 실패:', error);
-      showToast('주소 복사에 실패했습니다.');
+      showToast('주소 복사에 실패했습니다.', 'warning');
     }
   };
 
@@ -40,11 +39,13 @@ export function useStudyActions(studyId) {
           await verifyStudyPassword(studyId, password);
           saveStudyVerified(studyId);
           setActiveModal(null);
-          // TODO:경로 수정 필요
           navigate('/');
         } catch (error) {
           console.error(error.message);
-          showToast('🚨 비밀번호가 일치하지 않습니다. 다시 입력해주세요.');
+          showToast(
+            '🚨 비밀번호가 일치하지 않습니다. 다시 입력해주세요.',
+            'warning',
+          );
         } finally {
           setIsModalButtonLoading(false);
         }
@@ -69,7 +70,10 @@ export function useStudyActions(studyId) {
           navigate('/');
         } catch (error) {
           console.error(error.message);
-          showToast('🚨 비밀번호가 일치하지 않습니다. 다시 입력해주세요.');
+          showToast(
+            '🚨 비밀번호가 일치하지 않습니다. 다시 입력해주세요.',
+            'warning',
+          );
         } finally {
           setIsModalButtonLoading(false);
         }
@@ -94,7 +98,10 @@ export function useStudyActions(studyId) {
           navigate(`/studies/${studyId}/habits`);
         } catch (error) {
           console.error(error.message);
-          showToast('🚨 비밀번호가 일치하지 않습니다. 다시 입력해주세요.');
+          showToast(
+            '🚨 비밀번호가 일치하지 않습니다. 다시 입력해주세요.',
+            'warning',
+          );
         } finally {
           setIsModalButtonLoading(false);
         }
@@ -119,7 +126,11 @@ export function useStudyActions(studyId) {
           navigate(`/studies/${studyId}/focus`);
         } catch (error) {
           console.error(error.message);
-          showToast('🚨 비밀번호가 일치하지 않습니다. 다시 입력해주세요.');
+
+          showToast(
+            '🚨 비밀번호가 일치하지 않습니다. 다시 입력해주세요.',
+            'warning',
+          );
         } finally {
           setIsModalButtonLoading(false);
         }
