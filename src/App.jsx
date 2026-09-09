@@ -1,31 +1,14 @@
-import { Route, Routes } from 'react-router';
-import './App.css';
-import Layout from '@/components/Layout';
-import Home from '@/pages/home/Home';
-import StudyCreate from '@/pages/studyCreate/StudyCreate';
-import StudyDetail from '@/pages/studyDetail/StudyDetail';
-import StudyEdit from '@/pages/studyEdit/StudyEdit';
-import HabitPage from '@/pages/HabitPage/HabitPage';
-import FocusPage from '@/pages/focusPage/FocusPage';
-import NotFound from '@/pages/notFound/NotFound';
-import './reset.css';
+import { RouterProvider } from 'react-router';
+import { router } from '@/router';
 import { Toaster } from 'react-hot-toast';
+import './App.css';
+import './reset.css';
 
 function App() {
   return (
     <>
-        <Toaster position="bottom-center" toastOptions={{ duration: 1000 }} />
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<Home />} />
-            <Route path="studies/new" element={<StudyCreate />} />
-            <Route path="studies/:studyId" element={<StudyDetail />} />
-            <Route path="studies/:studyId/edit" element={<StudyEdit />} />
-            <Route path="studies/:studyId/habits" element={<HabitPage />} />
-            <Route path="studies/:studyId/focus" element={<FocusPage />} />
-          </Route>
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+      <Toaster position="bottom-center" toastOptions={{ duration: 1000 }} />
+      <RouterProvider router={router} />
     </>
   );
 }

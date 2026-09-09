@@ -1,37 +1,15 @@
 import styles from '@/pages/focusPage/components/timer/Timer.module.css';
 import TimerControlButtonsContainer from '@/pages/focusPage/components/timer/timerControlButtonsContainer/TimerControlButtonsContainer';
 import icTimer from '@/assets/focusPage/ic_timer.svg';
-import { useTimer } from '@/pages/focusPage/hooks/useTimer';
-import { useState } from 'react';
 import { formatTime } from '@/utils/formatTime';
-import { showToast } from '@/utils/showToast';
 import clsx from 'clsx';
 
-const PRESET_TIMES = [25, 35, 45];
-const MIN_MINUTES = 25;
-
-const calculateEarnedPoints = (durationInSeconds) => {
-  const BASE_POINT = 3;
-  const targetMinutes = Math.floor(durationInSeconds / 60);
-  const BONUS_POINT = Math.floor(targetMinutes / 10);
-
-  return BASE_POINT + BONUS_POINT;
-};
-
-function Timer({ totalSeconds, onComplete }) {
-  const [duration, setDuration] = useState(() =>
-    Math.max(totalSeconds || 0, MIN_MINUTES * 60),
-  );
-
-  const handleTimerComplete = () => {
-    const earnedPoints = calculateEarnedPoints(duration);
-    if (onComplete && earnedPoints > 0) {
-      onComplete(earnedPoints);
-      showToast(`🎉 ${earnedPoints}포인트를 획득했습니다!`, 'success');
-    }
-  };
-
-  const {
+function Timer({duration,
+  timer,
+  presetTimes = [],
+  onAdjustTime,
+  onSelectPresetTime,}) {
+    const {
     formattedTime,
     isRunning,
     isPaused,
@@ -39,18 +17,7 @@ function Timer({ totalSeconds, onComplete }) {
     startTimer,
     pauseTimer,
     resetTimer,
-  } = useTimer(duration, handleTimerComplete);
-
-  const adjustTime = (amountInMinutes) => {
-    setDuration((prev) => {
-      const next = prev + amountInMinutes * 60;
-      return Math.max(next, MIN_MINUTES * 60);
-    });
-  };
-
-  const selectPresetTime = (minutes) => {
-    setDuration(Math.max(minutes, MIN_MINUTES) * 60);
-  };
+  } = timer;
 
   return (
     <div className={styles.timerContainer}>
@@ -79,12 +46,12 @@ function Timer({ totalSeconds, onComplete }) {
             isRunning && styles.hidden,
           )}
         >
-          {PRESET_TIMES.map((minutes) => (
+          {presetTimes.map((minutes) => (
             <button
               key={minutes}
               type="button"
               className={`${styles.timerPresetChip}`}
-              onClick={() => selectPresetTime(minutes)}
+              onClick={() => onSelectPresetTime(minutes)}
             >
               {minutes}분
             </button>
@@ -97,16 +64,16 @@ function Timer({ totalSeconds, onComplete }) {
             isRunning && styles.hidden,
           )}
         >
-          <button type="button" onClick={() => adjustTime(-10)}>
+          <button type="button" onClick={() => onAdjustTime(-10)}>
             - 10
           </button>
-          <button type="button" onClick={() => adjustTime(-5)}>
+          <button type="button" onClick={() => onAdjustTime(-5)}>
             - 5
           </button>
-          <button type="button" onClick={() => adjustTime(+5)}>
+          <button type="button" onClick={() => onAdjustTime(+5)}>
             + 5
           </button>
-          <button type="button" onClick={() => adjustTime(+10)}>
+          <button type="button" onClick={() => onAdjustTime(+10)}>
             + 10
           </button>
         </div>
