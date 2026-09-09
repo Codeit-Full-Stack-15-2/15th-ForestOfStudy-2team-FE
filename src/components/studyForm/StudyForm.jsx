@@ -13,6 +13,7 @@ const backgroundOptions = [
   { id: 'seventh', className: styles.backgroundOptionSeventh },
   { id: 'eighth', className: styles.backgroundOptionEighth },
 ];
+
 function StudyForm({
   formData,
   onChange,
