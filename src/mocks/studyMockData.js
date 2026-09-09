@@ -3,7 +3,8 @@ export const CURRENT_MOCK_USER_ID = 'user-current-uuid-001';
 export const MOCK_STUDY_HEADER = {
   studyId: 123,
   title: '연우의 개발공장',
-  description: 'Slow And Steady Wins The Race! 다들 오늘 하루도 화이팅 :)',
+  description:
+    '매일 작은 습관이 쌓여 단단한 성장을 만듭니다. 지치지 않고 꾸준히 달리는 호랑이처럼, 서로를 응원하며 끝까지 완주해 봅시다. 오늘도 목표를 향해 한 걸음 전진하는 멋진 하루를 힘차게 시작해 봐요! 화이팅!',
   totalPoints: 310,
   reactions: [
     {

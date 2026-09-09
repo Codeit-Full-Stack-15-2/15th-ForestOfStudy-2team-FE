@@ -1,13 +1,12 @@
 import logo from '@/assets/common/logo.svg';
-import styles from './GlobalHeader.module.css';
 import { Link, useLocation, useNavigate } from 'react-router';
+import styles from './GlobalHeader.module.css';
 
 function GlobalHeader() {
   const navigate = useNavigate();
   const path = useLocation();
 
   const handleMakeStudy = () => {
-    //  TODO: 스터디 만들기 페이지 경로 필요
     navigate('/studies/new');
   };
   return (
