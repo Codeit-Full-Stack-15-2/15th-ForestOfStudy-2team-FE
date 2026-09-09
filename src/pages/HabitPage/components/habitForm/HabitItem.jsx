@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import styles from './HabitItem.module.css';
 import btnDeterminate from '@/assets/habitPage/btn_determinate.svg';
-import { useToast } from '@/components/toast/ToastContext';
+import { showToast } from '@/utils/showToast';
 
 function HabitItem({
   habit,
@@ -13,7 +13,7 @@ function HabitItem({
 }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editHabit, setEditHabit] = useState(habit.name);
-  const { showToast } = useToast();
+
 
   useEffect(() => {
     if (isCheckMode) {
