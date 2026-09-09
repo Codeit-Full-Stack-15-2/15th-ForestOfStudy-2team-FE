@@ -4,7 +4,7 @@ import icTimer from '@/assets/focusPage/ic_timer.svg';
 import { useTimer } from '@/pages/focusPage/hooks/useTimer';
 import { useState } from 'react';
 import { formatTime } from '@/utils/formatTime';
-import { useToast } from '@/components/toast/ToastContext';
+import { showToast } from '@/utils/showToast';
 import clsx from 'clsx';
 
 const PRESET_TIMES = [25, 35, 45];
@@ -22,8 +22,6 @@ function Timer({ totalSeconds, onComplete }) {
   const [duration, setDuration] = useState(() =>
     Math.max(totalSeconds || 0, MIN_MINUTES * 60),
   );
-
-  const { showToast } = useToast();
 
   const handleTimerComplete = () => {
     const earnedPoints = calculateEarnedPoints(duration);
