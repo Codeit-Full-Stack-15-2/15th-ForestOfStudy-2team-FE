@@ -9,11 +9,11 @@ import HabitPage from '@/pages/HabitPage/HabitPage';
 import FocusPage from '@/pages/focusPage/FocusPage';
 import NotFound from '@/pages/notFound/NotFound';
 import './reset.css';
-import { ToastProvider } from './components/toast/ToastContext';
+//import { ToastProvider } from './components/toast/ToastContext';
 
 function App() {
   return (
-    <ToastProvider>
+  
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
@@ -25,7 +25,7 @@ function App() {
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
-    </ToastProvider>
+
   );
 }
 
