@@ -1,5 +1,5 @@
 import { verifyStudyPassword } from '@/api/studyApi';
-import { useToast } from '@/components/toast/ToastContext';
+import { showToast } from '@/utils/showToast';
 import {
   checkIsStudyVerified,
   saveStudyVerified,
@@ -11,15 +11,16 @@ export function useStudyActions(studyId) {
   const [activeModal, setActiveModal] = useState(null);
   const [isModalButtonLoading, setIsModalButtonLoading] = useState(false);
   const navigate = useNavigate();
-  const { showToast } = useToast();
   // 1. 공유하기
   const handleStudyShare = async () => {
     try {
       const currentUrl = window.location.href;
       await navigator.clipboard.writeText(currentUrl);
+      //TODO:토스트 대체 필요
       showToast('주소가 복사되었습니다.', 'success');
     } catch (error) {
       console.error('주소 복사 실패:', error);
+      //TODO:토스트 대체 필요
       showToast('주소 복사에 실패했습니다.');
     }
   };
@@ -44,6 +45,7 @@ export function useStudyActions(studyId) {
           navigate('/');
         } catch (error) {
           console.error(error.message);
+          //TODO:토스트 대체 필요
           showToast('🚨 비밀번호가 일치하지 않습니다. 다시 입력해주세요.');
         } finally {
           setIsModalButtonLoading(false);
@@ -69,6 +71,7 @@ export function useStudyActions(studyId) {
           navigate('/');
         } catch (error) {
           console.error(error.message);
+          //TODO:토스트 대체 필요
           showToast('🚨 비밀번호가 일치하지 않습니다. 다시 입력해주세요.');
         } finally {
           setIsModalButtonLoading(false);
@@ -94,6 +97,7 @@ export function useStudyActions(studyId) {
           navigate(`/studies/${studyId}/habits`);
         } catch (error) {
           console.error(error.message);
+          //TODO:토스트 대체 필요
           showToast('🚨 비밀번호가 일치하지 않습니다. 다시 입력해주세요.');
         } finally {
           setIsModalButtonLoading(false);
@@ -119,6 +123,8 @@ export function useStudyActions(studyId) {
           navigate(`/studies/${studyId}/focus`);
         } catch (error) {
           console.error(error.message);
+
+          //TODO:토스트 대체 필요
           showToast('🚨 비밀번호가 일치하지 않습니다. 다시 입력해주세요.');
         } finally {
           setIsModalButtonLoading(false);
