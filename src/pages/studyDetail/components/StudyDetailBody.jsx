@@ -1,40 +1,63 @@
 import { getStudyHabits } from '@/api/studyApi';
 import Spinner from '@/components/Spinner';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useInfiniteScroll } from 'react-infinite-scroll-component';
 import HabitTrackerTable from './HabitTrackerTable';
 import styles from './StudyDetailBody.module.css';
 
 function StudyDetailBody({ studyId }) {
-  const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [habits, setHabits] = useState([]);
+  const [hasMore, setHasMore] = useState(true);
 
-  useEffect(() => {
-    const initHabits = async () => {
-      try {
-        setIsLoading(true);
-        const data = await getStudyHabits(studyId, new Date(), {
-          page: 1,
-          pageSize: 7,
-        });
-        setHabits(data.list);
-      } catch (error) {
-        console.error(error.message);
-      } finally {
-        setIsLoading(false);
+  const fetchHabitsByPage = async (targetPage) => {
+    try {
+      const data = await getStudyHabits(studyId, new Date(), {
+        page: targetPage,
+        pageSize: 7,
+      });
+
+      const incomingList = Array.isArray(data?.list) ? data.list : [];
+
+      setHabits((prev) =>
+        targetPage === 1 ? incomingList : [...prev, ...incomingList],
+      );
+      setPage(targetPage + 1);
+
+      const totalLoaded =
+        targetPage === 1
+          ? incomingList.length
+          : habits.length + incomingList.length;
+
+      if (incomingList.length === 0 || totalLoaded >= data.totalCount) {
+        setHasMore(false);
       }
-    };
-    initHabits();
-  }, [studyId]);
+    } catch (error) {
+      console.error('습관 데이터 로딩 실패', error.message);
+      setHasMore(false);
+    }
+  };
 
-  if (isLoading) <Spinner />;
+  const { sentinelRef, isLoading } = useInfiniteScroll({
+    next: () => fetchHabitsByPage(page),
+    hasMore,
+    dataLength: habits.length,
+  });
 
   return (
     <section className={styles.bodyContainer}>
       <h2 className={styles.title}>습관 기록표</h2>
-      {habits.length > 0 ? (
-        <HabitTrackerTable habits={habits} />
-      ) : (
+      <HabitTrackerTable habits={habits} />
+      <div ref={sentinelRef} aria-hidden="true" />
+      {!hasMore && (
+        <p className={styles.endMessage}>모든 습관 데이터를 불러왔습니다.</p>
+      )}
+      {isLoading && (
+        <div className={styles.loaderContainer}>
+          <Spinner />
+        </div>
+      )}
+      {!isLoading && !hasMore && habits.length === 0 && (
         <div className={styles.contentDefault}>
           <p>
             아직 습관이 없어요
