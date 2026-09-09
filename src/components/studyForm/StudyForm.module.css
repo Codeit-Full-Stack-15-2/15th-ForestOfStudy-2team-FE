@@ -45,20 +45,19 @@
 }
 
 .nicknameInputBox {
-  position: relative;
+  display: flex;
+  gap: 8px;
 }
 
 .nicknameInput {
-  padding-right: 104px;
+  flex: 1;
+  min-width: 0;
 }
 
 .nicknameCheckButton {
-  position: absolute;
-  top: 50%;
-  right: 8px;
-  transform: translateY(-50%);
+  flex-shrink: 0;
   min-width: 80px;
-  height: 32px;
+  height: 48px;
   padding: 0 12px;
 }
 
