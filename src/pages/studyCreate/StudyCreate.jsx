@@ -3,7 +3,7 @@ import styles from './StudyCreate.module.css';
 import { useStudyCreateForm } from './hooks/useStudyCreateForm';
 import PasswordInput from '@/components/passwordInput/PasswordInput';
 import BaseButton from '@/components/baseButton/BaseButton';
-import StudyCreateConfirmModal from './components/StudyCreateConfirmModal';
+import ConfirmModal from '@/components/confirmModal/ConfirmModal';
 import { useNavigate } from 'react-router';
 
 function StudyCreate() {
@@ -29,7 +29,7 @@ function StudyCreate() {
     // const description =
     //   formData.description.trim() ||
     //   `${formData.nickname.trim()}의 ${formData.studyName.trim()}입니다.`;
-    
+
     navigate('/studies/123');
   };
 
@@ -73,11 +73,13 @@ function StudyCreate() {
           </div>
         </section>
       </form>
-      <StudyCreateConfirmModal
-        open={isConfirmModalOpen}
-        onCancel={handleCloseConfirmModal}
-        onConfirm={handleConfirmCreate}
-      />
+      <ConfirmModal
+  open={isConfirmModalOpen}
+  title="비밀번호를 꼭 기억해 주세요."
+  description="비밀번호는 변경할 수 없습니다."
+  onCancel={handleCloseConfirmModal}
+  onConfirm={handleConfirmCreate}
+/>
     </main>
   );
 }
