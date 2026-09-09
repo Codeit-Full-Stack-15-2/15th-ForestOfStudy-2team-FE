@@ -7,7 +7,7 @@ import { formatTime } from '@/utils/formatTime';
 import { useToast } from '@/components/toast/ToastContext';
 import clsx from 'clsx';
 
-const PRESET_TIMES = [15, 25, 35];
+const PRESET_TIMES = [25, 35, 45];
 const MIN_MINUTES = 25;
 
 const calculateEarnedPoints = (durationInSeconds) => {
@@ -99,17 +99,17 @@ function Timer({ totalSeconds, onComplete }) {
             isRunning && styles.hidden,
           )}
         >
+          <button type="button" onClick={() => adjustTime(-10)}>
+            - 10
+          </button>
           <button type="button" onClick={() => adjustTime(-5)}>
             - 5
           </button>
-          <button type="button" onClick={() => adjustTime(-1)}>
-            - 1
-          </button>
-          <button type="button" onClick={() => adjustTime(+1)}>
-            + 1
-          </button>
           <button type="button" onClick={() => adjustTime(+5)}>
             + 5
+          </button>
+          <button type="button" onClick={() => adjustTime(+10)}>
+            + 10
           </button>
         </div>
       </div>
