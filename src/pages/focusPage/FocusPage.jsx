@@ -3,7 +3,7 @@ import ArrowButton from '@/components/arrowButton/ArrowButton';
 import Timer from './components/timer/Timer';
 import CardContainer from '@/components/cardContainer/CardContainer';
 import PointBadge from './components/PointBadge';
-import { useFocusPoints } from '@/hooks/useFocusPoints';
+import { useFocusPoints } from '@/pages/focusPage/hooks/useFocusPoints';
 
 function FocusPage({ studyId = 123 }) {
   const { points, addPoints } = useFocusPoints(studyId);

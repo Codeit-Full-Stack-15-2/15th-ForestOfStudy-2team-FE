@@ -8,7 +8,7 @@ import { useToast } from '@/components/toast/ToastContext';
 import clsx from 'clsx';
 
 const PRESET_TIMES = [15, 25, 35];
-const MIN_MINUTES = 15;
+const MIN_MINUTES = 25;
 
 const calculateEarnedPoints = (durationInSeconds) => {
   const BASE_POINT = 3;
