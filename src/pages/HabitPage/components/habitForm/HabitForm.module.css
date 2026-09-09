@@ -2,32 +2,15 @@
   width: 100%;
   max-width: 1480px;
   margin: 0 auto;
-}
-
-@media (max-width: 1280px) {
-  .habitPageDiv {
-    max-width: 90%;
-    padding: 24px;
-  }
-}
-
-@media (max-width: 744px) {
-  .wrapper {
-    padding: 0 16px;
-  }
-}
-
-@media (max-width: 375px) {
-  .wrapper {
-    padding: 0 16px;
-  }
+  padding: 0 20px;
+  box-sizing: border-box;
 }
 
 .addHabitUlDiv {
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
 }
 
 .habitListField {
@@ -82,7 +65,7 @@
   height: 0;
 }
 
-.habit {
+.habitItem {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -96,6 +79,7 @@
   font-size: var(--font-size-md);
   text-decoration: underline;
   color: var(--color-gray-500);
+  flex-shrink: 0;
 }
 
 .checked {
@@ -149,14 +133,32 @@
   border-radius: 50%;
   background-color: var(--color-pink-light);
   transform: translateX(-100%);
+  flex-shrink: 0;
 
   .habitDeleteButton {
     width: 36px;
     height: 36px;
+    display: block;
   }
 }
 
 .deleteButtonOuter {
   border-color: #f50e0e;
   transition: transform 0.2s cubic-bezier(0.235, 0, 0.05, 0.95);
+}
+
+@media (max-width: 1280px) {
+  .habitPageDiv {
+    max-width: 90%;
+    padding: 24px;
+  }
+}
+
+@media (max-width: 744px) {
+  .wrapper {
+    padding: 0 16px;
+  }
+}
+
+@media (max-width: 375px) {
 }
