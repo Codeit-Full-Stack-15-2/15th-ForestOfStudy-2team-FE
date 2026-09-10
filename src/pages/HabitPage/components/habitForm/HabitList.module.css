@@ -7,7 +7,6 @@
 
 .habitListField {
   display: flex;
-  padding-left: 30px;
   overflow-y: auto;
   overflow-x: hidden;
   flex-direction: column;

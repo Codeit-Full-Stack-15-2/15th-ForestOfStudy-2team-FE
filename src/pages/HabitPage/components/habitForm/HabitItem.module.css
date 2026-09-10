@@ -1,4 +1,5 @@
 .habitRow {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -12,6 +13,8 @@
 
 .habitBox {
   flex: 1;
+  margin-top: 10px;
+  margin-right: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -32,6 +35,7 @@
 }
 
 .habitInputEdit {
+  position: absolute;
   text-align: center;
   width: 100%;
   max-width: 400px;
@@ -49,11 +53,14 @@
 }
 
 .deleteButton {
+  position: absolute;
+  top: 0px;
+  right: 0px;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 48px;
-  height: 48px;
+  width: 2.25rem;
+  height: 2.25rem;
   padding: 0;
   border: 0.1rem solid transparent;
   border-radius: 50%;
@@ -61,8 +68,8 @@
   flex-shrink: 0;
 
   .habitDeleteButton {
-    width: 36px;
-    height: 36px;
+    width: 1.5rem;
+    height: 1.5rem;
     display: block;
   }
 }
@@ -73,21 +80,14 @@
 }
 
 .deleteButtonOuter:hover {
-  transform: perspective(1px) scale3d(1.044, 1.044, 1) translateZ(0) !important;
+  transform: perspective(1px) scale3d(1.044, 1.044, 1) translateZ(0);
 }
 
-@media (max-width: 1280px) {
-  .habitPageDiv {
-    max-width: 90%;
-    padding: 24px;
-  }
+
+
+@media (max-width: 768px) {
+ 
 }
 
-@media (max-width: 744px) {
-  .wrapper {
-    padding: 0 16px;
-  }
-}
-
-@media (max-width: 375px) {
+@media (max-width: 440px) {
 }
