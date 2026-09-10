@@ -1,6 +1,6 @@
-import point from '@/assets/common/ic_point.svg';
 import ArrowButton from '@/components/arrowButton/ArrowButton';
 import PasswordVerificationModal from '@/components/passwordVerificationModal/PasswordVerificationModal';
+import PointBadge from '@/pages/focusPage/components/PointBadge';
 import { useStudyActions } from '../hooks/useStudyActions';
 import StudyActions from './StudyActions';
 import styles from './StudyDetailHeader.module.css';
@@ -51,13 +51,10 @@ function StudyDetailHeader({ studyId, data }) {
           <p className={styles.label}>소개</p>
           <p className={styles.description}>{data.description}</p>
         </div>
-        <div className={styles.pointContainer}>
-          <p className={styles.label}>현재까지 획득한 포인트</p>
-          <div className={styles.badge}>
-            <img src={point} alt="포인트 아이콘" />
-            <span>{data.totalPoints}&nbsp;획득</span>
-          </div>
-        </div>
+        <PointBadge
+          className={styles.pointContainer}
+          points={data.totalPoints}
+        />
       </section>
       <PasswordVerificationModal
         open={Boolean(activeModal)}
