@@ -12,13 +12,14 @@ function StudyCard({
   likes,
   variant,
   image,
+  onClick,
 }) {
   return (
     <li
       className={`${styles.studyCard} ${styles[variant]}`}
       style={image ? { backgroundImage: `url(${image})` } : undefined}
     >
-      <Link to={`/studies/${id}`} className={styles.cardLink}>
+      <Link to={`/studies/${id}`} className={styles.cardLink} onClick={onClick}>
         <article className={styles.cardContent}>
           <div className={styles.cardHeader}>
             <h3 className={styles.cardTitle}>{title}</h3>

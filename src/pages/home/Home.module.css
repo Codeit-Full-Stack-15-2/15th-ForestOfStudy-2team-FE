@@ -173,7 +173,7 @@
 }
 
 /* Tablet */
-@media (max-width: 744px) {
+@media (max-width: 768px) {
   .studyList {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -195,7 +195,7 @@
 }
 
 /* Mobile */
-@media (max-width: 375px) {
+@media (max-width: 440px) {
   .sectionTitle {
     font-size: var(--font-size-lg);
   }

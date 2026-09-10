@@ -84,6 +84,33 @@ const studies = [
 ];
 
 function Home() {
+  // 최근 조회한 스터디 localStorage 활용해서 저장, 표시 구현
+  const handleStudyClick = (studyId) => {
+    const savedRecentStudies = localStorage.getItem('recentStudies');
+
+    const parsedRecentStudies = savedRecentStudies
+      ? JSON.parse(savedRecentStudies)
+      : [];
+
+    const recentStudyIds = [
+      studyId,
+      ...parsedRecentStudies.filter((id) => id !== studyId),
+    ].slice(0, 3);
+
+    localStorage.setItem('recentStudies', JSON.stringify(recentStudyIds));
+  };
+
+  const savedRecentStudyIds = localStorage.getItem('recentStudies');
+
+  const recentStudyIds = savedRecentStudyIds
+    ? JSON.parse(savedRecentStudyIds)
+    : [];
+
+  const recentStudies = recentStudyIds
+    .map((id) => studies.find((study) => study.id === id))
+    .filter(Boolean);
+
+  // 정렬 버튼 커스텀 드롭다운 구현
   const [isSortOpen, setIsSortOpen] = useState(false);
   const [sortValue, setSortValue] = useState('recent');
   const selectedSort = sortOptions.find((option) => option.value === sortValue);
@@ -125,7 +152,7 @@ function Home() {
         <h2 className={styles.sectionTitle}>최근 조회한 스터디</h2>
 
         <ul className={styles.recentStudyList}>
-          {studies.slice(0, 3).map((study) => {
+          {recentStudies.map((study) => {
             return (
               <StudyCard
                 key={study.id}
@@ -218,6 +245,7 @@ function Home() {
                 likes={study.likes}
                 variant={study.variant}
                 image={study.image}
+                onClick={() => handleStudyClick(study.id)}
               />
             );
           })}
