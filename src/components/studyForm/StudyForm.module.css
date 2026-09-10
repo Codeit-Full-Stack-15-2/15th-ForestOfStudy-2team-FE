@@ -17,6 +17,12 @@
   gap: 8px;
 }
 
+.fieldInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .label {
   font-size: var(--font-size-lg);
   font-weight: 600;
@@ -26,6 +32,13 @@
 .errorMessage {
   font-size: var(--font-size-sm);
   color: var(--color-red-dark);
+}
+
+.characterCount {
+  flex-shrink: 0;
+  margin-left: auto;
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-500);
 }
 
 .input {
@@ -49,8 +62,15 @@
   gap: 8px;
 }
 
-.nicknameInput {
+.nicknameField {
+  display: flex;
   flex: 1;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.nicknameInput {
   min-width: 0;
 }
 
