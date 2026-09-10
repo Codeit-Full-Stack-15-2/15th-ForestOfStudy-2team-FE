@@ -12,6 +12,7 @@ function StudyDetailHeader({ studyId, data }) {
     activeModal,
     activeConfirmModal,
     setActiveConfirmModal,
+    isConfirmModalButtonLoading,
     isModalButtonLoading,
     setActiveModal,
     handleStudyShare,
@@ -77,6 +78,7 @@ function StudyDetailHeader({ studyId, data }) {
         onCancel={() => {
           setActiveConfirmModal(null);
         }}
+        loading={isConfirmModalButtonLoading}
       />
     </>
   );

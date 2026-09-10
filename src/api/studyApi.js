@@ -104,3 +104,47 @@ export async function verifyStudyPassword(studyId, password) {
     }, 300);
   });
 }
+
+// ==========================================
+// 5. 스터디 삭제 API
+// ==========================================
+export async function removeStudy(studyId) {
+  // // 1. sessionStorage에서 비밀번호 검증 완료 시 저장했던 토큰 추출
+  // const verificationToken = sessionStorage.getItem(`study_verify_${studyId}`);
+
+  // if (!verificationToken) {
+  //   throw new Error(
+  //     '스터디 삭제 권한이 없습니다. 비밀번호를 다시 인증해주세요.',
+  //   );
+  // }
+
+  // // 2. 실제 백엔드 /api/studies/:studyId 엔드포인트로 DELETE 요청
+  // const response = await fetch(`/api/studies/${studyId}`, {
+  //   method: 'DELETE',
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //     // Bearer 규격 또는 커스텀 헤더(X-Study-Token)로 전달 ⭐
+  //     Authorization: `Bearer ${verificationToken}`,
+  //   },
+  // });
+
+  // const result = await response.json();
+
+  // if (!response.ok) {
+  //   throw new Error(result.message || '스터디 삭제에 실패했습니다.');
+  // }
+
+  // // 3. 삭제 성공 시 사용 완료된 세션 토큰 깔끔하게 소멸
+  // sessionStorage.removeItem(`study_verify_${studyId}`);
+
+  // return result;
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        success: true,
+        data: studyId,
+        message: '스터디 삭제 성공',
+      });
+    }, 200);
+  });
+}
