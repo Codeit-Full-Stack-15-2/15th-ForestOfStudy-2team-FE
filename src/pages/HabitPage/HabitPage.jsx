@@ -72,7 +72,7 @@ function HabitPage() {
               </div>
             </div>
             <div className={styles.nowTimeDiv}>
-              <p className={styles.nowTimeP}>현재시간</p>
+              <p className={styles.nowTimeP}>현재날짜</p>
               <div className={styles.timeBox}>
                 <p className={styles.time}>{timeNow}</p>
               </div>

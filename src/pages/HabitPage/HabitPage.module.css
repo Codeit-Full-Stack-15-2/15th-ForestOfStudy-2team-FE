@@ -17,6 +17,7 @@
   width: 100%;
   height: 124px;
   gap: 16px;
+  margin-bottom: 20px;
 }
 
 .titleContainer {
@@ -34,10 +35,10 @@
   }
 }
 
-
 .nowTimeDiv {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: 24px;
 }
 
@@ -50,7 +51,7 @@
 }
 
 .timeBox {
-  width: 184px;
+  width: 115px;
   height: 35px;
   border-radius: 3.125rem;
   border: solid 1px rgba(0, 0, 0, 0.1);
@@ -62,8 +63,6 @@
 .time {
   white-space: nowrap;
 }
-
-
 
 .todayHabitDiv {
   display: flex;
@@ -128,29 +127,23 @@
   justify-content: center;
   max-width: 100%;
   border-radius: 1.25rem;
-  padding: 40px;
+  padding: 220px 0;
   gap: 10px;
   text-align: center;
   font-size: var(--font-size-xl);
   font-weight: 500;
   color: var(--color-gray-500);
+  line-height: 1.8;
 }
 
-@media (max-width: 1280px) {
-  .wrapper {
-    max-width: 90%;
-    padding: 24px;
+@media (max-width: 768px) {
+  .titleContainer {
+    display: block;
+  }
+  .nowTimeDiv {
+    display: block;
   }
 }
 
-@media (max-width: 744px) {
-  .wrapper {
-    padding: 0 16px;
-  }
-}
-
-@media (max-width: 375px) {
-  .listModifyButton {
-    transform: translateX(-80%);
-  }
+@media (max-width: 440px) {
 }

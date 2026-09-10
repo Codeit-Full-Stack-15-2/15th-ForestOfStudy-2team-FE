@@ -23,6 +23,7 @@ function HabitForm({ onAddHabit }) {
       onChange={(e) => setNewHabit(e.target.value)}
       onKeyDown={handleKeyDown}
       className={styles.habitInput}
+      placeholder='추가하고 싶은 습관 입력 후 엔터'
     />
   );
 }
