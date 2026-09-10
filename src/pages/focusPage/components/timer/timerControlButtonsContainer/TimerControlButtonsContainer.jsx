@@ -27,10 +27,12 @@ function TimerControlButtonsContainer({
         onClick={startTimer}
         disabled={isRunning && !isPaused}
       >
-        <img src={icStartButton} alt="스타트 아이콘" />
-        <span className={styles.timerStartText}>
-          {isRunning && isPaused ? 'Resume' : 'Start!'}
-        </span>
+        <div className={styles.timerStartButtonContainer}>
+          <img src={icStartButton} alt="스타트 아이콘" />
+          <span className={styles.timerStartText}>
+            {isRunning && isPaused ? 'Resume' : 'Start!'}
+          </span>
+        </div>
       </button>
 
       <button
