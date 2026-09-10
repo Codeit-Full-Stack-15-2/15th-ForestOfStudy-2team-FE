@@ -1,8 +1,10 @@
+import { useEffect } from 'react';
 import StudyForm from '@/components/studyForm/StudyForm';
 import BaseButton from '@/components/baseButton/BaseButton';
 import styles from './StudyEdit.module.css';
 import { useStudyEditForm } from './hooks/useStudyEditForm';
 import { useNavigate, useParams } from 'react-router';
+import { checkIsStudyVerified } from '@/utils/studyAuthSession';
 
 function StudyEdit() {
   const navigate = useNavigate();
@@ -15,6 +17,14 @@ function StudyEdit() {
     handleChange,
     handleBackgroundSelect,
   } = useStudyEditForm();
+
+  useEffect(() => {
+    const isVerified = checkIsStudyVerified(studyId);
+
+    if (!isVerified) {
+      navigate('/', { replace: true });
+    }
+  }, [studyId, navigate]);
 
   const handleEdit = () => {
     navigate(`/studies/${studyId}`);
