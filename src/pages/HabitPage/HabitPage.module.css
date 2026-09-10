@@ -133,6 +133,7 @@
   font-size: var(--font-size-xl);
   font-weight: 500;
   color: var(--color-gray-500);
+  line-height: 1.8;
 }
 
 @media (max-width: 768px) {
