@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router';
 
 export function useStudyActions(studyId) {
   const [activeModal, setActiveModal] = useState(null);
+  const [activeConfirmModal, setActiveConfirmModal] = useState(null);
   const [isModalButtonLoading, setIsModalButtonLoading] = useState(false);
   const navigate = useNavigate();
   // 1. 공유하기
@@ -56,7 +57,10 @@ export function useStudyActions(studyId) {
   // 3. 삭제 모달 열기
   const handleOpenRemoveModal = () => {
     if (checkIsStudyVerified(studyId)) {
-      navigate(`/`);
+      setActiveConfirmModal({
+        buttonText: '삭제',
+        onOk: () => console.log('삭제 버튼 클릭'),
+      });
       return;
     }
     setActiveModal({
@@ -67,6 +71,7 @@ export function useStudyActions(studyId) {
           await verifyStudyPassword(studyId, password);
           saveStudyVerified(studyId);
           setActiveModal(null);
+          // TODO: 정말 삭제하시겠습니까? 모달 노출
           navigate('/');
         } catch (error) {
           console.error(error.message);
@@ -140,6 +145,8 @@ export function useStudyActions(studyId) {
 
   return {
     activeModal,
+    activeConfirmModal,
+    setActiveConfirmModal,
     isModalButtonLoading,
     setActiveModal,
     handleStudyShare,

@@ -1,4 +1,5 @@
 import ArrowButton from '@/components/arrowButton/ArrowButton';
+import ConfirmModal from '@/components/confirmModal/ConfirmModal';
 import PasswordVerificationModal from '@/components/passwordVerificationModal/PasswordVerificationModal';
 import PointBadge from '@/pages/focusPage/components/PointBadge';
 import { useStudyActions } from '../hooks/useStudyActions';
@@ -9,6 +10,8 @@ import StudyReactions from './StudyReactions';
 function StudyDetailHeader({ studyId, data }) {
   const {
     activeModal,
+    activeConfirmModal,
+    setActiveConfirmModal,
     isModalButtonLoading,
     setActiveModal,
     handleStudyShare,
@@ -64,6 +67,16 @@ function StudyDetailHeader({ studyId, data }) {
         modalButtonLoading={isModalButtonLoading}
         onOk={(password) => activeModal?.onOk(password)}
         onCancel={() => setActiveModal(null)}
+      />
+      <ConfirmModal
+        open={Boolean(activeConfirmModal)}
+        title={'스터디 삭제하기'}
+        description={'정말 삭제하시겠습니까?'}
+        confirmText={activeConfirmModal?.buttonText}
+        onConfirm={activeConfirmModal?.onOk}
+        onCancel={() => {
+          setActiveConfirmModal(null);
+        }}
       />
     </>
   );
