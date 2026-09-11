@@ -18,3 +18,17 @@
   font-weight: 800;
   color: var(--color-gray-900);
 }
+
+@media (max-width: 768px) {
+  .studyForm {
+    width: calc(100% - 48px);
+  }
+}
+
+@media (max-width: 440px) {
+  .studyForm {
+    width: calc(100% - 32px);
+    margin-top: 24px;
+    padding: 24px 16px 40px;
+  }
+}

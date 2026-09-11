@@ -31,16 +31,36 @@ function StudyForm({
         </label>
         <div className={styles.fieldArea}>
           <div className={styles.nicknameInputBox}>
-            <input
-              className={clsx(styles.input, styles.nicknameInput)}
-              id="nickname"
-              name="nickname"
-              type="text"
-              placeholder="닉네임을 입력해 주세요"
-              value={formData.nickname}
-              onChange={onChange}
-              maxLength={10}
-            />
+            <div className={styles.nicknameField}>
+              <input
+                className={clsx(styles.input, styles.nicknameInput)}
+                id="nickname"
+                name="nickname"
+                type="text"
+                placeholder="닉네임을 입력해 주세요"
+                value={formData.nickname}
+                onChange={onChange}
+                maxLength={10}
+              />
+
+              <div className={styles.fieldInfo}>
+                <div>
+                  {errors.nickname && (
+                    <p className={styles.errorMessage}>{errors.nickname}</p>
+                  )}
+                  {!errors.nickname && nicknameCheckStatus === 'available' && (
+                    <p>사용 가능한 닉네임입니다.</p>
+                  )}
+                  {!errors.nickname && nicknameCheckStatus === 'duplicate' && (
+                    <p>이미 사용 중인 닉네임입니다.</p>
+                  )}
+                </div>
+                <p className={styles.characterCount}>
+                  {formData.nickname.length} / 10
+                </p>
+              </div>
+            </div>
+
             <BaseButton
               type="button"
               size="none"
@@ -52,16 +72,6 @@ function StudyForm({
               중복 확인
             </BaseButton>
           </div>
-
-          {errors.nickname && (
-            <p className={styles.errorMessage}>{errors.nickname}</p>
-          )}
-          {!errors.nickname && nicknameCheckStatus === 'available' && (
-            <p>사용 가능한 닉네임입니다.</p>
-          )}
-          {!errors.nickname && nicknameCheckStatus === 'duplicate' && (
-            <p>이미 사용 중인 닉네임입니다.</p>
-          )}
         </div>
       </div>
       <div className={styles.formGroup}>
@@ -80,9 +90,17 @@ function StudyForm({
             maxLength={10}
           />
 
-          {errors.studyName && (
-            <p className={styles.errorMessage}>{errors.studyName}</p>
-          )}
+          <div className={styles.fieldInfo}>
+            <div>
+              {errors.studyName && (
+                <p className={styles.errorMessage}>{errors.studyName}</p>
+              )}
+            </div>
+
+            <p className={styles.characterCount}>
+              {formData.studyName.length} / 10
+            </p>
+          </div>
         </div>
       </div>
       <div className={styles.formGroup}>
@@ -98,6 +116,12 @@ function StudyForm({
           onChange={onChange}
           maxLength={100}
         />
+
+        <div className={styles.fieldInfo}>
+          <p className={styles.characterCount}>
+            {formData.description.length} / 100
+          </p>
+        </div>
       </div>
       <div className={styles.backgroundGroup}>
         <p className={styles.label}>배경을 선택해주세요</p>
