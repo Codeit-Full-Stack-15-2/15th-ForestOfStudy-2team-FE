@@ -52,8 +52,12 @@ function StudyDetailHeader({ studyId, data }) {
           </div>
         </div>
         <div className={styles.descriptionContainer}>
-          <p className={styles.label}>소개</p>
-          <p className={styles.description}>{data.description}</p>
+          {data.description && (
+            <>
+              <p className={styles.label}>소개</p>
+              <p className={styles.description}>{data.description}</p>
+            </>
+          )}
         </div>
         <PointBadge
           className={styles.pointContainer}

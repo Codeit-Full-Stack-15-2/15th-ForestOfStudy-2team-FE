@@ -1,24 +1,25 @@
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 // src/api/studyApi.js
-import { MOCK_HABITS_RESPONSE, MOCK_STUDY_HEADER } from '@/mocks/studyMockData';
+import { MOCK_HABITS_RESPONSE } from '@/mocks/studyMockData';
 
 // ==========================================
 // 1. 스터디 헤더 정보 조회 API
 // ==========================================
 export async function getStudyDetail(studyId) {
-  /* [실제 백엔드 배포 시 활성화할 fetch 코드]
-  const response = await fetch(`/api/studies/${studyId}`);
-  if (!response.ok) throw new Error('스터디 정보를 불러오지 못했습니다.');
-  return await response.json();
-  */
+  try {
+    const response = await fetch(`${BASE_URL}/studies/${studyId}`);
 
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        ...MOCK_STUDY_HEADER,
-        studyId: Number(studyId) || MOCK_STUDY_HEADER.studyId,
-      });
-    }, 200);
-  });
+    if (!response.ok) {
+      throw new Error('스터디 정보를 불러오지 못했습니다.');
+    }
+    const data = await response.json();
+    console.log(data.data);
+    return data.data;
+  } catch (error) {
+    console.error('스터디 조회 실패:', error);
+    throw error;
+  }
 }
 
 // ==========================================
