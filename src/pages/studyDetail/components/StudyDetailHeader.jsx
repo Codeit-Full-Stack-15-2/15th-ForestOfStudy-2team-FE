@@ -1,6 +1,7 @@
-import point from '@/assets/common/ic_point.svg';
 import ArrowButton from '@/components/arrowButton/ArrowButton';
+import ConfirmModal from '@/components/confirmModal/ConfirmModal';
 import PasswordVerificationModal from '@/components/passwordVerificationModal/PasswordVerificationModal';
+import PointBadge from '@/pages/focusPage/components/PointBadge';
 import { useStudyActions } from '../hooks/useStudyActions';
 import StudyActions from './StudyActions';
 import styles from './StudyDetailHeader.module.css';
@@ -9,6 +10,9 @@ import StudyReactions from './StudyReactions';
 function StudyDetailHeader({ studyId, data }) {
   const {
     activeModal,
+    activeConfirmModal,
+    setActiveConfirmModal,
+    isConfirmModalButtonLoading,
     isModalButtonLoading,
     setActiveModal,
     handleStudyShare,
@@ -51,13 +55,10 @@ function StudyDetailHeader({ studyId, data }) {
           <p className={styles.label}>소개</p>
           <p className={styles.description}>{data.description}</p>
         </div>
-        <div className={styles.pointContainer}>
-          <p className={styles.label}>현재까지 획득한 포인트</p>
-          <div className={styles.badge}>
-            <img src={point} alt="포인트 아이콘" />
-            <span>{data.totalPoints}&nbsp;획득</span>
-          </div>
-        </div>
+        <PointBadge
+          className={styles.pointContainer}
+          points={data.totalPoints}
+        />
       </section>
       <PasswordVerificationModal
         open={Boolean(activeModal)}
@@ -67,6 +68,17 @@ function StudyDetailHeader({ studyId, data }) {
         modalButtonLoading={isModalButtonLoading}
         onOk={(password) => activeModal?.onOk(password)}
         onCancel={() => setActiveModal(null)}
+      />
+      <ConfirmModal
+        open={Boolean(activeConfirmModal)}
+        title={'스터디 삭제하기'}
+        description={'정말 삭제하시겠습니까?'}
+        confirmText={activeConfirmModal?.buttonText}
+        onConfirm={activeConfirmModal?.onOk}
+        onCancel={() => {
+          setActiveConfirmModal(null);
+        }}
+        loading={isConfirmModalButtonLoading}
       />
     </>
   );
