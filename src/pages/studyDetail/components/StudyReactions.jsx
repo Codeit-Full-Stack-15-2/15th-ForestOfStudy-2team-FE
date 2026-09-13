@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import smile from '@/assets/studyDetailPage/ic_smile.svg';
 import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
@@ -21,7 +22,7 @@ function StudyReactions({ studyId, initialReactions }) {
     handleToggleReactionList,
   } = useStudyReactions(studyId, initialReactions);
   return (
-    <div className={styles.container}>
+    <div className={clsx(styles.container, reactions.length > 0 && styles.containerGap)}>
       <div className={styles.badges}>
         {reactions.slice(0, VISIBLE_LIMIT).map((reaction) => {
           const isSelected = reaction.guestUuids.includes(currentUserId);
@@ -39,7 +40,7 @@ function StudyReactions({ studyId, initialReactions }) {
         })}
         {reactions.length > VISIBLE_LIMIT && (
           <button
-            className={`${styles.reactionBadge} ${styles.more}`}
+            className={clsx(styles.reactionBadge, styles.more)}
             onClick={handleToggleReactionList}
           >
             + {reactions.length - VISIBLE_LIMIT}..
