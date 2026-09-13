@@ -8,7 +8,7 @@ import ConfirmModal from '@/components/confirmModal/ConfirmModal';
 import { useFocusPoints } from '@/pages/focusPage/hooks/useFocusPoints';
 import { useState, useCallback, useEffect } from 'react';
 import { useBlocker, useParams } from 'react-router';
-import { calculateEarnedPoints } from './utils/calculatePoints';
+import { calculateEarnedPoints } from './utils/calculateEarnedPoints';
 import { showToast } from '@/utils/showToast';
 import { useTimer } from './hooks/useTimer';
 
@@ -23,13 +23,29 @@ function FocusPage({ totalSeconds = MIN_MINUTES * 60 }) {
     Math.max(totalSeconds || 0, MIN_MINUTES * 60),
   );
 
-  const handleTimerComplete = useCallback(() => {
-    const earnedPoints = calculateEarnedPoints(duration);
-    if (earnedPoints > 0) {
-      addPoints(earnedPoints);
+  const handleTimerComplete = useCallback(async () => {
+  const earnedPoints = calculateEarnedPoints(duration);
+  if (earnedPoints > 0) {
+    const minutes = Math.floor(duration / 60);
+    
+    try {
+      const res = await fetch(`/api/studies/${studyId}/points`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ minutes }),
+      });
+      
+      if (!res.ok) {
+        throw new Error('포인트 저장 실패');
+      }
+      addPoints(earnedPoints); 
       showToast(`🎉 ${earnedPoints}포인트를 획득했습니다!`, 'success');
+    } catch (err) {
+      console.error(err.message);
+      showToast(`포인트 저장에 문제가 생겼어요!`, 'warning');
     }
-  }, [duration, addPoints]);
+  }
+}, [duration, addPoints, studyId]);
 
   const timer = useTimer(duration, handleTimerComplete);
 
