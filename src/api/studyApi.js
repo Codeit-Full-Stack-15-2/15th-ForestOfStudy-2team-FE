@@ -1,24 +1,25 @@
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 // src/api/studyApi.js
-import { MOCK_HABITS_RESPONSE, MOCK_STUDY_HEADER } from '@/mocks/studyMockData';
+import { MOCK_HABITS_RESPONSE } from '@/mocks/studyMockData';
 
 // ==========================================
 // 1. 스터디 헤더 정보 조회 API
 // ==========================================
 export async function getStudyDetail(studyId) {
-  /* [실제 백엔드 배포 시 활성화할 fetch 코드]
-  const response = await fetch(`/api/studies/${studyId}`);
-  if (!response.ok) throw new Error('스터디 정보를 불러오지 못했습니다.');
-  return await response.json();
-  */
+  try {
+    const response = await fetch(`${BASE_URL}/studies/${studyId}`);
 
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        ...MOCK_STUDY_HEADER,
-        studyId: Number(studyId) || MOCK_STUDY_HEADER.studyId,
-      });
-    }, 200);
-  });
+    if (!response.ok) {
+      throw new Error('스터디 정보를 불러오지 못했습니다.');
+    }
+    const data = await response.json();
+    console.log(data.data);
+    return data.data;
+  } catch (error) {
+    console.error('스터디 조회 실패:', error);
+    throw error;
+  }
 }
 
 // ==========================================
@@ -102,5 +103,49 @@ export async function verifyStudyPassword(studyId, password) {
         reject(new Error('비밀번호가 일치하지 않습니다.'));
       }
     }, 300);
+  });
+}
+
+// ==========================================
+// 5. 스터디 삭제 API
+// ==========================================
+export async function removeStudy(studyId) {
+  // // 1. sessionStorage에서 비밀번호 검증 완료 시 저장했던 토큰 추출
+  // const verificationToken = sessionStorage.getItem(`study_verify_${studyId}`);
+
+  // if (!verificationToken) {
+  //   throw new Error(
+  //     '스터디 삭제 권한이 없습니다. 비밀번호를 다시 인증해주세요.',
+  //   );
+  // }
+
+  // // 2. 실제 백엔드 /api/studies/:studyId 엔드포인트로 DELETE 요청
+  // const response = await fetch(`/api/studies/${studyId}`, {
+  //   method: 'DELETE',
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //     // Bearer 규격 또는 커스텀 헤더(X-Study-Token)로 전달 ⭐
+  //     Authorization: `Bearer ${verificationToken}`,
+  //   },
+  // });
+
+  // const result = await response.json();
+
+  // if (!response.ok) {
+  //   throw new Error(result.message || '스터디 삭제에 실패했습니다.');
+  // }
+
+  // // 3. 삭제 성공 시 사용 완료된 세션 토큰 깔끔하게 소멸
+  // sessionStorage.removeItem(`study_verify_${studyId}`);
+
+  // return result;
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        success: true,
+        data: studyId,
+        message: '스터디 삭제 성공',
+      });
+    }, 200);
   });
 }

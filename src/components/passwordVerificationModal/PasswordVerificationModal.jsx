@@ -81,7 +81,7 @@ function PasswordVerificationModal({
           <PasswordInput
             value={password}
             placeholder="비밀번호를 입력해 주세요"
-            errorMessage={errorMessage}
+            error={errorMessage}
             onChange={handleChangePassword}
             onKeyDown={(event) => event.key === 'Enter' && handleConfirm()}
           />

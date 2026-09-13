@@ -1,4 +1,4 @@
-import { verifyStudyPassword } from '@/api/studyApi';
+import { removeStudy, verifyStudyPassword } from '@/api/studyApi';
 import { showToast } from '@/utils/showToast';
 import {
   checkIsStudyVerified,
@@ -9,7 +9,10 @@ import { useNavigate } from 'react-router';
 
 export function useStudyActions(studyId) {
   const [activeModal, setActiveModal] = useState(null);
+  const [activeConfirmModal, setActiveConfirmModal] = useState(null);
   const [isModalButtonLoading, setIsModalButtonLoading] = useState(false);
+  const [isConfirmModalButtonLoading, setIsConfirmModalButtonLoading] =
+    useState(false);
   const navigate = useNavigate();
   // 1. 공유하기
   const handleStudyShare = async () => {
@@ -26,8 +29,7 @@ export function useStudyActions(studyId) {
   // 2. 수정 모달 열기
   const handleOpenEditModal = () => {
     if (checkIsStudyVerified(studyId)) {
-      // TODO: 경로 수정 필요
-      navigate(`/`);
+      navigate(`/studies/${studyId}/edit`);
       return;
     }
 
@@ -39,7 +41,7 @@ export function useStudyActions(studyId) {
           await verifyStudyPassword(studyId, password);
           saveStudyVerified(studyId);
           setActiveModal(null);
-          navigate('/');
+          navigate(`/studies/${studyId}/edit`);
         } catch (error) {
           console.error(error.message);
           showToast(
@@ -53,12 +55,37 @@ export function useStudyActions(studyId) {
     });
   };
 
-  // 3. 삭제 모달 열기
+  // 스터디 삭제 획인 모달 열기
+  const handleOpenConfirmRemoveStudyModal = () => {
+    setActiveConfirmModal({
+      buttonText: '삭제',
+      onOk: async () => {
+        setIsConfirmModalButtonLoading(true);
+        try {
+          await removeStudy(studyId);
+          showToast('스터디 삭제가 완료되었습니다.');
+          setActiveConfirmModal(null);
+          navigate('/');
+        } catch (error) {
+          console.error(error.message);
+          showToast(
+            '🚨 스터디 삭제에 실패했습니다. 다시 시도해주세요.',
+            'warning',
+          );
+        } finally {
+          setIsConfirmModalButtonLoading(false);
+        }
+      },
+    });
+  };
+
+  // 3. 스터디 삭제하기 비밀번호 검증 모달 열기
   const handleOpenRemoveModal = () => {
     if (checkIsStudyVerified(studyId)) {
-      navigate(`/`);
+      handleOpenConfirmRemoveStudyModal();
       return;
     }
+
     setActiveModal({
       buttonText: '스터디 삭제하기',
       onOk: async (password) => {
@@ -67,7 +94,7 @@ export function useStudyActions(studyId) {
           await verifyStudyPassword(studyId, password);
           saveStudyVerified(studyId);
           setActiveModal(null);
-          navigate('/');
+          handleOpenConfirmRemoveStudyModal();
         } catch (error) {
           console.error(error.message);
           showToast(
@@ -140,6 +167,9 @@ export function useStudyActions(studyId) {
 
   return {
     activeModal,
+    activeConfirmModal,
+    setActiveConfirmModal,
+    isConfirmModalButtonLoading,
     isModalButtonLoading,
     setActiveModal,
     handleStudyShare,
