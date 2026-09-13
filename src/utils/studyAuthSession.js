@@ -1,13 +1,10 @@
 const getStudyTokenKey = (studyId) => `study_verify_${studyId}`;
-// TODO: 리펙토링 후 제거
-const getVerifiedMap = (studyId) => console.log(studyId);
 
-// TODO: 리펙토링 후 제거
 export function checkIsStudyVerified(studyId) {
   if (!studyId) return false;
 
-  const verifiedMap = getVerifiedMap();
-  return Boolean(verifiedMap[String(studyId)]);
+  const verifiedMap = getStudyVerifiedToken(studyId);
+  return Boolean(verifiedMap);
 }
 
 export function saveStudyVerified(studyId, token) {
@@ -32,9 +29,7 @@ export function getStudyVerifiedToken(studyId) {
 export function removeStudyVerified(studyId) {
   if (!studyId) return;
   try {
-    const removedToken = sessionStorage.removeItem(getStudyTokenKey(studyId));
-    // TODO: 반환값 확인 후 제거
-    console.log(removedToken);
+    sessionStorage.removeItem(getStudyTokenKey(studyId));
   } catch (error) {
     console.error('세션 스토리지 삭제 실패:', error);
   }

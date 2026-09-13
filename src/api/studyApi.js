@@ -2,6 +2,10 @@ const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 // src/api/studyApi.js
 import { MOCK_HABITS_RESPONSE } from '@/mocks/studyMockData';
+import {
+  getStudyVerifiedToken,
+  removeStudyVerified,
+} from '@/utils/studyAuthSession';
 
 // ==========================================
 // 1. 스터디 헤더 정보 조회 API
@@ -100,8 +104,7 @@ export async function verifyStudyPassword(studyId, password) {
 export async function removeStudy(studyId) {
   try {
     // 1. sessionStorage에서 비밀번호 검증 완료 시 저장했던 토큰 추출
-    const verificationToken = sessionStorage.getItem(`study_verify_${studyId}`);
-
+    const verificationToken = getStudyVerifiedToken(studyId);
     if (!verificationToken) {
       throw new Error(
         '스터디 삭제 권한이 없습니다. 비밀번호를 다시 인증해주세요.',
@@ -109,7 +112,7 @@ export async function removeStudy(studyId) {
     }
 
     // 2. 실제 백엔드 /api/studies/:studyId 엔드포인트로 DELETE 요청
-    const response = await fetch(`${BASE_URL}/api/studies/${studyId}`, {
+    const response = await fetch(`${BASE_URL}/studies/${studyId}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -125,7 +128,7 @@ export async function removeStudy(studyId) {
     }
 
     // 3. 삭제 성공 시 사용 완료된 세션 토큰 깔끔하게 소멸
-    sessionStorage.removeItem(`study_verify_${studyId}`);
+    removeStudyVerified(studyId);
 
     return result;
   } catch (error) {

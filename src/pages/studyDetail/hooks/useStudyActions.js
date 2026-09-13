@@ -38,8 +38,8 @@ export function useStudyActions(studyId) {
       onOk: async (password) => {
         setIsModalButtonLoading(true);
         try {
-          await verifyStudyPassword(studyId, password);
-          saveStudyVerified(studyId);
+          const token = await verifyStudyPassword(studyId, password);
+          saveStudyVerified(studyId, token);
           setActiveModal(null);
           navigate(`/studies/${studyId}/edit`);
         } catch (error) {
@@ -119,8 +119,8 @@ export function useStudyActions(studyId) {
       onOk: async (password) => {
         setIsModalButtonLoading(true);
         try {
-          await verifyStudyPassword(studyId, password);
-          saveStudyVerified(studyId);
+          const token = await verifyStudyPassword(studyId, password);
+          saveStudyVerified(studyId, token);
           setActiveModal(null);
           navigate(`/studies/${studyId}/habits`);
         } catch (error) {
@@ -147,8 +147,8 @@ export function useStudyActions(studyId) {
       onOk: async (password) => {
         setIsModalButtonLoading(true);
         try {
-          await verifyStudyPassword(studyId, password);
-          saveStudyVerified(studyId);
+          const token = await verifyStudyPassword(studyId, password);
+          saveStudyVerified(studyId, token);
           setActiveModal(null);
           navigate(`/studies/${studyId}/focus`);
         } catch (error) {
