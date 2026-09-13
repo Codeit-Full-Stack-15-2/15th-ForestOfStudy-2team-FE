@@ -69,7 +69,7 @@ export async function toggleStudyReaction(studyId, emoji, userId) {
   const response = await fetch(`${BASE_URL}/studies/${studyId}/reactions`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ emoji, userId }),
+    body: JSON.stringify({ emoji, guest_uuid: userId }),
   });
   if (!response.ok) throw new Error('이모지 반응 처리에 실패했습니다.');
   return await response.json();

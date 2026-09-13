@@ -16,29 +16,33 @@ export function useStudyReactions(studyId, initialReactions) {
     setReactions((prev) => {
       const target = prev.find((item) => item.emoji === targetEmoji);
       if (target) {
-        const hasReacted = target.reactedUserIds.includes(currentUserId);
+        const hasReacted = target.guestUuids.includes(currentUserId);
 
-        return prev
+        const filterdReactions = prev
           .map((item) => {
             if (item.emoji !== targetEmoji) return item;
 
             return {
               ...item,
-              count: hasReacted ? item.count - 1 : item.count + 1,
-              reactedUserIds: hasReacted
-                ? item.reactedUserIds.filter((id) => id !== currentUserId)
+              totalCount: hasReacted
+                ? item.totalCount - 1
+                : item.totalCount + 1,
+              guestUuids: hasReacted
+                ? item.guestUuids.filter((id) => id !== currentUserId)
                 : [...item.reactedUserIds, currentUserId],
             };
           })
-          .filter((item) => item.count > 0);
+          .filter((item) => item.totalCount > 0);
+
+        return filterdReactions;
       }
       return [
         ...prev,
         {
           id: Date.now(),
           emoji: targetEmoji,
-          count: 1,
-          reactedUserIds: [currentUserId],
+          totalCount: 1,
+          guestUuids: [currentUserId],
         },
       ];
     });
