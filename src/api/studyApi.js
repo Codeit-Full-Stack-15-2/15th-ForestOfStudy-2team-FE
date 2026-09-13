@@ -13,7 +13,6 @@ import {
 export async function getStudyDetail(studyId) {
   try {
     const response = await fetch(`${BASE_URL}/studies/${studyId}`);
-
     if (!response.ok) {
       throw new Error('스터디 정보를 불러오지 못했습니다.');
     }
@@ -67,21 +66,13 @@ export async function getStudyHabits(
 // 3. 이모지 반응 저장/토글 API
 // ==========================================
 export async function toggleStudyReaction(studyId, emoji, userId) {
-  /* [실제 백엔드 배포 시 활성화할 fetch 코드]
-  const response = await fetch(`/api/studies/${studyId}/reactions`, {
+  const response = await fetch(`${BASE_URL}/studies/${studyId}/reactions`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ emoji, userId }),
   });
   if (!response.ok) throw new Error('이모지 반응 처리에 실패했습니다.');
   return await response.json();
-  */
-
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({ success: true, emoji, userId });
-    }, 200);
-  });
 }
 
 // ==========================================

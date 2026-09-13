@@ -20,17 +20,17 @@ function StudyReactions({ studyId, initialReactions }) {
     handleToggleEmojiPicker,
     handleToggleReactionList,
   } = useStudyReactions(studyId, initialReactions);
-
+  console.log(reactions);
   return (
     <div className={styles.container}>
       <div className={styles.badges}>
         {reactions.slice(0, VISIBLE_LIMIT).map((reaction) => {
-          const isSelected = reaction.reactedUserIds.includes(currentUserId);
+          const isSelected = reaction.guestUuids.includes(currentUserId);
           return (
             <ReactionBadge
               key={reaction.emoji}
               emoji={reaction.emoji}
-              count={reaction.count}
+              count={reaction.totalCount}
               onClick={() => {
                 handleSelectEmojiFromBadge(reaction.emoji);
               }}
