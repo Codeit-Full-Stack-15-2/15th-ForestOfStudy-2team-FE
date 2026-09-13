@@ -13,7 +13,7 @@ import { showToast } from '@/utils/showToast';
 import { useTimer } from './hooks/useTimer';
 
 const PRESET_TIMES = [25, 35, 45];
-const MIN_MINUTES = 0;
+const MIN_MINUTES = 25;
 
 function FocusPage({ totalSeconds = MIN_MINUTES * 60 }) {
   const { studyId: paramStudyId } = useParams();
@@ -24,28 +24,18 @@ function FocusPage({ totalSeconds = MIN_MINUTES * 60 }) {
   );
 
   const handleTimerComplete = useCallback(async () => {
-  const earnedPoints = calculateEarnedPoints(duration);
-  if (earnedPoints > 0) {
-    const minutes = Math.floor(duration / 60);
-    
-    try {
-      const res = await fetch(`/api/studies/${studyId}/points`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ minutes }),
-      });
-      
-      if (!res.ok) {
-        throw new Error('포인트 저장 실패');
+    const earnedPoints = calculateEarnedPoints(duration);
+    if (earnedPoints > 0) {
+      const minutes = Math.floor(duration / 60);
+      try {
+        await addPoints(minutes);
+        showToast(`🎉 ${earnedPoints}포인트를 획득했습니다!`, 'success');
+      } catch (err) {
+        console.error(err.message);
+        showToast('포인트 저장에 문제가 생겼어요!', 'warning');
       }
-      addPoints(earnedPoints); 
-      showToast(`🎉 ${earnedPoints}포인트를 획득했습니다!`, 'success');
-    } catch (err) {
-      console.error(err.message);
-      showToast(`포인트 저장에 문제가 생겼어요!`, 'warning');
     }
-  }
-}, [duration, addPoints, studyId]);
+  }, [duration, addPoints]);
 
   const timer = useTimer(duration, handleTimerComplete);
 
