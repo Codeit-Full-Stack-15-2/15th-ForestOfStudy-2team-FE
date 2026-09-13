@@ -51,6 +51,7 @@ export function useStudyReactions(studyId, initialReactions) {
   const handleToggleReaction = async (targetEmoji) => {
     if (isSubmitting) return;
     const previousReactions = [...reactions];
+    // TODO: 낙관적 업데이트 위치 고민
     applyOptimisticUpdate(targetEmoji, currentUserId);
     try {
       setIsSubmitting(true);
