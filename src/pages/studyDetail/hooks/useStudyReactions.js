@@ -50,10 +50,8 @@ export function useStudyReactions(studyId, initialReactions) {
 
   const handleToggleReaction = async (targetEmoji) => {
     if (isSubmitting) return;
-
     const previousReactions = [...reactions];
     applyOptimisticUpdate(targetEmoji, currentUserId);
-
     try {
       setIsSubmitting(true);
       await toggleStudyReaction(studyId, targetEmoji, currentUserId);
@@ -68,11 +66,6 @@ export function useStudyReactions(studyId, initialReactions) {
 
   const handleSelectEmojiFromPicker = (emoji) => {
     handleToggleReaction(emoji.native);
-
-    if (document.activeElement instanceof HTMLElement) {
-      document.activeElement.blur();
-    }
-    setIsOpenEmojiPicker(false);
   };
 
   const handleSelectEmojiFromBadge = (emoji) => {
