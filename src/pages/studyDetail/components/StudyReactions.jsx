@@ -45,7 +45,7 @@ function StudyReactions({ studyId, initialReactions }) {
             + {reactions.length - VISIBLE_LIMIT}..
           </button>
         )}
-        {isOpenReactionList && (
+        {reactions.length > VISIBLE_LIMIT && isOpenReactionList && (
           <div ref={reactionListPopoverRef} className={styles.allReactions}>
             {reactions.map((reaction) => {
               const isSelected = reaction.guestUuids.includes(currentUserId);
