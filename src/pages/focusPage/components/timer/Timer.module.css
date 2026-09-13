@@ -34,9 +34,10 @@
 
 .timerNumber {
   font-weight: 800;
-  font-size: var(--font-size-display-lg);
+  font-size: clamp(2.5rem, 18vw, var(--font-size-display-lg));
   color: var(--color-gray-900);
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
 .timerNumberRunning {
@@ -46,7 +47,6 @@
 .timerNumberOverTime {
   color: var(--color-gray-500);
 }
-
 
 .timerSettingButtonsContainer {
   display: flex;

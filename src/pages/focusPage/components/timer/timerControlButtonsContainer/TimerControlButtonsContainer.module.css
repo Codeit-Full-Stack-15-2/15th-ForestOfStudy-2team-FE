@@ -2,12 +2,23 @@
   display: flex;
   gap: 24px;
   align-items: center;
+  justify-content: center;
+  width: 100%;
+
+  @media (max-width: 440px) {
+    .timerPauseButton img,
+    .timerRestartButton img {
+      width: 48px;
+      height: 48px;
+    }
+  }
 }
 
 .timerPauseButton,
 .timerRestartButton {
   border: none;
   background: none;
+  flex-shrink: 0;
 }
 
 .timerPauseButton:not(:disabled),
@@ -30,15 +41,31 @@
   background-color: var(--color-brand-primary);
   border-radius: 50px;
   border: none;
-  width: 333px;
-  height: 60px;
+  padding: 8px 90px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 16px;
   color: white;
   font-weight: 800;
-  font-size: 28px;
+  font-size: 1.75rem;
+  flex-shrink: 1;
+  min-width: 0;
+
+  @media (max-width: 440px) {
+    padding: 12px 20px;
+    font-size: var(--font-size-lg);
+
+    img {
+      width: 24px;
+      height: 24px;
+    }
+  }
+}
+
+.timerStartButtonContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .timerStartButton:disabled {
