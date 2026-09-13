@@ -91,8 +91,8 @@ export function useStudyActions(studyId) {
       onOk: async (password) => {
         setIsModalButtonLoading(true);
         try {
-          await verifyStudyPassword(studyId, password);
-          saveStudyVerified(studyId);
+          const token = await verifyStudyPassword(studyId, password);
+          saveStudyVerified(studyId, token);
           setActiveModal(null);
           handleOpenConfirmRemoveStudyModal();
         } catch (error) {
