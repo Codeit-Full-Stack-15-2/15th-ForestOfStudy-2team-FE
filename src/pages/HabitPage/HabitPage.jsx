@@ -8,7 +8,7 @@ import styles from './HabitPage.module.css';
 import HabitList from './components/habitForm/HabitList';
 
 function HabitPage() {
-  const {studyId} = useParams();
+  const { study_id: studyId } = useParams();
 
   const timeNow = new Date()
     .toLocaleString('sv-SE', { timeZone: 'Asia/Seoul' })
@@ -29,7 +29,10 @@ function HabitPage() {
     }
   };
   useEffect(() => {
-    fetchHabitsData();
+    console.log('현재 전달된 studyId:', studyId);
+    if (studyId) {
+      fetchHabitsData();
+    }
   }, [studyId]);
 
   const handleAddHabit = async (habitName) => {
@@ -83,9 +86,7 @@ function HabitPage() {
             <div className={styles.titleContainer}>
               <h2 className={styles.title}>연우의 개발공장</h2>
               <div className={styles.titleButtons}>
-                <ArrowButton to={`/studies/${studyId}`}>
-                  대시보드
-                </ArrowButton>
+                <ArrowButton to={`/studies/${studyId}`}>대시보드</ArrowButton>
                 <ArrowButton to={`/studies/${studyId}/focus`}>
                   오늘의 집중 타이머
                 </ArrowButton>
