@@ -8,7 +8,7 @@ import styles from './HabitPage.module.css';
 import HabitList from './components/habitForm/HabitList';
 
 function HabitPage() {
-  const {study_Id} = useParams();
+  const {studyId} = useParams();
 
   const timeNow = new Date()
     .toLocaleString('sv-SE', { timeZone: 'Asia/Seoul' })
@@ -19,7 +19,7 @@ function HabitPage() {
 
   const fetchHabitsData = async () => {
     try {
-      const response = await getHabits(study_Id);
+      const response = await getHabits(studyId);
       const habitList = Array.isArray(response)
         ? response
         : response.data || response.habits || response.list || [];
@@ -30,11 +30,11 @@ function HabitPage() {
   };
   useEffect(() => {
     fetchHabitsData();
-  }, [study_Id]);
+  }, [studyId]);
 
   const handleAddHabit = async (habitName) => {
     try {
-      await createHabits(study_Id, [habitName]);
+      await createHabits(studyId, [habitName]);
       await fetchHabitsData();
     } catch (error) {
       const serverMessage = error.response?.data?.message;
@@ -83,10 +83,10 @@ function HabitPage() {
             <div className={styles.titleContainer}>
               <h2 className={styles.title}>연우의 개발공장</h2>
               <div className={styles.titleButtons}>
-                <ArrowButton to={`/studies/${study_Id}`}>
+                <ArrowButton to={`/studies/${studyId}`}>
                   대시보드
                 </ArrowButton>
-                <ArrowButton to={`/studies/${study_Id}/focus`}>
+                <ArrowButton to={`/studies/${studyId}/focus`}>
                   오늘의 집중 타이머
                 </ArrowButton>
               </div>
