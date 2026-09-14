@@ -8,12 +8,12 @@ import ConfirmModal from '@/components/confirmModal/ConfirmModal';
 import { useFocusPoints } from '@/pages/focusPage/hooks/useFocusPoints';
 import { useState, useCallback, useEffect } from 'react';
 import { useBlocker, useParams } from 'react-router';
-import { calculateEarnedPoints } from './utils/calculatePoints';
+import { calculateEarnedPoints } from './utils/calculateEarnedPoints';
 import { showToast } from '@/utils/showToast';
 import { useTimer } from './hooks/useTimer';
 
 const PRESET_TIMES = [25, 35, 45];
-const MIN_MINUTES = 0;
+const MIN_MINUTES = 25;
 
 function FocusPage({ totalSeconds = MIN_MINUTES * 60 }) {
   const { studyId: paramStudyId } = useParams();
@@ -23,11 +23,17 @@ function FocusPage({ totalSeconds = MIN_MINUTES * 60 }) {
     Math.max(totalSeconds || 0, MIN_MINUTES * 60),
   );
 
-  const handleTimerComplete = useCallback(() => {
+  const handleTimerComplete = useCallback(async () => {
     const earnedPoints = calculateEarnedPoints(duration);
     if (earnedPoints > 0) {
-      addPoints(earnedPoints);
-      showToast(`🎉 ${earnedPoints}포인트를 획득했습니다!`, 'success');
+      const minutes = Math.floor(duration / 60);
+      try {
+        await addPoints(minutes);
+        showToast(`🎉 ${earnedPoints}포인트를 획득했습니다!`, 'success');
+      } catch (err) {
+        console.error(err.message);
+        showToast('포인트 저장에 문제가 생겼어요!', 'warning');
+      }
     }
   }, [duration, addPoints]);
 
