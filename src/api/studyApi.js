@@ -1,7 +1,6 @@
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 // src/api/studyApi.js
-import { MOCK_HABITS_RESPONSE } from '@/mocks/studyMockData';
 import {
   getStudyVerifiedToken,
   removeStudyVerified,
@@ -29,37 +28,21 @@ export async function getStudyDetail(studyId) {
 // ==========================================
 export async function getStudyHabits(
   studyId,
-  startDate,
+  targetDate,
   { page = 1, pageSize = 10 } = {},
 ) {
-  /* [실제 백엔드 배포 시 활성화할 fetch 코드]
   const queryParams = new URLSearchParams({
-    startDate: startDate instanceof Date ? startDate.toISOString() : startDate,
+    target_date:
+      targetDate instanceof Date ? targetDate.toISOString() : targetDate,
     page: String(page),
-    pageSize: String(pageSize),
+    page_size: String(pageSize),
   });
 
-  const response = await fetch(`/api/studies/${studyId}/habits?${queryParams.toString()}`);
+  const response = await fetch(
+    `${BASE_URL}/studies/${studyId}/habits/records/weekly?${queryParams.toString()}`,
+  );
   if (!response.ok) throw new Error('주간 습관 일정을 불러오지 못했습니다.');
   return await response.json();
-  */
-
-  // [목업 데이터 기반 무한 스크롤 시뮬레이션 환경]
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      const allHabits = MOCK_HABITS_RESPONSE.list;
-      const startIndex = (page - 1) * pageSize;
-      const endIndex = startIndex + pageSize;
-
-      // 요청한 page, pageSize 단위로 실제 데이터 잘라내기
-      const pagedList = allHabits.slice(startIndex, endIndex);
-
-      resolve({
-        totalCount: allHabits.length, // 전체 데이터 수 (30개)
-        list: pagedList, // 이번 페이지에 해당하는 데이터 (예: 7개씩)
-      });
-    }, 200);
-  });
 }
 
 // ==========================================
