@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { getHabits, createHabits } from '@/api/habitApi';
 import HabitForm from './components/habitForm/HabitInput';
 import ArrowButton from '@/components/arrowButton/ArrowButton';
@@ -7,7 +8,7 @@ import styles from './HabitPage.module.css';
 import HabitList from './components/habitForm/HabitList';
 
 function HabitPage() {
-  const TEMP_STUDY_ID = 1;
+  const {study_Id} = useParams();
 
   const timeNow = new Date()
     .toLocaleString('sv-SE', { timeZone: 'Asia/Seoul' })
@@ -18,7 +19,7 @@ function HabitPage() {
 
   const fetchHabitsData = async () => {
     try {
-      const response = await getHabits(TEMP_STUDY_ID);
+      const response = await getHabits(study_Id);
       const habitList = Array.isArray(response)
         ? response
         : response.data || response.habits || response.list || [];
@@ -29,11 +30,11 @@ function HabitPage() {
   };
   useEffect(() => {
     fetchHabitsData();
-  }, [TEMP_STUDY_ID]);
+  }, [study_Id]);
 
   const handleAddHabit = async (habitName) => {
     try {
-      await createHabits(TEMP_STUDY_ID, [habitName]);
+      await createHabits(study_Id, [habitName]);
       await fetchHabitsData();
     } catch (error) {
       const serverMessage = error.response?.data?.message;
@@ -82,10 +83,10 @@ function HabitPage() {
             <div className={styles.titleContainer}>
               <h2 className={styles.title}>연우의 개발공장</h2>
               <div className={styles.titleButtons}>
-                <ArrowButton to={`/studies/${TEMP_STUDY_ID}`}>
+                <ArrowButton to={`/studies/${study_Id}`}>
                   대시보드
                 </ArrowButton>
-                <ArrowButton to={`/studies/${TEMP_STUDY_ID}/focus`}>
+                <ArrowButton to={`/studies/${study_Id}/focus`}>
                   오늘의 집중 타이머
                 </ArrowButton>
               </div>

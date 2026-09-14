@@ -25,6 +25,7 @@
     "react-hot-toast": "^2.6.0",
     "react-infinite-scroll-component": "^7.2.1",
     "react-router": "^7.18.3",
+    "react-router-dom": "^7.18.3",
     "react-spinners": "^0.17.1"
   },
   "devDependencies": {
