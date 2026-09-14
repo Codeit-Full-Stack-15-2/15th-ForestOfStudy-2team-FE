@@ -41,8 +41,10 @@ export async function getStudyHabits(
   const response = await fetch(
     `${BASE_URL}/studies/${studyId}/habits/records/weekly?${queryParams.toString()}`,
   );
+
   if (!response.ok) throw new Error('주간 습관 일정을 불러오지 못했습니다.');
-  return await response.json();
+  const habit_records = (await response.json()).data;
+  return habit_records;
 }
 
 // ==========================================

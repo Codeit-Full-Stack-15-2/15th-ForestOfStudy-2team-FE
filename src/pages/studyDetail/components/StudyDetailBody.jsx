@@ -25,7 +25,7 @@ function StudyDetailBody({ studyId }) {
           pageSize: 7,
         });
 
-        const incomingList = Array.isArray(data?.list) ? data.list : [];
+        const incomingList = Array.isArray(data) ? data : [];
 
         setHabits((prev) =>
           targetPage === 1 ? incomingList : [...prev, ...incomingList],
