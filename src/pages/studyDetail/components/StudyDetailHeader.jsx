@@ -21,7 +21,6 @@ function StudyDetailHeader({ studyId, data }) {
     handleOpenHabitModal,
     handleOpenFocusModal,
   } = useStudyActions(studyId);
-
   return (
     <>
       <section className={styles.headerContainer}>

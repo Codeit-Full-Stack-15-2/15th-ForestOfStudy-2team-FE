@@ -1,6 +1,8 @@
+.containerGap {
+  gap: 8px;
+}
 .container {
   display: flex;
-  gap: 8px;
   flex-wrap: wrap;
   & .badges {
     display: flex;
