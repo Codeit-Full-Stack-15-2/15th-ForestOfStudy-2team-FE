@@ -1,5 +1,6 @@
 import { getStudyHabits } from '@/api/studyApi';
 import Spinner from '@/components/Spinner';
+import dayjs from '@/utils/dayjs';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import HabitTrackerTable from './HabitTrackerTable';
 import styles from './StudyDetailBody.module.css';
@@ -18,7 +19,8 @@ function StudyDetailBody({ studyId }) {
       setIsLoading(true);
 
       try {
-        const data = await getStudyHabits(studyId, new Date(), {
+        const targetDate = dayjs().format('YYYY-MM-DD');
+        const data = await getStudyHabits(studyId, targetDate, {
           page: targetPage,
           pageSize: 7,
         });
