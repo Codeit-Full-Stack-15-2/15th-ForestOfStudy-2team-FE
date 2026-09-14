@@ -15,6 +15,10 @@ function HabitItem({
   const [editHabit, setEditHabit] = useState(habit.name);
 
   useEffect(() => {
+    setEditHabit(habit.title || '');
+  }, [habit]);
+
+  useEffect(() => {
     if (isCheckMode) {
       setIsEditing(false);
     }
@@ -41,7 +45,7 @@ function HabitItem({
       return;
     }
     onCheckHabit(habit.id);
-    showToast(`${habit.name} 달성을 축하합니다!`, 'success');
+    showToast(`${habit.title} 달성을 축하합니다!`, 'success');
   };
 
   return (
@@ -67,7 +71,7 @@ function HabitItem({
             )}
             onClick={handleClick}
           >
-            {habit.name}
+            {habit.title}
           </span>
         )}
       </div>

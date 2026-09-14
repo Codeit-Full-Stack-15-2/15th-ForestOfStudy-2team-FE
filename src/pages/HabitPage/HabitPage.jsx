@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { getHabits, createHabits } from '@/api/habitApi';
 import HabitForm from './components/habitForm/HabitInput';
 import ArrowButton from '@/components/arrowButton/ArrowButton';
 import CardContainer from '@/components/cardContainer/CardContainer';
@@ -6,7 +7,7 @@ import styles from './HabitPage.module.css';
 import HabitList from './components/habitForm/HabitList';
 
 function HabitPage() {
-  const TEMP_STUDY_ID = 123;
+  const TEMP_STUDY_ID = 1;
 
   const timeNow = new Date()
     .toLocaleString('sv-SE', { timeZone: 'Asia/Seoul' })
@@ -15,15 +16,33 @@ function HabitPage() {
   const [isCheckMode, setIsCheckMode] = useState(true);
   const [habits, setHabits] = useState([]);
 
-  const handleAddHabit = (habitName) => {
-    setHabits((prevHabits) => [
-      ...prevHabits,
-      {
-        id: Date.now(),
-        name: habitName,
-        isCompleted: false,
-      },
-    ]);
+  const fetchHabitsData = async () => {
+    try {
+      const response = await getHabits(TEMP_STUDY_ID);
+      const habitList = Array.isArray(response)
+        ? response
+        : response.data || response.habits || response.list || [];
+      setHabits(habitList);
+    } catch (error) {
+      console.error('습관 목록 불러오기 오류:', error);
+    }
+  };
+  useEffect(() => {
+    fetchHabitsData();
+  }, [TEMP_STUDY_ID]);
+
+  const handleAddHabit = async (habitName) => {
+    try {
+      await createHabits(TEMP_STUDY_ID, [habitName]);
+      await fetchHabitsData();
+    } catch (error) {
+      const serverMessage = error.response?.data?.message;
+      if (serverMessage) {
+        alert(serverMessage);
+      } else {
+        alert('습관 등록 실패: 서버 통신에 실패했습니다.');
+      }
+    }
   };
 
   const handleUpdateHabit = (id, newName) => {
