@@ -29,7 +29,7 @@ export async function getStudyDetail(studyId) {
 export async function getStudyHabits(
   studyId,
   targetDate,
-  { page = 1, pageSize = 10 } = {},
+  { page = 1, pageSize = 7 } = {},
 ) {
   const queryParams = new URLSearchParams({
     target_date:
@@ -43,7 +43,7 @@ export async function getStudyHabits(
   );
 
   if (!response.ok) throw new Error('주간 습관 일정을 불러오지 못했습니다.');
-  const habit_records = (await response.json()).data;
+  const habit_records = (await response.json()).data.list;
   return habit_records;
 }
 
