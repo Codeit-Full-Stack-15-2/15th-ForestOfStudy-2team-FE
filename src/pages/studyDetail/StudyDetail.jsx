@@ -23,7 +23,7 @@ function StudyDetail() {
       } catch (error) {
         setError(error.message);
         showToast(error.message, 'warning');
-        navigate('/');
+        navigate('/', { replace: true });
       } finally {
         setIsLoading(false);
       }

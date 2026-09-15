@@ -6,6 +6,7 @@ import styles from './PasswordVerificationModal.module.css';
 
 function PasswordVerificationModal({
   open = false,
+  nickname,
   title,
   description,
   okText = '확인',
@@ -74,7 +75,9 @@ function PasswordVerificationModal({
     <div className={styles.dimOverlay}>
       <div ref={modalRef} className={styles.modalContainer}>
         <div className={styles.header}>
-          <p className={styles.title}>{title}</p>
+          <p className={styles.title}>
+            {nickname}의 {title}
+          </p>
           <p className={styles.description}>{description}</p>
         </div>
         <div className={styles.body}>
