@@ -11,13 +11,17 @@
   display: flex;
   margin-top: 24px;
   justify-content: space-between;
+  align-items: center;
+  gap: 8px;
   & .title {
     font-size: var(--font-size-3xl);
+    line-height: 1.333333;
     font-weight: 800;
     color: var(--color-gray-900);
   }
   & .titleButtons {
     display: flex;
+    flex-shrink: 0;
     gap: 16px;
     flex-wrap: wrap;
   }
@@ -87,9 +91,6 @@
           right: 0px;
         }
       }
-    }
-    & .controls {
-      text-align: right;
     }
   }
   .titleContainer {

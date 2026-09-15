@@ -1,5 +1,6 @@
 .container {
   background-color: var(--color-bg-base);
+  margin: 0 20px;
 }
 
 .wrapper {
@@ -30,11 +31,11 @@
 }
 
 @media (max-width: 768px) {
+  .container {
+    margin: 0;
+  }
   .wrapper {
     padding: 0 24px;
-    /* & button {
-      width: 160px;
-    } */
   }
 }
 
