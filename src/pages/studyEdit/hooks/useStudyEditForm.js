@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 export function useStudyEditForm() {
   const [formData, setFormData] = useState({
@@ -10,6 +10,15 @@ export function useStudyEditForm() {
 
   const [nicknameCheckStatus, setNicknameCheckStatus] = useState('unchecked');
   const [errors, setErrors] = useState({});
+
+  const initializeFormData = useCallback((study) => {
+    setFormData({
+      nickname: study.nickname ?? '',
+      studyName: study.title ?? '',
+      description: study.description ?? '',
+      background: study.background ?? '',
+    });
+  }, []);
 
   const clearError = (name) => {
     setErrors((prev) => ({
@@ -46,5 +55,6 @@ export function useStudyEditForm() {
     errors,
     handleChange,
     handleBackgroundSelect,
+    initializeFormData,
   };
 }

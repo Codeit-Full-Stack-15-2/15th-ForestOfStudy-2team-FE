@@ -1,5 +1,7 @@
 import { getStudyHabits } from '@/api/studyApi';
 import Spinner from '@/components/Spinner';
+import dayjs from '@/utils/dayjs';
+import clsx from 'clsx';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import HabitTrackerTable from './HabitTrackerTable';
 import styles from './StudyDetailBody.module.css';
@@ -9,8 +11,8 @@ function StudyDetailBody({ studyId }) {
   const [habits, setHabits] = useState([]);
   const [hasMore, setHasMore] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-
   const sentinelRef = useRef(null);
+  const isEmpty = !isLoading && !hasMore && habits.length === 0;
 
   const loadHabits = useCallback(
     async (targetPage) => {
@@ -18,12 +20,13 @@ function StudyDetailBody({ studyId }) {
       setIsLoading(true);
 
       try {
-        const data = await getStudyHabits(studyId, new Date(), {
+        const targetDate = dayjs().format('YYYY-MM-DD');
+        const data = await getStudyHabits(studyId, targetDate, {
           page: targetPage,
           pageSize: 7,
         });
 
-        const incomingList = Array.isArray(data?.list) ? data.list : [];
+        const incomingList = Array.isArray(data) ? data : [];
 
         setHabits((prev) =>
           targetPage === 1 ? incomingList : [...prev, ...incomingList],
@@ -73,26 +76,42 @@ function StudyDetailBody({ studyId }) {
   return (
     <section className={styles.bodyContainer}>
       <h2 className={styles.title}>습관 기록표</h2>
-      <HabitTrackerTable habits={habits} />
 
-      <div ref={sentinelRef} style={{ height: '10px' }} aria-hidden="true" />
-
-      {!hasMore && (
-        <p className={styles.endMessage}>모든 습관 데이터를 불러왔습니다.</p>
-      )}
-      {isLoading && (
-        <div className={styles.loaderContainer}>
-          <Spinner />
-        </div>
-      )}
-      {!isLoading && !hasMore && habits.length === 0 && (
+      {isEmpty ? (
         <div className={styles.contentDefault}>
           <p>
             아직 습관이 없어요
             <br />
-            오늘의 습관에서 습관을 생성해보세요
+            [습관 달성 기록하기]에서 습관을 생성해보세요
           </p>
         </div>
+      ) : (
+        <>
+          {habits.length > 0 && <HabitTrackerTable habits={habits} />}
+
+          <div
+            ref={sentinelRef}
+            style={{ height: '10px' }}
+            aria-hidden="true"
+          />
+
+          {!hasMore && (
+            <p className={styles.endMessage}>
+              모든 습관 데이터를 불러왔습니다.
+            </p>
+          )}
+
+          {isLoading && (
+            <div
+              className={clsx(
+                habits.length === 0 && styles.loaderContainerNothing,
+                styles.loaderContainer,
+              )}
+            >
+              <Spinner />
+            </div>
+          )}
+        </>
       )}
     </section>
   );

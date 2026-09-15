@@ -18,8 +18,11 @@ function HabitTrackerTable({ habits }) {
         {habits.map((habit) => (
           <React.Fragment key={habit.id}>
             <span className={styles.habitTitle}>{habit.title}</span>
-            {habit.records.map((record) => (
-              <StampIcon key={record.day} isCompleted={record.isCompleted} />
+            {habit.weeklyRecords.map((record) => (
+              <StampIcon
+                key={record.date}
+                isCompleted={Boolean(record.record)}
+              />
             ))}
           </React.Fragment>
         ))}
