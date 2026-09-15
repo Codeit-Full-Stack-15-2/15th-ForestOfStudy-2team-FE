@@ -6,6 +6,30 @@ import {
   removeStudyVerified,
 } from '@/utils/studyAuthSession';
 
+export async function getStudies({
+  keyword = '',
+  orderBy = 'latest',
+  page = 1,
+  pageSize = 6,
+} = {}) {
+  const queryParams = new URLSearchParams({
+    orderBy,
+    page: String(page),
+    pageSize: String(pageSize),
+  });
+  if (keyword) {
+    queryParams.append('keyword', keyword);
+  }
+
+  const response = await fetch(`${BASE_URL}/studies?${queryParams.toString()}`);
+  if (!response.ok) {
+    throw new Error('스터디 목록을 불러오지 못했습니다.');
+  }
+
+  const data = await response.json();
+  return data.data;
+}
+
 // ==========================================
 // 1. 스터디 헤더 정보 조회 API
 // ==========================================
