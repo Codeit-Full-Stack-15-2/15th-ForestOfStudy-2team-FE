@@ -1,11 +1,12 @@
-import axios from 'axios';
-
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export async function getHabits(studyId) {
   try {
-    const response = await axios.get(`${BASE_URL}/studies/${studyId}/habits`);
-    return response.data;
+    const response = await fetch(`${BASE_URL}/studies/${studyId}/habits`);
+    if (!response.ok) {
+      throw new Error(`습관 목록을 가져오지 못했습니다.`);
+    }
+    return response.json();
   } catch (error) {
     console.error('습관 목록 조회 실패', error);
     throw error;
@@ -14,10 +15,20 @@ export async function getHabits(studyId) {
 
 export async function createHabits(studyId, titles) {
   try {
-    const response = await axios.post(`${BASE_URL}/studies/${studyId}/habits`, {
-      title: titles,
+    const response = await fetch(`${BASE_URL}/studies/${studyId}/habits`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+
+      body: JSON.stringify({
+        title: titles,
+      }),
     });
-    return response.data;
+    if (!response.ok) {
+      throw new Error('습관을 생성하는데 실패했습니다.');
+    }
+    return await response.json();
   } catch (error) {
     console.error('습관 생성 실패:', error);
     throw error;
@@ -26,11 +37,17 @@ export async function createHabits(studyId, titles) {
 
 export async function updateHabits(studyId, habits) {
   try {
-    const response = await axios.patch(
-      `${BASE_URL}/studies/${studyId}/habits`,
-      { habits }, // 백엔드 스키마 명세의 필드명(habits 또는 updatedHabits)에 맞게 전달
-    );
-    return response.data;
+    const response = await fetch(`${BASE_URL}/studies/${studyId}/habits`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ habits }),
+    });
+    if (!response.ok) {
+      throw new Error('습관 수정에 실패했습니다.');
+    }
+    return await response.json();
   } catch (error) {
     console.error('습관 수정 실패:', error);
     throw error;
@@ -39,13 +56,17 @@ export async function updateHabits(studyId, habits) {
 
 export async function deleteHabits(studyId, habitIds) {
   try {
-    const response = await axios.delete(
-      `${BASE_URL}/studies/${studyId}/habits`,
-      {
-        data: { habitIds }, // deleteHabitsSchema에서 요구하는 필드명(예: habitIds)으로 설정
+    const response = await fetch(`${BASE_URL}/studies/${studyId}/habits`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
       },
-    );
-    return response.data;
+      body: JSON.stringify({ habitIds }),
+    });
+    if (!response.ok) {
+      throw new Error('습관을 삭제하는데 실패했습니다.');
+    }
+    return await response.json();
   } catch (error) {
     console.error('습관 삭제 실패:', error);
     throw error;
