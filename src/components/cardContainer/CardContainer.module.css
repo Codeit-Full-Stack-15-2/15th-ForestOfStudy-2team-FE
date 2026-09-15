@@ -18,6 +18,10 @@
 
 /* container tablet*/
 @media (max-width: 768px) {
+  .container {
+    margin: 0;
+  }
+
   .wrapper {
     margin: 16px 24px;
     padding: 24px;
