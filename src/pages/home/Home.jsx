@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import searchIcon from '@/assets/homePage/search.svg';
 import styles from './Home.module.css';
 import StudyCard from '@/pages/home/components/studyCard/StudyCard';
-import studyCardBg from '@/assets/homePage/study-card-bg.webp';
 import BaseButton from '@/components/baseButton/BaseButton';
+import { getStudies } from '@/api/studyApi';
 
 const sortOptions = [
   { value: 'recent', label: '최근 순' },
@@ -12,78 +12,18 @@ const sortOptions = [
   { value: 'lowPoint', label: '작은 포인트 순' },
 ];
 
-const studies = [
-  {
-    id: 1,
-    title: '이유디의 UX 스터디',
-    point: 310,
-    days: 62,
-    description: 'Slow And Steady Wins The Race!!',
-    participants: 37,
-    focusCount: 26,
-    likes: 14,
-    variant: 'image',
-    image: studyCardBg,
-  },
-  {
-    id: 2,
-    title: '프론트엔드 개발 스터디',
-    point: 420,
-    days: 31,
-    description: '매일 조금씩 꾸준히 공부합니다',
-    participants: 24,
-    focusCount: 18,
-    likes: 9,
-    variant: 'green',
-  },
-  {
-    id: 3,
-    title: '알고리즘 문제 풀이',
-    point: 250,
-    days: 45,
-    description: '하루 한 문제씩 해결해요!',
-    participants: 19,
-    focusCount: 22,
-    likes: 11,
-    variant: 'yellow',
-  },
-  {
-    id: 4,
-    title: '이유디의 UX 스터디',
-    point: 310,
-    days: 62,
-    description: 'Slow And Steady Wins The Race!!',
-    participants: 37,
-    focusCount: 26,
-    likes: 14,
-    variant: 'image',
-    image: studyCardBg,
-  },
-  {
-    id: 5,
-    title: '프론트엔드 개발 스터디',
-    point: 420,
-    days: 31,
-    description: '매일 조금씩 꾸준히 공부합니다',
-    participants: 24,
-    focusCount: 18,
-    likes: 9,
-    variant: 'green',
-  },
-  {
-    id: 6,
-    title: '알고리즘 문제 풀이',
-    point: 250,
-    days: 45,
-    description: '하루 한 문제씩 해결해요!',
-    participants: 19,
-    focusCount: 22,
-    likes: 11,
-    variant: 'yellow',
-  },
-];
-
 function Home() {
+  const [studies, setStudies] = useState([]);
+
+  useEffect(() => {
+    const fetchStudies = async () => {
+      const data = await getStudies();
+      setStudies(data.list);
+    };
+
+    fetchStudies();
+  }, []);
+
   // 최근 조회한 스터디 localStorage 활용해서 저장, 표시 구현
   const handleStudyClick = (studyId) => {
     const savedRecentStudies = localStorage.getItem('recentStudies');
