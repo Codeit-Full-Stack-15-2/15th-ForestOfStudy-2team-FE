@@ -23,11 +23,14 @@
       text-align: center;
     }
   }
-  & .loaderContainer {
+  & .loaderContainerNothing {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: calc(511px - 77px);
+  }
+  & .loaderContainer {
+    text-align: center;
   }
 }
 

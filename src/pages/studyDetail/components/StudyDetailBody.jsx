@@ -1,6 +1,7 @@
 import { getStudyHabits } from '@/api/studyApi';
 import Spinner from '@/components/Spinner';
 import dayjs from '@/utils/dayjs';
+import clsx from 'clsx';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import HabitTrackerTable from './HabitTrackerTable';
 import styles from './StudyDetailBody.module.css';
@@ -101,7 +102,12 @@ function StudyDetailBody({ studyId }) {
           )}
 
           {isLoading && (
-            <div className={styles.loaderContainer}>
+            <div
+              className={clsx(
+                habits.length === 0 && styles.loaderContainerNothing,
+                styles.loaderContainer,
+              )}
+            >
               <Spinner />
             </div>
           )}
