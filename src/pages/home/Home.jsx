@@ -93,15 +93,13 @@ function Home() {
               <StudyCard
                 key={study.id}
                 id={study.id}
+                nickname={study.nickname}
                 title={study.title}
                 point={study.point}
-                days={study.days}
+                createdAt={study.createdAt}
                 description={study.description}
-                participants={study.participants}
-                focusCount={study.focusCount}
-                likes={study.likes}
-                variant={study.variant}
-                image={study.image}
+                emoji={study.emoji}
+                background={study.background}
               />
             );
           })}
@@ -172,15 +170,13 @@ function Home() {
               <StudyCard
                 key={study.id}
                 id={study.id}
+                nickname={study.nickname}
                 title={study.title}
                 point={study.point}
-                days={study.days}
+                createdAt={study.createdAt}
                 description={study.description}
-                participants={study.participants}
-                focusCount={study.focusCount}
-                likes={study.likes}
-                variant={study.variant}
-                image={study.image}
+                emoji={study.emoji}
+                background={study.background}
                 onClick={() => handleStudyClick(study.id)}
               />
             );
