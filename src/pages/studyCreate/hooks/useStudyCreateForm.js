@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { checkNicknameAvailability } from '@/api/studyApi';
 
 export function useStudyCreateForm() {
   const [formData, setFormData] = useState({
@@ -36,6 +37,25 @@ export function useStudyCreateForm() {
     }
   };
 
+  const handleNicknameCheck = async () => {
+    const nickname = formData.nickname.trim();
+
+    if (!nickname) {
+      return;
+    }
+
+    setNicknameCheckStatus('checking');
+
+    try {
+      const result = await checkNicknameAvailability(nickname);
+
+      setNicknameCheckStatus(result.available ? 'available' : 'duplicate');
+    } catch (error) {
+      console.error('닉네임 중복 확인에 실패했습니다.', error);
+      setNicknameCheckStatus('unchecked');
+    }
+  };
+
   const handleBackgroundSelect = (backgroundId) => {
     setSelectedBackground(backgroundId);
   };
@@ -55,6 +75,8 @@ export function useStudyCreateForm() {
 
     if (!formData.nickname.trim()) {
       nextErrors.nickname = '*닉네임을 입력해 주세요.';
+    } else if (nicknameCheckStatus !== 'available') {
+      nextErrors.nickname = '*닉네임 중복 확인을 해주세요.';
     }
 
     if (!formData.studyName.trim()) {
@@ -102,6 +124,7 @@ export function useStudyCreateForm() {
     errors,
     isConfirmModalOpen,
     handleChange,
+    handleNicknameCheck,
     handleBackgroundSelect,
     handlePasswordChange,
     handlePasswordConfirmChange,

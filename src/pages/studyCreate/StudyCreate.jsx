@@ -5,6 +5,7 @@ import PasswordInput from '@/components/passwordInput/PasswordInput';
 import BaseButton from '@/components/baseButton/BaseButton';
 import ConfirmModal from '@/components/confirmModal/ConfirmModal';
 import { useNavigate } from 'react-router';
+import { createStudy } from '@/api/studyApi';
 
 function StudyCreate() {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ function StudyCreate() {
     errors,
     isConfirmModalOpen,
     handleChange,
+    handleNicknameCheck,
     handleBackgroundSelect,
     handlePasswordChange,
     handlePasswordConfirmChange,
@@ -24,13 +26,25 @@ function StudyCreate() {
     handleCloseConfirmModal,
   } = useStudyCreateForm();
 
-  const handleConfirmCreate = () => {
-    // 실제 생성 API 연동 시 적용
-    // const description =
-    //   formData.description.trim() ||
-    //   `${formData.nickname.trim()}의 ${formData.studyName.trim()}입니다.`;
+  const handleConfirmCreate = async () => {
+    const description =
+      formData.description.trim() ||
+      `${formData.nickname.trim()}의 ${formData.studyName.trim()}입니다.`;
 
-    navigate('/studies/123');
+    const studyData = {
+      nickname: formData.nickname.trim(),
+      title: formData.studyName.trim(),
+      description,
+      background: selectedBackground,
+      study_password: password,
+    };
+
+    try {
+      const newStudy = await createStudy(studyData);
+      navigate(`/studies/${newStudy.id}`);
+    } catch (error) {
+      console.error('스터디 생성에 실패했습니다:', error);
+    }
   };
 
   return (
@@ -44,6 +58,7 @@ function StudyCreate() {
               formData={formData}
               onChange={handleChange}
               nicknameCheckStatus={nicknameCheckStatus}
+              onNicknameCheck={handleNicknameCheck}
               selectedBackground={selectedBackground}
               onBackgroundSelect={handleBackgroundSelect}
               errors={errors}
@@ -74,12 +89,12 @@ function StudyCreate() {
         </section>
       </form>
       <ConfirmModal
-  open={isConfirmModalOpen}
-  title="비밀번호를 꼭 기억해 주세요."
-  description="비밀번호는 변경할 수 없습니다."
-  onCancel={handleCloseConfirmModal}
-  onConfirm={handleConfirmCreate}
-/>
+        open={isConfirmModalOpen}
+        title="비밀번호를 꼭 기억해 주세요."
+        description="비밀번호는 변경할 수 없습니다."
+        onCancel={handleCloseConfirmModal}
+        onConfirm={handleConfirmCreate}
+      />
     </main>
   );
 }
