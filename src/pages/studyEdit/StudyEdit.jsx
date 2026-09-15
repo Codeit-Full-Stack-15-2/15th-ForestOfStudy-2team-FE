@@ -7,6 +7,7 @@ import { useNavigate, useParams } from 'react-router';
 import ConfirmModal from '@/components/confirmModal/ConfirmModal';
 import { checkIsStudyVerified } from '@/utils/studyAuthSession';
 import { getStudyDetail, updateStudy } from '@/api/studyApi';
+import { showToast } from '@/utils/showToast';
 
 function StudyEdit() {
   const navigate = useNavigate();
@@ -19,6 +20,8 @@ function StudyEdit() {
     nicknameCheckStatus,
     errors,
     handleChange,
+    handleNicknameCheck,
+    validateNickname,
     handleBackgroundSelect,
     initializeFormData,
   } = useStudyEditForm();
@@ -43,6 +46,12 @@ function StudyEdit() {
   }, [studyId, navigate, initializeFormData]);
 
   const handleEdit = () => {
+    const isValidNickname = validateNickname();
+
+    if (!isValidNickname) {
+      return;
+    }
+
     setIsConfirmOpen(true);
   };
 
@@ -66,6 +75,7 @@ function StudyEdit() {
       navigate(`/studies/${studyId}`);
     } catch (error) {
       console.error('스터디 수정에 실패했습니다:', error);
+      showToast(error.message || '스터디 수정에 실패했습니다.', 'warning');
     }
   };
 
@@ -79,6 +89,7 @@ function StudyEdit() {
             formData={formData}
             onChange={handleChange}
             nicknameCheckStatus={nicknameCheckStatus}
+            onNicknameCheck={handleNicknameCheck}
             selectedBackground={formData.background}
             onBackgroundSelect={handleBackgroundSelect}
             errors={errors}

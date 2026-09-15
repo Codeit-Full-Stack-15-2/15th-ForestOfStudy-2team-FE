@@ -138,3 +138,39 @@ export async function updateStudy(studyId, updateData) {
 
   return result.data;
 }
+
+export async function createStudy(studyData) {
+  const response = await fetch(`${BASE_URL}/studies`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(studyData),
+  });
+
+  const result = await response.json();
+
+  if (!response.ok) {
+    throw new Error(result.message || '스터디 생성에 실패했습니다.');
+  }
+
+  return result.data;
+}
+
+export async function checkNicknameAvailability(nickname) {
+  const queryParams = new URLSearchParams({
+    nickname,
+  });
+
+  const response = await fetch(
+    `${BASE_URL}/studies/nickname/check?${queryParams.toString()}`,
+  );
+
+  const result = await response.json();
+
+  if (!response.ok) {
+    throw new Error(result.message || '닉네임 중복 확인에 실패했습니다.');
+  }
+
+  return result.data;
+}
