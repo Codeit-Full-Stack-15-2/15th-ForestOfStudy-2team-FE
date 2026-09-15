@@ -40,7 +40,9 @@ function StudyDetailHeader({ studyId, data }) {
           </div>
         </div>
         <div className={styles.titleContainer}>
-          <h2 className={styles.title}>{data.title}</h2>
+          <h2 className={styles.title}>
+            {data.nickname}의 {data.title}
+          </h2>
           <div className={styles.titleButtons}>
             <ArrowButton onClick={handleOpenHabitModal}>
               습관 달성 기록하기
@@ -65,6 +67,7 @@ function StudyDetailHeader({ studyId, data }) {
       </section>
       <PasswordVerificationModal
         open={Boolean(activeModal)}
+        nickname={data.nickname}
         title={data.title}
         description="권한이 필요해요!"
         okText={activeModal?.buttonText}
