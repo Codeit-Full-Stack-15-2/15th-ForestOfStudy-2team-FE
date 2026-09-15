@@ -105,23 +105,27 @@ function Home() {
       <section className={styles.recentStudies}>
         <h2 className={styles.sectionTitle}>최근 조회한 스터디</h2>
 
-        <ul className={styles.recentStudyList}>
-          {recentStudies.map((study) => {
-            return (
-              <StudyCard
-                key={study.id}
-                id={study.id}
-                nickname={study.nickname}
-                title={study.title}
-                point={study.point}
-                createdAt={study.createdAt}
-                description={study.description}
-                emoji={study.emoji}
-                background={study.background}
-              />
-            );
-          })}
-        </ul>
+        {recentStudies.length === 0 ? (
+          <p className={styles.emptyMessage}>아직 조회한 스터디가 없어요</p>
+        ) : (
+          <ul className={styles.recentStudyList}>
+            {recentStudies.map((study) => {
+              return (
+                <StudyCard
+                  key={study.id}
+                  id={study.id}
+                  nickname={study.nickname}
+                  title={study.title}
+                  point={study.point}
+                  createdAt={study.createdAt}
+                  description={study.description}
+                  emoji={study.emoji}
+                  background={study.background}
+                />
+              );
+            })}
+          </ul>
+        )}
       </section>
 
       <section className={styles.studyBrowse}>
@@ -182,24 +186,33 @@ function Home() {
           </div>
         </div>
 
-        <ul className={styles.studyList}>
-          {studies.map((study) => {
-            return (
-              <StudyCard
-                key={study.id}
-                id={study.id}
-                nickname={study.nickname}
-                title={study.title}
-                point={study.point}
-                createdAt={study.createdAt}
-                description={study.description}
-                emoji={study.emoji}
-                background={study.background}
-                onClick={() => handleStudyClick(study.id)}
-              />
-            );
-          })}
-        </ul>
+        {studies.length === 0 ? (
+          <p className={styles.emptyMessage}>
+            {searchValue.trim()
+              ? '검색 결과가 없어요'
+              : '아직 둘러 볼 스터디가 없어요'}
+          </p>
+        ) : (
+          <ul className={styles.studyList}>
+            {studies.map((study) => {
+              return (
+                <StudyCard
+                  key={study.id}
+                  id={study.id}
+                  nickname={study.nickname}
+                  title={study.title}
+                  point={study.point}
+                  createdAt={study.createdAt}
+                  description={study.description}
+                  emoji={study.emoji}
+                  background={study.background}
+                  onClick={() => handleStudyClick(study.id)}
+                />
+              );
+            })}
+          </ul>
+        )}
+
         {studies.length < totalCount && (
           <BaseButton
             variant="outline"
