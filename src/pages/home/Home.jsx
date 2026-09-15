@@ -17,6 +17,9 @@ function Home() {
   const [page, setPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
 
+  const [isStudiesLoading, setIsStudiesLoading] = useState(true);
+  const [studiesError, setStudiesError] = useState(null);
+
   const [sortValue, setSortValue] = useState('latest');
   const [searchValue, setSearchValue] = useState('');
 
@@ -33,15 +36,24 @@ function Home() {
 
   useEffect(() => {
     const fetchStudies = async () => {
-      const data = await getStudies({
-        keyword: debouncedSearchValue,
-        orderBy: sortValue,
-        page,
-      });
-      setStudies((prevStudies) =>
-        page === 1 ? data.list : [...prevStudies, ...data.list],
-      );
-      setTotalCount(data.totalCount);
+      setIsStudiesLoading(true);
+      setStudiesError(null);
+
+      try {
+        const data = await getStudies({
+          keyword: debouncedSearchValue,
+          orderBy: sortValue,
+          page,
+        });
+        setStudies((prevStudies) =>
+          page === 1 ? data.list : [...prevStudies, ...data.list],
+        );
+        setTotalCount(data.totalCount);
+      } catch (error) {
+        setStudiesError(error);
+      } finally {
+        setIsStudiesLoading(false);
+      }
     };
 
     fetchStudies();
@@ -65,6 +77,9 @@ function Home() {
 
   const [recentStudies, setRecentStudies] = useState([]);
 
+  const [isRecentStudiesLoading, setIsRecentStudiesLoading] = useState(true);
+  const [recentStudiesError, setRecentStudiesError] = useState(null);
+
   useEffect(() => {
     const savedRecentStudyIds = localStorage.getItem('recentStudies');
 
@@ -73,19 +88,25 @@ function Home() {
       : [];
 
     const fetchRecentStudies = async () => {
-      const recentStudyData = await Promise.all(
-        recentStudyIds.map((id) => getStudyDetail(id)),
-      );
+      try {
+        const recentStudyData = await Promise.all(
+          recentStudyIds.map((id) => getStudyDetail(id)),
+        );
 
-      const formattedRecentStudies = recentStudyData.map((study) => ({
-        ...study,
-        emoji: study.reactions.map((reaction) => ({
-          emoji: reaction.emoji,
-          count: reaction.totalCount,
-        })),
-      }));
+        const formattedRecentStudies = recentStudyData.map((study) => ({
+          ...study,
+          emoji: study.reactions.map((reaction) => ({
+            emoji: reaction.emoji,
+            count: reaction.totalCount,
+          })),
+        }));
 
-      setRecentStudies(formattedRecentStudies);
+        setRecentStudies(formattedRecentStudies);
+      } catch (error) {
+        setRecentStudiesError(error);
+      } finally {
+        setIsRecentStudiesLoading(false);
+      }
     };
 
     fetchRecentStudies();
@@ -105,7 +126,13 @@ function Home() {
       <section className={styles.recentStudies}>
         <h2 className={styles.sectionTitle}>최근 조회한 스터디</h2>
 
-        {recentStudies.length === 0 ? (
+        {isRecentStudiesLoading ? (
+          <p className={styles.emptyMessage}>불러오는 중...</p>
+        ) : recentStudiesError ? (
+          <p className={styles.emptyMessage}>
+            최근 조회한 스터디를 불러오지 못했어요
+          </p>
+        ) : recentStudies.length === 0 ? (
           <p className={styles.emptyMessage}>아직 조회한 스터디가 없어요</p>
         ) : (
           <ul className={styles.recentStudyList}>
@@ -186,7 +213,11 @@ function Home() {
           </div>
         </div>
 
-        {studies.length === 0 ? (
+        {isStudiesLoading && page === 1 ? (
+          <p className={styles.emptyMessage}>불러오는 중...</p>
+        ) : studiesError ? (
+          <p className={styles.emptyMessage}>스터디 목록을 불러오지 못했어요</p>
+        ) : studies.length === 0 ? (
           <p className={styles.emptyMessage}>
             {searchValue.trim()
               ? '검색 결과가 없어요'
@@ -220,8 +251,9 @@ function Home() {
             width="260px"
             className={styles.loadMoreButton}
             onClick={handleLoadMore}
+            disabled={isStudiesLoading && page > 1}
           >
-            더보기
+            {isStudiesLoading && page > 1 ? '불러오는 중...' : '더보기'}
           </BaseButton>
         )}
       </section>
