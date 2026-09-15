@@ -3,7 +3,7 @@ import searchIcon from '@/assets/homePage/search.svg';
 import styles from './Home.module.css';
 import StudyCard from '@/pages/home/components/studyCard/StudyCard';
 import BaseButton from '@/components/baseButton/BaseButton';
-import { getStudies } from '@/api/studyApi';
+import { getStudies, getStudyDetail } from '@/api/studyApi';
 
 const sortOptions = [
   { value: 'latest', label: '최근 순' },
@@ -63,15 +63,33 @@ function Home() {
     localStorage.setItem('recentStudies', JSON.stringify(recentStudyIds));
   };
 
-  const savedRecentStudyIds = localStorage.getItem('recentStudies');
+  const [recentStudies, setRecentStudies] = useState([]);
 
-  const recentStudyIds = savedRecentStudyIds
-    ? JSON.parse(savedRecentStudyIds)
-    : [];
+  useEffect(() => {
+    const savedRecentStudyIds = localStorage.getItem('recentStudies');
 
-  const recentStudies = recentStudyIds
-    .map((id) => studies.find((study) => study.id === id))
-    .filter(Boolean);
+    const recentStudyIds = savedRecentStudyIds
+      ? JSON.parse(savedRecentStudyIds)
+      : [];
+
+    const fetchRecentStudies = async () => {
+      const recentStudyData = await Promise.all(
+        recentStudyIds.map((id) => getStudyDetail(id)),
+      );
+
+      const formattedRecentStudies = recentStudyData.map((study) => ({
+        ...study,
+        emoji: study.reactions.map((reaction) => ({
+          emoji: reaction.emoji,
+          count: reaction.totalCount,
+        })),
+      }));
+
+      setRecentStudies(formattedRecentStudies);
+    };
+
+    fetchRecentStudies();
+  }, []);
 
   // 정렬 버튼 커스텀 드롭다운 구현
   const [isSortOpen, setIsSortOpen] = useState(false);
