@@ -12,7 +12,11 @@ function HabitItem({
   onUpdateHabit,
 }) {
   const [isEditing, setIsEditing] = useState(false);
-  const [editHabit, setEditHabit] = useState(habit.name);
+  const [editHabit, setEditHabit] = useState(habit.title || '');
+
+  useEffect(() => {
+    setEditHabit(habit.title || '');
+  }, [habit]);
 
   useEffect(() => {
     if (isCheckMode) {
@@ -22,16 +26,14 @@ function HabitItem({
 
   const handleEditKeyDown = (e) => {
     if (e.key !== 'Enter') return;
+    if (e.nativeEvent.isComposing) return;
 
     e.preventDefault();
-
     const habitName = editHabit.trim();
-
     if (!habitName) return;
 
     // 나중에 Patch 부분
     onUpdateHabit(habit.id, habitName);
-
     setIsEditing(false);
   };
 
@@ -41,7 +43,7 @@ function HabitItem({
       return;
     }
     onCheckHabit(habit.id);
-    showToast(`${habit.name} 달성을 축하합니다!`, 'success');
+    showToast(`${habit.title} 달성을 축하합니다!`, 'success');
   };
 
   return (
@@ -67,7 +69,7 @@ function HabitItem({
             )}
             onClick={handleClick}
           >
-            {habit.name}
+            {habit.title}
           </span>
         )}
       </div>

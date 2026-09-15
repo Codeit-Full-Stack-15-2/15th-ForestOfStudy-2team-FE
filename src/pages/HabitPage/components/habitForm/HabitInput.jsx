@@ -1,29 +1,28 @@
 import { useState } from 'react';
 import styles from './HabitInput.module.css';
 
-function HabitForm({ onAddHabit }) {
-  const [newHabit, setNewHabit] = useState('');
+function HabitForm({ onAddTempHabit }) {
+  const [inputValue, setInputValue] = useState('');
 
   const handleKeyDown = (e) => {
     if (e.key !== 'Enter') return;
+    if (e.nativeEvent.isComposing) return;
 
     e.preventDefault();
-
-    const habitName = newHabit.trim();
-
+    const habitName = inputValue.trim();
     if (!habitName) return;
 
-    onAddHabit(habitName);
-    setNewHabit('');
+    onAddTempHabit(habitName);
+    setInputValue('');
   };
 
   return (
     <input
-      value={newHabit}
-      onChange={(e) => setNewHabit(e.target.value)}
+      value={inputValue}
+      onChange={(e) => setInputValue(e.target.value)}
       onKeyDown={handleKeyDown}
       className={styles.habitInput}
-      placeholder='추가하고 싶은 습관 입력 후 엔터'
+      placeholder="추가하고 싶은 습관 입력 후 엔터"
     />
   );
 }
