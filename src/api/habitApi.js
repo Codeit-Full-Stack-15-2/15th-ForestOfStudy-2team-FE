@@ -35,24 +35,61 @@ export async function createHabits(studyId, titles) {
   }
 }
 
-export async function updateHabits(studyId, habits) {
+export async function updateHabits(studyId, habitsToUPdate) {
   try {
     const response = await fetch(`${BASE_URL}/studies/${studyId}/habits`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ habits }),
+      body: JSON.stringify({ habits: habitsToUPdate }),
     });
     if (!response.ok) {
-      throw new Error('습관 수정에 실패했습니다.');
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.message || '습관 수정에 실패했습니다.');
     }
+
     return await response.json();
   } catch (error) {
-    console.error('습관 수정 실패:', error);
+    console.error('습관 수정 API 호출 실패:', error.message);
     throw error;
   }
 }
+
+export const toggleHabitRecord = async (
+  studyId,
+  habitId,
+  { isComplete, recordDate },
+) => {
+  try {
+    // 💡 BASE_URL 적용 확인 (${BASE_URL})
+    const response = await fetch(
+      `${BASE_URL}/studies/${studyId}/habits/${habitId}/records`,
+      {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          isComplete,
+          recordDate,
+        }),
+      },
+    );
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(
+        errorData.message || '습관 상태를 변경하는데 실패했습니다.',
+      );
+    }
+
+    return await response.json(); // 💡 성공 시 결과 반환
+  } catch (error) {
+    console.error('습관 상태 변경 실패:', error);
+    throw error;
+  }
+};
 
 export async function deleteHabits(studyId, habitIds) {
   try {

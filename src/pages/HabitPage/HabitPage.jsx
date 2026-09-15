@@ -4,6 +4,7 @@ import {
   createHabits,
   updateHabits,
   deleteHabits,
+  toggleHabitRecord,
 } from '@/api/habitApi';
 import HabitForm from './components/habitForm/HabitInput';
 import ArrowButton from '@/components/arrowButton/ArrowButton';
@@ -27,7 +28,13 @@ function HabitPage() {
       const habitList = Array.isArray(response)
         ? response
         : response.data || response.habits || response.list || [];
-      setHabits(habitList);
+
+      const normalizedHabits = habitList.map((h) => ({
+        ...h,
+        isCompleted: h.isCompleted ?? h.isComplete ?? false,
+      }));
+
+      setHabits(normalizedHabits);
     } catch (error) {
       console.error('습관 목록 불러오기 오류:', error);
     }
@@ -47,27 +54,21 @@ function HabitPage() {
     setHabits((prev) => [...prev, newTempHabit]);
   };
 
-  // const handleAddHabit = async (habitName) => {
-  //   try {
-  //     await createHabits(TEMP_STUDY_ID, [habitName]);
-  //     await fetchHabitsData();
-  //   } catch (error) {
-  //     const serverMessage = error.response?.data?.message;
-  //     if (serverMessage) {
-  //       alert(serverMessage);
-  //     } else {
-  //       alert('습관 등록 실패: 서버 통신에 실패했습니다.');
-  //     }
-  //   }
-  // }; 문제 없을시 삭제하기
-
   const handleUpdateHabit = (id, newTitle) => {
     setHabits((prevHabits) =>
       prevHabits.map((habit) => {
         if (habit.id !== id) return habit;
-        return habit.isTemp
-          ? { ...habit, title: newTitle }
-          : { ...habit, title: newTitle, isUpdated: true };
+        if (habit.isTemp) {
+          return { ...habit, title: newTitle };
+        }
+        const isTitleChanged = habit.title !== newTitle;
+
+        return {
+          ...habit,
+          title: newTitle,
+          isUpdated: isTitleChanged ? true : habit.isUpdated,
+          isCompleted: isTitleChanged ? false : habit.isCompleted,
+        };
       }),
     );
   };
@@ -85,14 +86,39 @@ function HabitPage() {
     );
   };
 
-  const handleCheckHabit = (habitId) => {
+  const handleCheckHabit = async (habitId) => {
+    const targetHabit = habits.find((h) => h.id === habitId);
+    if (!targetHabit || targetHabit.isTemp) {
+      alert('목록 수정 완료 후 완료 체크가 가능합니다.');
+      return;
+    }
+    const nextIsCompleted = !targetHabit.isCompleted;
+
     setHabits((prevHabits) =>
       prevHabits.map((habit) =>
         habit.id === habitId
-          ? { ...habit, isCompleted: !habit.isCompleted }
+          ? { ...habit, isCompleted: nextIsCompleted }
           : habit,
       ),
     );
+    try {
+      const todayStr = timeNow;
+      await toggleHabitRecord(TEMP_STUDY_ID, habitId, {
+        isComplete: nextIsCompleted,
+        recordDate: todayStr,
+      });
+    } catch (error) {
+      console.log('습관 상태 변경 실패', error);
+      alert('습관 상태 변경에 실패했습니다.');
+
+      setHabits((prevHabits) =>
+        prevHabits.map((habit) =>
+          habit.id === habitId
+            ? { ...habit, isCompleted: !nextIsCompleted }
+            : habit,
+        ),
+      );
+    }
   };
 
   const handleForm = async () => {
@@ -117,10 +143,20 @@ function HabitPage() {
           // 수정 API
           if (updatedHabits.length > 0) {
             const habitsToUpdate = updatedHabits.map((h) => ({
-              id: h.id,
+              id: Number(h.id),
               title: h.title,
             }));
+
             await updateHabits(TEMP_STUDY_ID, habitsToUpdate);
+
+            await Promise.all(
+              updatedHabits.map((h) =>
+                toggleHabitRecord(TEMP_STUDY_ID, Number(h.id), {
+                  isComplete: false,
+                  recordDate: timeNow,
+                }),
+              ),
+            );
           }
 
           // 삭제 API
