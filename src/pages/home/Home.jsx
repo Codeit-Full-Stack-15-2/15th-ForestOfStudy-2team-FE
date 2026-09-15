@@ -6,23 +6,40 @@ import BaseButton from '@/components/baseButton/BaseButton';
 import { getStudies } from '@/api/studyApi';
 
 const sortOptions = [
-  { value: 'recent', label: '최근 순' },
+  { value: 'latest', label: '최근 순' },
   { value: 'oldest', label: '오래된 순' },
-  { value: 'highPoint', label: '많은 포인트 순' },
-  { value: 'lowPoint', label: '작은 포인트 순' },
+  { value: 'highPoints', label: '많은 포인트 순' },
+  { value: 'lowPoints', label: '작은 포인트 순' },
 ];
 
 function Home() {
   const [studies, setStudies] = useState([]);
 
+  const [sortValue, setSortValue] = useState('latest');
+  const [searchValue, setSearchValue] = useState('');
+
+  // 디바운스 구현
+  const [debouncedSearchValue, setDebouncedSearchValue] = useState('');
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearchValue(searchValue);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [searchValue]);
+
   useEffect(() => {
     const fetchStudies = async () => {
-      const data = await getStudies();
+      const data = await getStudies({
+        keyword: debouncedSearchValue,
+        orderBy: sortValue,
+      });
       setStudies(data.list);
     };
 
     fetchStudies();
-  }, []);
+  }, [debouncedSearchValue, sortValue]);
 
   // 최근 조회한 스터디 localStorage 활용해서 저장, 표시 구현
   const handleStudyClick = (studyId) => {
@@ -52,36 +69,11 @@ function Home() {
 
   // 정렬 버튼 커스텀 드롭다운 구현
   const [isSortOpen, setIsSortOpen] = useState(false);
-  const [sortValue, setSortValue] = useState('recent');
   const selectedSort = sortOptions.find((option) => option.value === sortValue);
-
-  // 검색 기능 구현
-  const [searchValue, setSearchValue] = useState('');
-  const normalizedSearchValue = searchValue.trim().toLowerCase();
-  const filteredStudies = studies.filter((study) =>
-    study.title.toLowerCase().includes(normalizedSearchValue),
-  );
-
-  // 정렬 기능 구현
-  const sortedStudies = [...filteredStudies].sort((a, b) => {
-    if (sortValue === 'highPoint') {
-      return b.point - a.point;
-    }
-
-    if (sortValue === 'lowPoint') {
-      return a.point - b.point;
-    }
-
-    if (sortValue === 'oldest') {
-      return a.id - b.id;
-    }
-
-    return b.id - a.id;
-  });
 
   // 더보기 버튼 기능 구현
   const [visibleCount, setVisibleCount] = useState(6);
-  const visibleStudies = sortedStudies.slice(0, visibleCount);
+  const visibleStudies = studies.slice(0, visibleCount);
   const handleLoadMore = () => {
     setVisibleCount((prev) => prev + 6);
   };
@@ -190,7 +182,7 @@ function Home() {
             );
           })}
         </ul>
-        {visibleCount < sortedStudies.length && (
+        {visibleCount < studies.length && (
           <BaseButton
             variant="outline"
             size="none"
