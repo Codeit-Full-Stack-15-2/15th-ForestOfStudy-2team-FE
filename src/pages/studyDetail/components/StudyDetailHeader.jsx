@@ -60,10 +60,7 @@ function StudyDetailHeader({ studyId, data }) {
             </>
           )}
         </div>
-        <PointBadge
-          className={styles.pointContainer}
-          points={data.totalPoints}
-        />
+        <PointBadge className={styles.pointContainer} points={data.point} />
       </section>
       <PasswordVerificationModal
         open={Boolean(activeModal)}
