@@ -111,3 +111,30 @@ export async function removeStudy(studyId) {
     console.error('스터디 삭제에 실패했습니다:', error);
   }
 }
+
+export async function updateStudy(studyId, updateData) {
+  const verificationToken = getStudyVerifiedToken(studyId);
+
+  if (!verificationToken) {
+    throw new Error(
+      '스터디 수정 권한이 없습니다. 비밀번호를 다시 인증해주세요.',
+    );
+  }
+
+  const response = await fetch(`${BASE_URL}/studies/${studyId}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${verificationToken}`,
+    },
+    body: JSON.stringify(updateData),
+  });
+
+  const result = await response.json();
+
+  if (!response.ok) {
+    throw new Error(result.message || '스터디 수정에 실패했습니다.');
+  }
+
+  return result.data;
+}

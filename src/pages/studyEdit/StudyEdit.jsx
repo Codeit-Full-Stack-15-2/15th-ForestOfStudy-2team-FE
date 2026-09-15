@@ -6,6 +6,7 @@ import { useStudyEditForm } from './hooks/useStudyEditForm';
 import { useNavigate, useParams } from 'react-router';
 import ConfirmModal from '@/components/confirmModal/ConfirmModal';
 import { checkIsStudyVerified } from '@/utils/studyAuthSession';
+import { getStudyDetail, updateStudy } from '@/api/studyApi';
 
 function StudyEdit() {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ function StudyEdit() {
     errors,
     handleChange,
     handleBackgroundSelect,
+    initializeFormData,
   } = useStudyEditForm();
 
   useEffect(() => {
@@ -26,8 +28,19 @@ function StudyEdit() {
 
     if (!isVerified) {
       navigate('/', { replace: true });
+      return;
     }
-  }, [studyId, navigate]);
+    const fetchStudy = async () => {
+      try {
+        const study = await getStudyDetail(studyId);
+        initializeFormData(study);
+      } catch (error) {
+        console.error('스터디 정보를 불러오지 못했습니다.', error);
+      }
+    };
+
+    fetchStudy();
+  }, [studyId, navigate, initializeFormData]);
 
   const handleEdit = () => {
     setIsConfirmOpen(true);
@@ -37,9 +50,23 @@ function StudyEdit() {
     setIsConfirmOpen(false);
   };
 
-  const handleConfirmEdit = () => {
-    setIsConfirmOpen(false);
-    navigate(`/studies/${studyId}`);
+  const handleConfirmEdit = async () => {
+    const updateData = {
+      nickname: formData.nickname.trim(),
+      title: formData.studyName.trim(),
+      description:
+        formData.description.trim() ||
+        `${formData.nickname.trim()}의 ${formData.studyName.trim()}입니다.`,
+      background: formData.background,
+    };
+
+    try {
+      await updateStudy(studyId, updateData);
+      setIsConfirmOpen(false);
+      navigate(`/studies/${studyId}`);
+    } catch (error) {
+      console.error('스터디 수정에 실패했습니다:', error);
+    }
   };
 
   return (
