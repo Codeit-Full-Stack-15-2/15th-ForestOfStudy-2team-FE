@@ -14,6 +14,8 @@ const sortOptions = [
 
 function Home() {
   const [studies, setStudies] = useState([]);
+  const [page, setPage] = useState(1);
+  const [totalCount, setTotalCount] = useState(0);
 
   const [sortValue, setSortValue] = useState('latest');
   const [searchValue, setSearchValue] = useState('');
@@ -34,12 +36,16 @@ function Home() {
       const data = await getStudies({
         keyword: debouncedSearchValue,
         orderBy: sortValue,
+        page,
       });
-      setStudies(data.list);
+      setStudies((prevStudies) =>
+        page === 1 ? data.list : [...prevStudies, ...data.list],
+      );
+      setTotalCount(data.totalCount);
     };
 
     fetchStudies();
-  }, [debouncedSearchValue, sortValue]);
+  }, [debouncedSearchValue, sortValue, page]);
 
   // 최근 조회한 스터디 localStorage 활용해서 저장, 표시 구현
   const handleStudyClick = (studyId) => {
@@ -72,10 +78,8 @@ function Home() {
   const selectedSort = sortOptions.find((option) => option.value === sortValue);
 
   // 더보기 버튼 기능 구현
-  const [visibleCount, setVisibleCount] = useState(6);
-  const visibleStudies = studies.slice(0, visibleCount);
   const handleLoadMore = () => {
-    setVisibleCount((prev) => prev + 6);
+    setPage((prevPage) => prevPage + 1);
   };
 
   return (
@@ -118,7 +122,7 @@ function Home() {
               value={searchValue}
               onChange={(e) => {
                 setSearchValue(e.target.value);
-                setVisibleCount(6);
+                setPage(1);
               }}
             />
           </div>
@@ -149,7 +153,7 @@ function Home() {
                       className={styles.sortOption}
                       onClick={() => {
                         setSortValue(option.value);
-                        setVisibleCount(6);
+                        setPage(1);
                         setIsSortOpen(false);
                       }}
                     >
@@ -163,7 +167,7 @@ function Home() {
         </div>
 
         <ul className={styles.studyList}>
-          {visibleStudies.map((study) => {
+          {studies.map((study) => {
             return (
               <StudyCard
                 key={study.id}
@@ -182,7 +186,7 @@ function Home() {
             );
           })}
         </ul>
-        {visibleCount < studies.length && (
+        {studies.length < totalCount && (
           <BaseButton
             variant="outline"
             size="none"
