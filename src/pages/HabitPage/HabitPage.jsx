@@ -101,14 +101,11 @@ function HabitPage() {
           : habit,
       ),
     );
+
     try {
-      const todayStr = timeNow;
-      await toggleHabitRecord(TEMP_STUDY_ID, habitId, {
-        isComplete: nextIsCompleted,
-        recordDate: todayStr,
-      });
+      await toggleHabitRecord(TEMP_STUDY_ID, habitId, timeNow);
     } catch (error) {
-      console.log('습관 상태 변경 실패', error);
+      console.error('습관 상태 변경 실패', error);
       alert('습관 상태 변경에 실패했습니다.');
 
       setHabits((prevHabits) =>
@@ -148,15 +145,6 @@ function HabitPage() {
             }));
 
             await updateHabits(TEMP_STUDY_ID, habitsToUpdate);
-
-            await Promise.all(
-              updatedHabits.map((h) =>
-                toggleHabitRecord(TEMP_STUDY_ID, Number(h.id), {
-                  isComplete: false,
-                  recordDate: timeNow,
-                }),
-              ),
-            );
           }
 
           // 삭제 API
