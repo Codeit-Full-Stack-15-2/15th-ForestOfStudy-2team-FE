@@ -4,6 +4,7 @@ import Timer from './components/timer/Timer';
 import CardContainer from '@/components/cardContainer/CardContainer';
 import PointBadge from './components/PointBadge';
 import ConfirmModal from '@/components/confirmModal/ConfirmModal';
+import Spinner from '@/components/Spinner';
 
 import { useStudy } from '@/pages/focusPage/hooks/useStudy';
 import { useState, useCallback, useEffect } from 'react';
@@ -70,10 +71,22 @@ function FocusPage({ totalSeconds = MIN_MINUTES * 60 }) {
     return () => window.removeEventListener('beforeunload', handleBeforeUnload);
   }, [timer.isRunning]);
 
+  if (isLoading) {
+    return (
+      <CardContainer>
+        <div className={styles.spinnerContainer}>
+          <Spinner />
+        </div>
+      </CardContainer>
+    );
+  }
+
   return (
     <CardContainer>
       <div className={styles.titleContainer}>
-        <h3>{isLoading ? '불러오는 중...' : `${nickname}의 ${title}`}</h3>
+        <h3>
+          {nickname}의 {title}
+        </h3>
         <div className={styles.buttonContainer}>
           <ArrowButton to={`/studies/${studyId}/habits`}>
             습관 달성 기록하기
