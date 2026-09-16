@@ -1,4 +1,5 @@
 import { createBrowserRouter } from 'react-router';
+import ProtectedRoute from '@/components/ProtectedRoute';
 import Layout from '@/components/Layout';
 import Home from '@/pages/home/Home';
 import StudyCreate from '@/pages/studyCreate/StudyCreate';
@@ -31,7 +32,11 @@ export const router = createBrowserRouter([
       },
       {
         path: 'studies/:studyId/habits',
-        element: <HabitPage />,
+        element: (
+          <ProtectedRoute>
+            <HabitPage />
+          </ProtectedRoute>
+        ),
       },
       {
         path: 'studies/:studyId/focus',
