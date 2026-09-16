@@ -88,7 +88,7 @@ export function useStudyCreateForm() {
     if (!password.trim()) {
       nextErrors.password = '*비밀번호를 입력해 주세요.';
     } else if (password.length < 4) {
-      nextErrors.password = '*비밀번호는 4자 이상 입력해 주세요.';
+      nextErrors.password = '*비밀번호는 4~64자로 입력해 주세요.';
     }
 
     if (!passwordConfirm.trim()) {

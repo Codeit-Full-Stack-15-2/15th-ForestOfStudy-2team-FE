@@ -22,7 +22,7 @@ function PasswordInput({
   const isTypingInvalid = Boolean(value && value.length < 4);
 
   const displayError =
-    error || (isTypingInvalid ? '*비밀번호는 4자 이상 입력해 주세요.' : '');
+    error || (isTypingInvalid ? '*비밀번호는 4~64자로 입력해 주세요.' : '');
 
   const hasError = Boolean(displayError);
 
@@ -51,6 +51,7 @@ function PasswordInput({
             value={value}
             onChange={onChange}
             onKeyDown={onKeyDown}
+            maxLength={64}
           />
 
           <button
