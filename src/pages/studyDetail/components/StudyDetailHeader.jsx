@@ -1,7 +1,7 @@
 import ArrowButton from '@/components/arrowButton/ArrowButton';
 import ConfirmModal from '@/components/confirmModal/ConfirmModal';
 import PasswordVerificationModal from '@/components/passwordVerificationModal/PasswordVerificationModal';
-import PointBadge from '@/pages/focusPage/components/PointBadge';
+import PointBadge from '@/pages/focusPage/components/pointBadge/PointBadge';
 import { useStudyActions } from '../hooks/useStudyActions';
 import StudyActions from './StudyActions';
 import styles from './StudyDetailHeader.module.css';

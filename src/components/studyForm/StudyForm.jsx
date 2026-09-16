@@ -23,6 +23,16 @@ function StudyForm({
   onBackgroundSelect,
   errors = {},
 }) {
+  const handleTextChange = (event) => {
+    const { value, maxLength } = event.target;
+
+    if (value.length > maxLength) {
+      return;
+    }
+
+    onChange(event);
+  };
+
   return (
     <div className={styles.form}>
       <div className={styles.formGroup}>
@@ -39,7 +49,7 @@ function StudyForm({
                 type="text"
                 placeholder="닉네임을 입력해 주세요"
                 value={formData.nickname}
-                onChange={onChange}
+                onChange={handleTextChange}
                 maxLength={10}
               />
 
@@ -86,7 +96,7 @@ function StudyForm({
             type="text"
             placeholder="스터디 이름을 입력해 주세요"
             value={formData.studyName}
-            onChange={onChange}
+            onChange={handleTextChange}
             maxLength={10}
           />
 
@@ -113,7 +123,7 @@ function StudyForm({
           name="description"
           placeholder="소개 멘트를 작성해 주세요"
           value={formData.description}
-          onChange={onChange}
+          onChange={handleTextChange}
           maxLength={100}
         />
 
