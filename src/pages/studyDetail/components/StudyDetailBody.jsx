@@ -16,6 +16,7 @@ function StudyDetailBody({ studyId }) {
     hasMore: weeklyHasMore,
     isEmpty: isWeeklyEmpty,
     sentinelRef: weeklySentinelRef,
+    handleToggleHabit,
   } = useStudyHabits(studyId);
 
   // 2. 월간 데이터 훅 (viewMode가 'monthly'일 때만 enabled = true)
@@ -64,7 +65,10 @@ function StudyDetailBody({ studyId }) {
         ) : (
           <>
             {weeklyHabits.length > 0 && (
-              <HabitTrackerTable habits={weeklyHabits} />
+              <HabitTrackerTable
+                habits={weeklyHabits}
+                onClick={handleToggleHabit}
+              />
             )}
             <div
               ref={weeklySentinelRef}

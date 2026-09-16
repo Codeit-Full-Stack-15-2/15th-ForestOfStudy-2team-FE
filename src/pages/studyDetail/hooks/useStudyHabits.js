@@ -1,5 +1,6 @@
 import { getStudyHabits } from '@/api/studyApi';
 import dayjs from '@/utils/dayjs';
+import { showToast } from '@/utils/showToast';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 export const useStudyHabits = (studyId) => {
@@ -70,6 +71,18 @@ export const useStudyHabits = (studyId) => {
     };
   }, [hasMore, isLoading, page, loadHabits]);
 
+  const handleToggleHabit = ({ habitId, date }) => {
+    const today = dayjs().format('YYYY-MM-DD');
+    console.log(habitId);
+    if (today !== date) {
+      showToast('오늘 습관만 변경할 수 있습니다.', 'warning');
+      return;
+    }
+    // TODO: 습관 변경 로직 개발
+    // TODO: UI 업데이트
+    // TODO: 데이터 페칭
+  };
+
   return {
     habits,
     isLoading,
@@ -77,5 +90,6 @@ export const useStudyHabits = (studyId) => {
     isEmpty,
     sentinelRef,
     setHabits,
+    handleToggleHabit,
   };
 };
