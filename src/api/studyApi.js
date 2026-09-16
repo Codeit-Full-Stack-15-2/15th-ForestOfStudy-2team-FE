@@ -223,3 +223,19 @@ export async function checkNicknameAvailability(nickname) {
 
   return result.data;
 }
+
+export async function updateStudyPoints(studyId, minutes) {
+  const response = await fetch(`${BASE_URL}/studies/${studyId}/points`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ minutes }),
+  });
+
+  const result = await response.json();
+
+  if (!response.ok) {
+    throw new Error(result.message || '포인트 저장에 실패했습니다.');
+  }
+
+  return result.data;
+}
