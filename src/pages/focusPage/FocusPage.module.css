@@ -39,6 +39,18 @@
   }
 }
 
+.titleWithMute {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  button {
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+}
+
 .buttonContainer {
   display: flex;
   gap: 16px;
