@@ -122,7 +122,7 @@ function FocusPage({ totalSeconds = MIN_MINUTES * 60 }) {
       <div className={styles.titleContainer}>
         <div className={styles.titleWithMute}>
           <h3>
-            ${nickname}의 ${title}
+            {nickname}의 {title}
           </h3>
           <button
             type="button"
