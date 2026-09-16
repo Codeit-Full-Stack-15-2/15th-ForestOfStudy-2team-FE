@@ -9,7 +9,18 @@ import styles from './StudyDetailBody.module.css';
 
 function StudyDetailBody({ studyId }) {
   const [viewMode, setViewMode] = useState('weekly');
-  // 1. 주간 데이터 훅
+
+  // 1. 월간 데이터 훅 (viewMode가 'monthly'일 때만 enabled = true)
+  const {
+    habits: monthlyHabits,
+    isLoading: isMonthlyLoading,
+    hasMore: monthlyHasMore,
+    isEmpty: monthlyIsEmpty,
+    sentinelRef: monthlySentinelRef,
+    resetMonthlyHabits,
+  } = useStudyHabitsMonthly(studyId, viewMode === 'monthly');
+
+  // 2. 주간 데이터 훅
   const {
     habits: weeklyHabits,
     isLoading: isWeeklyLoading,
@@ -17,16 +28,11 @@ function StudyDetailBody({ studyId }) {
     isEmpty: isWeeklyEmpty,
     sentinelRef: weeklySentinelRef,
     handleToggleHabit,
-  } = useStudyHabits(studyId);
-
-  // 2. 월간 데이터 훅 (viewMode가 'monthly'일 때만 enabled = true)
-  const {
-    habits: monthlyHabits,
-    isLoading: isMonthlyLoading,
-    hasMore: monthlyHasMore,
-    isEmpty: monthlyIsEmpty,
-    sentinelRef: monthlySentinelRef,
-  } = useStudyHabitsMonthly(studyId, viewMode === 'monthly');
+  } = useStudyHabits(studyId, {
+    onToggleSuccess: () => {
+      resetMonthlyHabits();
+    },
+  });
 
   return (
     <section className={styles.bodyContainer}>

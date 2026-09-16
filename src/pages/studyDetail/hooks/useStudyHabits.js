@@ -4,7 +4,7 @@ import dayjs from '@/utils/dayjs';
 import { showToast } from '@/utils/showToast';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-export const useStudyHabits = (studyId) => {
+export const useStudyHabits = (studyId, options = {}) => {
   const [page, setPage] = useState(1);
   const [habits, setHabits] = useState([]);
   const [hasMore, setHasMore] = useState(true);
@@ -122,6 +122,10 @@ export const useStudyHabits = (studyId) => {
     try {
       await toggleHabitRecord(studyId, habitId, date);
       showToast('습관 상태가 변경되었습니다.', 'success');
+
+      if (options.onToggleSuccess) {
+        options.onToggleSuccess();
+      }
     } catch (error) {
       console.error('변경에 실패했습니다: ', error.message);
       setHabits(previousHabits);

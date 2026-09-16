@@ -69,6 +69,11 @@ export const useStudyHabitsMonthly = (studyId, enabled = true) => {
     };
   }, [enabled, hasMore, isLoading, page, loadHabits]);
 
+  const resetMonthlyHabits = useCallback(() => {
+    setHabits([]);
+    setPage(1);
+    setHasMore(true);
+  }, []);
   return {
     habits,
     isLoading,
@@ -76,5 +81,6 @@ export const useStudyHabitsMonthly = (studyId, enabled = true) => {
     isEmpty,
     sentinelRef,
     setHabits,
+    resetMonthlyHabits,
   };
 };
