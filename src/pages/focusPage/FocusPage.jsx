@@ -11,6 +11,7 @@ import { useBlocker, useParams } from 'react-router';
 import { calculateEarnedPoints } from './utils/calculateEarnedPoints';
 import { showToast } from '@/utils/showToast';
 import { useTimer } from './hooks/useTimer';
+import { useHiddenTimerCommand } from './hooks/useHiddenTimerCommand';
 
 const PRESET_TIMES = [25, 35, 45];
 const MIN_MINUTES = 25;
@@ -19,6 +20,7 @@ function FocusPage({ totalSeconds = MIN_MINUTES * 60 }) {
   const { studyId: paramStudyId } = useParams();
   const studyId = paramStudyId || 123;
   const { points, addPoints, title, nickname, isLoading } = useStudy(studyId);
+  const isDemoMode = useHiddenTimerCommand();
   const [duration, setDuration] = useState(() =>
     Math.max(totalSeconds || 0, MIN_MINUTES * 60),
   );
@@ -37,7 +39,9 @@ function FocusPage({ totalSeconds = MIN_MINUTES * 60 }) {
     }
   }, [duration, addPoints]);
 
-  const timer = useTimer(duration, handleTimerComplete);
+  const timer = useTimer(duration, handleTimerComplete, {
+    fastForward: isDemoMode,
+  });
 
   const blocker = useBlocker(
     ({ currentLocation, nextLocation }) =>
