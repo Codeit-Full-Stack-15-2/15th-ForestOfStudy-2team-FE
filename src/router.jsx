@@ -1,5 +1,5 @@
 import { createBrowserRouter } from 'react-router';
-import ProtectedRoute from '@/components/ProtectedRoute';
+import ProtectedRoute from '@/components/ProtectedRoute.jsx';
 import Layout from '@/components/Layout';
 import Home from '@/pages/home/Home';
 import StudyCreate from '@/pages/studyCreate/StudyCreate';
