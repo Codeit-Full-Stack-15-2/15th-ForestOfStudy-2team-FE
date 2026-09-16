@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import styles from './GrassCell.module.css';
 
 function GrassCell({ date, record }) {
@@ -8,9 +9,10 @@ function GrassCell({ date, record }) {
   return (
     <div
       data-tooltip={tooltipText}
-      className={`${styles.grassCell} ${
-        isCompleted ? styles.completed : styles.uncompleted
-      }`}
+      className={clsx(
+        styles.grassCell,
+        isCompleted ? styles.completed : styles.uncompleted,
+      )}
     >
       <span className={styles.srOnly}>{tooltipText}</span>{' '}
     </div>

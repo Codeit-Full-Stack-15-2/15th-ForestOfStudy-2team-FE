@@ -39,7 +39,7 @@ function StudyDetailBody({ studyId }) {
               viewMode === 'weekly' ? styles.activeButton : ''
             }`}
           >
-            7일
+            이번주
           </button>
           <button
             onClick={() => setViewMode('monthly')}
@@ -47,7 +47,7 @@ function StudyDetailBody({ studyId }) {
               viewMode === 'monthly' ? styles.activeButton : ''
             }`}
           >
-            30일 잔디
+            이전 30일
           </button>
         </div>
       </div>
