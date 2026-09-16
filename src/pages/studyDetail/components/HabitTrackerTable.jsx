@@ -4,7 +4,7 @@ import StampIcon from './StampIcon';
 
 const DAYS = ['월', '화', '수', '목', '금', '토', '일 '];
 
-function HabitTrackerTable({ habits }) {
+function HabitTrackerTable({ habits, onClick }) {
   return (
     <section className={styles.container}>
       <div className={styles.gridContainer}>
@@ -18,10 +18,13 @@ function HabitTrackerTable({ habits }) {
         {habits.map((habit) => (
           <React.Fragment key={habit.id}>
             <span className={styles.habitTitle}>{habit.title}</span>
-            {habit.weeklyRecords.map((record) => (
+            {habit.weeklyRecords.map((recordObj) => (
               <StampIcon
-                key={record.date}
-                isCompleted={Boolean(record.record)}
+                key={recordObj.date}
+                date={recordObj.date}
+                habitId={habit.id}
+                record={recordObj.record}
+                onClick={onClick}
               />
             ))}
           </React.Fragment>

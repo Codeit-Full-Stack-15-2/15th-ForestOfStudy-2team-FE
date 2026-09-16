@@ -1,6 +1,9 @@
 .container {
   padding: 14px 41px;
   text-align: center;
+  & img {
+    cursor: pointer;
+  }
 }
 
 /*  tablet*/
