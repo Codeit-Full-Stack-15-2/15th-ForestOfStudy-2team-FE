@@ -8,7 +8,8 @@ import Spinner from '@/components/Spinner';
 
 import { useStudy } from '@/pages/focusPage/hooks/useStudy';
 import { useState, useCallback, useEffect } from 'react';
-import { useBlocker, useParams } from 'react-router';
+import { useBlocker, useParams, useNavigate } from 'react-router';
+import { checkIsStudyVerified } from '@/utils/studyAuthSession';
 import { calculateEarnedPoints } from './utils/calculateEarnedPoints';
 import { showToast } from '@/utils/showToast';
 import { useTimer } from './hooks/useTimer';
@@ -20,11 +21,18 @@ const MIN_MINUTES = 25;
 function FocusPage({ totalSeconds = MIN_MINUTES * 60 }) {
   const { studyId: paramStudyId } = useParams();
   const studyId = paramStudyId || 123;
+  const navigate = useNavigate();
   const { points, addPoints, title, nickname, isLoading } = useStudy(studyId);
   const isDemoMode = useHiddenTimerCommand();
   const [duration, setDuration] = useState(() =>
     Math.max(totalSeconds || 0, MIN_MINUTES * 60),
   );
+
+  useEffect(() => {
+    if (!checkIsStudyVerified(studyId)) {
+      navigate('/', { replace: true });
+    }
+  }, [studyId, navigate]);
 
   const handleTimerComplete = useCallback(async () => {
     const earnedPoints = calculateEarnedPoints(duration);
