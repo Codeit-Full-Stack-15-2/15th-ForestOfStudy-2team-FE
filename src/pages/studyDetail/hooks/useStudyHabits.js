@@ -106,11 +106,6 @@ export const useStudyHabits = (studyId, options = {}) => {
       return;
     }
 
-    // 토큰이 있는경우 토큰 유효성 검증
-    if (checkIsStudyVerified(studyId)) {
-      console.log('토큰이 있는경우');
-    }
-
     const today = dayjs().format('YYYY-MM-DD');
     if (today !== date) {
       showToast('오늘 습관만 변경할 수 있습니다.', 'warning');
