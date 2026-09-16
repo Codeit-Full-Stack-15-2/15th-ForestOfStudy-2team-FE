@@ -44,6 +44,8 @@ export function useStudyCreateForm() {
       return;
     }
 
+    clearError('nickname');
+
     setNicknameCheckStatus('checking');
 
     try {
