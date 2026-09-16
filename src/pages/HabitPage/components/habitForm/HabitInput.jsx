@@ -18,9 +18,11 @@ function HabitForm({ onAddTempHabit }) {
 
   return (
     <input
+      type="text"
       value={inputValue}
       onChange={(e) => setInputValue(e.target.value)}
       onKeyDown={handleKeyDown}
+      maxLength={15}
       className={styles.habitInput}
       placeholder="추가하고 싶은 습관 입력 후 엔터"
     />

@@ -4,14 +4,14 @@ import BaseButton from '@/components/baseButton/BaseButton';
 import selectedIcon from '@/assets/common/ic_bg_selected.svg';
 
 const backgroundOptions = [
-  { id: 'first', className: styles.backgroundOptionFirst },
-  { id: 'second', className: styles.backgroundOptionSecond },
-  { id: 'third', className: styles.backgroundOptionThird },
-  { id: 'fourth', className: styles.backgroundOptionFourth },
-  { id: 'fifth', className: styles.backgroundOptionFifth },
-  { id: 'sixth', className: styles.backgroundOptionSixth },
-  { id: 'seventh', className: styles.backgroundOptionSeventh },
-  { id: 'eighth', className: styles.backgroundOptionEighth },
+  { id: 'green', className: styles.backgroundOptionGreen },
+  { id: 'yellow', className: styles.backgroundOptionYellow },
+  { id: 'blue', className: styles.backgroundOptionBlue },
+  { id: 'pink', className: styles.backgroundOptionPink },
+  { id: 'forest_path', className: styles.backgroundOptionForestPath },
+  { id: 'clouds', className: styles.backgroundOptionClouds },
+  { id: 'beach', className: styles.backgroundOptionBeach },
+  { id: 'mountain_lake', className: styles.backgroundOptionMountainLake },
 ];
 
 function StudyForm({

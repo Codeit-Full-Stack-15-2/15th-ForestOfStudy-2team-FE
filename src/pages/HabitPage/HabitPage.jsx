@@ -4,15 +4,18 @@ import {
   createHabits,
   updateHabits,
   deleteHabits,
+  toggleHabitRecord,
 } from '@/api/habitApi';
 import HabitForm from './components/habitForm/HabitInput';
 import ArrowButton from '@/components/arrowButton/ArrowButton';
 import CardContainer from '@/components/cardContainer/CardContainer';
 import styles from './HabitPage.module.css';
 import HabitList from './components/habitForm/HabitList';
+import { showToast } from '@/utils/showToast';
+import { useParams } from 'react-router';
 
 function HabitPage() {
-  const TEMP_STUDY_ID = 1;
+  const { studyId } = useParams();
 
   const timeNow = new Date()
     .toLocaleString('sv-SE', { timeZone: 'Asia/Seoul' })
@@ -23,21 +26,38 @@ function HabitPage() {
 
   const fetchHabitsData = async () => {
     try {
-      const response = await getHabits(TEMP_STUDY_ID);
+      const response = await getHabits(studyId);
       const habitList = Array.isArray(response)
         ? response
         : response.data || response.habits || response.list || [];
-      setHabits(habitList);
+
+      const normalizedHabits = habitList.map((h) => ({
+        ...h,
+        isCompleted: h.isCompleted ?? h.isComplete ?? false,
+      }));
+
+      setHabits(normalizedHabits);
     } catch (error) {
       console.error('습관 목록 불러오기 오류:', error);
     }
   };
   useEffect(() => {
     fetchHabitsData();
-  }, [TEMP_STUDY_ID]);
+  }, [studyId]);
 
   // 엔터 입력 시 화면에만 임시로 추가 (통신X)
   const handleAddTempHabit = (habitTitle) => {
+    const trimmedTitle = habitTitle.trim();
+
+    const isDuplicate = habits.some(
+      (h) => !h.isDeleted && h.title.trim() === trimmedTitle,
+    );
+
+    if (isDuplicate) {
+      showToast('이미 존재하는 습관입니다.', 'warning');
+      return;
+    }
+
     const newTempHabit = {
       id: `temp-${Date.now()}`,
       title: habitTitle,
@@ -47,27 +67,21 @@ function HabitPage() {
     setHabits((prev) => [...prev, newTempHabit]);
   };
 
-  // const handleAddHabit = async (habitName) => {
-  //   try {
-  //     await createHabits(TEMP_STUDY_ID, [habitName]);
-  //     await fetchHabitsData();
-  //   } catch (error) {
-  //     const serverMessage = error.response?.data?.message;
-  //     if (serverMessage) {
-  //       alert(serverMessage);
-  //     } else {
-  //       alert('습관 등록 실패: 서버 통신에 실패했습니다.');
-  //     }
-  //   }
-  // }; 문제 없을시 삭제하기
-
   const handleUpdateHabit = (id, newTitle) => {
     setHabits((prevHabits) =>
       prevHabits.map((habit) => {
         if (habit.id !== id) return habit;
-        return habit.isTemp
-          ? { ...habit, title: newTitle }
-          : { ...habit, title: newTitle, isUpdated: true };
+        if (habit.isTemp) {
+          return { ...habit, title: newTitle };
+        }
+        const isTitleChanged = habit.title !== newTitle;
+
+        return {
+          ...habit,
+          title: newTitle,
+          isUpdated: isTitleChanged ? true : habit.isUpdated,
+          isCompleted: isTitleChanged ? false : habit.isCompleted,
+        };
       }),
     );
   };
@@ -85,14 +99,36 @@ function HabitPage() {
     );
   };
 
-  const handleCheckHabit = (habitId) => {
+  const handleCheckHabit = async (habitId) => {
+    const targetHabit = habits.find((h) => h.id === habitId);
+    if (!targetHabit || targetHabit.isTemp) {
+      showToast('목록 수정 완료 후 완료 체크가 가능합니다.', 'warning');
+      return;
+    }
+    const nextIsCompleted = !targetHabit.isCompleted;
+
     setHabits((prevHabits) =>
       prevHabits.map((habit) =>
         habit.id === habitId
-          ? { ...habit, isCompleted: !habit.isCompleted }
+          ? { ...habit, isCompleted: nextIsCompleted }
           : habit,
       ),
     );
+
+    try {
+      await toggleHabitRecord(studyId, habitId, timeNow);
+    } catch (error) {
+      console.error('습관 상태 변경 실패', error);
+      alert('습관 상태 변경에 실패했습니다.');
+
+      setHabits((prevHabits) =>
+        prevHabits.map((habit) =>
+          habit.id === habitId
+            ? { ...habit, isCompleted: !nextIsCompleted }
+            : habit,
+        ),
+      );
+    }
   };
 
   const handleForm = async () => {
@@ -108,32 +144,35 @@ function HabitPage() {
 
       if (hasChanges) {
         try {
+          // 기존 습관 먼저 삭제
+          if (deletedHabits.length > 0) {
+            const habitIds = deletedHabits.map((h) => Number(h.id));
+            await deleteHabits(studyId, habitIds);
+          }
+
           // 추가 API
           if (createdHabits.length > 0) {
-            const habitTitles = createdHabits.map((h) => h.title);
-            await createHabits(TEMP_STUDY_ID, habitTitles);
+            for (const habit of createdHabits) {
+              await createHabits(studyId, [habit.title]);
+            }
           }
 
           // 수정 API
           if (updatedHabits.length > 0) {
             const habitsToUpdate = updatedHabits.map((h) => ({
-              id: h.id,
+              id: Number(h.id),
               title: h.title,
             }));
-            await updateHabits(TEMP_STUDY_ID, habitsToUpdate);
-          }
-
-          // 삭제 API
-          if (deletedHabits.length > 0) {
-            const habitIds = deletedHabits.map((h) => h.id);
-            await deleteHabits(TEMP_STUDY_ID, habitIds);
+            await updateHabits(studyId, habitsToUpdate);
           }
 
           // API 호출 성공 후 최신 데이터 재조회
           await fetchHabitsData();
+
+          showToast('습관 목록이 저장되었습니다.', 'success');
         } catch (error) {
           console.error('습관 변경 사항 저장 실패:', error);
-          alert('습관 저장 중 오류가 발생했습니다.');
+          showToast('습관 저장 중 오류가 발생했습니다.', 'warning');
           return;
         }
       }
@@ -152,10 +191,8 @@ function HabitPage() {
             <div className={styles.titleContainer}>
               <h2 className={styles.title}>연우의 개발공장</h2>
               <div className={styles.titleButtons}>
-                <ArrowButton to={`/studies/${TEMP_STUDY_ID}`}>
-                  대시보드
-                </ArrowButton>
-                <ArrowButton to={`/studies/${TEMP_STUDY_ID}/focus`}>
+                <ArrowButton to={`/studies/${studyId}`}>대시보드</ArrowButton>
+                <ArrowButton to={`/studies/${studyId}/focus`}>
                   오늘의 집중 타이머
                 </ArrowButton>
               </div>

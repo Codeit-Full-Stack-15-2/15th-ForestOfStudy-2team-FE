@@ -234,3 +234,12 @@
     padding: 16px;
   }
 }
+
+.emptyMessage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 120px;
+
+  color: var(--color-gray-500);
+}

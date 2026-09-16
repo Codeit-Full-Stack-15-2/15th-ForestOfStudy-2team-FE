@@ -6,6 +6,30 @@ import {
   removeStudyVerified,
 } from '@/utils/studyAuthSession';
 
+export async function getStudies({
+  keyword = '',
+  orderBy = 'latest',
+  page = 1,
+  pageSize = 6,
+} = {}) {
+  const queryParams = new URLSearchParams({
+    orderBy,
+    page: String(page),
+    pageSize: String(pageSize),
+  });
+  if (keyword) {
+    queryParams.append('keyword', keyword);
+  }
+
+  const response = await fetch(`${BASE_URL}/studies?${queryParams.toString()}`);
+  if (!response.ok) {
+    throw new Error('스터디 목록을 불러오지 못했습니다.');
+  }
+
+  const data = await response.json();
+  return data.data;
+}
+
 // ==========================================
 // 1. 스터디 헤더 정보 조회 API
 // ==========================================
@@ -162,4 +186,40 @@ export async function getMonthlyHabitRecords(
     console.error('[API Error] getMonthlyHabitRecords failed:', error.message);
     throw error;
   }
+}
+
+export async function createStudy(studyData) {
+  const response = await fetch(`${BASE_URL}/studies`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(studyData),
+  });
+
+  const result = await response.json();
+
+  if (!response.ok) {
+    throw new Error(result.message || '스터디 생성에 실패했습니다.');
+  }
+
+  return result.data;
+}
+
+export async function checkNicknameAvailability(nickname) {
+  const queryParams = new URLSearchParams({
+    nickname,
+  });
+
+  const response = await fetch(
+    `${BASE_URL}/studies/nickname/check?${queryParams.toString()}`,
+  );
+
+  const result = await response.json();
+
+  if (!response.ok) {
+    throw new Error(result.message || '닉네임 중복 확인에 실패했습니다.');
+  }
+
+  return result.data;
 }

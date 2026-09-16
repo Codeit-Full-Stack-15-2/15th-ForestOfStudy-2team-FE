@@ -1,89 +1,64 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import searchIcon from '@/assets/homePage/search.svg';
 import styles from './Home.module.css';
 import StudyCard from '@/pages/home/components/studyCard/StudyCard';
-import studyCardBg from '@/assets/homePage/study-card-bg.webp';
 import BaseButton from '@/components/baseButton/BaseButton';
+import { getStudies, getStudyDetail } from '@/api/studyApi';
 
 const sortOptions = [
-  { value: 'recent', label: '최근 순' },
+  { value: 'latest', label: '최근 순' },
   { value: 'oldest', label: '오래된 순' },
-  { value: 'highPoint', label: '많은 포인트 순' },
-  { value: 'lowPoint', label: '작은 포인트 순' },
-];
-
-const studies = [
-  {
-    id: 1,
-    title: '이유디의 UX 스터디',
-    point: 310,
-    days: 62,
-    description: 'Slow And Steady Wins The Race!!',
-    participants: 37,
-    focusCount: 26,
-    likes: 14,
-    variant: 'image',
-    image: studyCardBg,
-  },
-  {
-    id: 2,
-    title: '프론트엔드 개발 스터디',
-    point: 420,
-    days: 31,
-    description: '매일 조금씩 꾸준히 공부합니다',
-    participants: 24,
-    focusCount: 18,
-    likes: 9,
-    variant: 'green',
-  },
-  {
-    id: 3,
-    title: '알고리즘 문제 풀이',
-    point: 250,
-    days: 45,
-    description: '하루 한 문제씩 해결해요!',
-    participants: 19,
-    focusCount: 22,
-    likes: 11,
-    variant: 'yellow',
-  },
-  {
-    id: 4,
-    title: '이유디의 UX 스터디',
-    point: 310,
-    days: 62,
-    description: 'Slow And Steady Wins The Race!!',
-    participants: 37,
-    focusCount: 26,
-    likes: 14,
-    variant: 'image',
-    image: studyCardBg,
-  },
-  {
-    id: 5,
-    title: '프론트엔드 개발 스터디',
-    point: 420,
-    days: 31,
-    description: '매일 조금씩 꾸준히 공부합니다',
-    participants: 24,
-    focusCount: 18,
-    likes: 9,
-    variant: 'green',
-  },
-  {
-    id: 6,
-    title: '알고리즘 문제 풀이',
-    point: 250,
-    days: 45,
-    description: '하루 한 문제씩 해결해요!',
-    participants: 19,
-    focusCount: 22,
-    likes: 11,
-    variant: 'yellow',
-  },
+  { value: 'highPoints', label: '많은 포인트 순' },
+  { value: 'lowPoints', label: '작은 포인트 순' },
 ];
 
 function Home() {
+  const [studies, setStudies] = useState([]);
+  const [page, setPage] = useState(1);
+  const [totalCount, setTotalCount] = useState(0);
+
+  const [isStudiesLoading, setIsStudiesLoading] = useState(true);
+  const [studiesError, setStudiesError] = useState(null);
+
+  const [sortValue, setSortValue] = useState('latest');
+  const [searchValue, setSearchValue] = useState('');
+
+  // 디바운스 구현
+  const [debouncedSearchValue, setDebouncedSearchValue] = useState('');
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearchValue(searchValue);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [searchValue]);
+
+  useEffect(() => {
+    const fetchStudies = async () => {
+      setIsStudiesLoading(true);
+      setStudiesError(null);
+
+      try {
+        const data = await getStudies({
+          keyword: debouncedSearchValue,
+          orderBy: sortValue,
+          page,
+        });
+        setStudies((prevStudies) =>
+          page === 1 ? data.list : [...prevStudies, ...data.list],
+        );
+        setTotalCount(data.totalCount);
+      } catch (error) {
+        setStudiesError(error);
+      } finally {
+        setIsStudiesLoading(false);
+      }
+    };
+
+    fetchStudies();
+  }, [debouncedSearchValue, sortValue, page]);
+
   // 최근 조회한 스터디 localStorage 활용해서 저장, 표시 구현
   const handleStudyClick = (studyId) => {
     const savedRecentStudies = localStorage.getItem('recentStudies');
@@ -100,50 +75,50 @@ function Home() {
     localStorage.setItem('recentStudies', JSON.stringify(recentStudyIds));
   };
 
-  const savedRecentStudyIds = localStorage.getItem('recentStudies');
+  const [recentStudies, setRecentStudies] = useState([]);
 
-  const recentStudyIds = savedRecentStudyIds
-    ? JSON.parse(savedRecentStudyIds)
-    : [];
+  const [isRecentStudiesLoading, setIsRecentStudiesLoading] = useState(true);
+  const [recentStudiesError, setRecentStudiesError] = useState(null);
 
-  const recentStudies = recentStudyIds
-    .map((id) => studies.find((study) => study.id === id))
-    .filter(Boolean);
+  useEffect(() => {
+    const savedRecentStudyIds = localStorage.getItem('recentStudies');
+
+    const recentStudyIds = savedRecentStudyIds
+      ? JSON.parse(savedRecentStudyIds)
+      : [];
+
+    const fetchRecentStudies = async () => {
+      try {
+        const recentStudyData = await Promise.all(
+          recentStudyIds.map((id) => getStudyDetail(id)),
+        );
+
+        const formattedRecentStudies = recentStudyData.map((study) => ({
+          ...study,
+          emoji: study.reactions.map((reaction) => ({
+            emoji: reaction.emoji,
+            count: reaction.totalCount,
+          })),
+        }));
+
+        setRecentStudies(formattedRecentStudies);
+      } catch (error) {
+        setRecentStudiesError(error);
+      } finally {
+        setIsRecentStudiesLoading(false);
+      }
+    };
+
+    fetchRecentStudies();
+  }, []);
 
   // 정렬 버튼 커스텀 드롭다운 구현
   const [isSortOpen, setIsSortOpen] = useState(false);
-  const [sortValue, setSortValue] = useState('recent');
   const selectedSort = sortOptions.find((option) => option.value === sortValue);
 
-  // 검색 기능 구현
-  const [searchValue, setSearchValue] = useState('');
-  const normalizedSearchValue = searchValue.trim().toLowerCase();
-  const filteredStudies = studies.filter((study) =>
-    study.title.toLowerCase().includes(normalizedSearchValue),
-  );
-
-  // 정렬 기능 구현
-  const sortedStudies = [...filteredStudies].sort((a, b) => {
-    if (sortValue === 'highPoint') {
-      return b.point - a.point;
-    }
-
-    if (sortValue === 'lowPoint') {
-      return a.point - b.point;
-    }
-
-    if (sortValue === 'oldest') {
-      return a.id - b.id;
-    }
-
-    return b.id - a.id;
-  });
-
   // 더보기 버튼 기능 구현
-  const [visibleCount, setVisibleCount] = useState(6);
-  const visibleStudies = sortedStudies.slice(0, visibleCount);
   const handleLoadMore = () => {
-    setVisibleCount((prev) => prev + 6);
+    setPage((prevPage) => prevPage + 1);
   };
 
   return (
@@ -151,25 +126,33 @@ function Home() {
       <section className={styles.recentStudies}>
         <h2 className={styles.sectionTitle}>최근 조회한 스터디</h2>
 
-        <ul className={styles.recentStudyList}>
-          {recentStudies.map((study) => {
-            return (
-              <StudyCard
-                key={study.id}
-                id={study.id}
-                title={study.title}
-                point={study.point}
-                days={study.days}
-                description={study.description}
-                participants={study.participants}
-                focusCount={study.focusCount}
-                likes={study.likes}
-                variant={study.variant}
-                image={study.image}
-              />
-            );
-          })}
-        </ul>
+        {isRecentStudiesLoading ? (
+          <p className={styles.emptyMessage}>불러오는 중...</p>
+        ) : recentStudiesError ? (
+          <p className={styles.emptyMessage}>
+            최근 조회한 스터디를 불러오지 못했어요
+          </p>
+        ) : recentStudies.length === 0 ? (
+          <p className={styles.emptyMessage}>아직 조회한 스터디가 없어요</p>
+        ) : (
+          <ul className={styles.recentStudyList}>
+            {recentStudies.map((study) => {
+              return (
+                <StudyCard
+                  key={study.id}
+                  id={study.id}
+                  nickname={study.nickname}
+                  title={study.title}
+                  point={study.point}
+                  createdAt={study.createdAt}
+                  description={study.description}
+                  emoji={study.emoji}
+                  background={study.background}
+                />
+              );
+            })}
+          </ul>
+        )}
       </section>
 
       <section className={styles.studyBrowse}>
@@ -186,7 +169,7 @@ function Home() {
               value={searchValue}
               onChange={(e) => {
                 setSearchValue(e.target.value);
-                setVisibleCount(6);
+                setPage(1);
               }}
             />
           </div>
@@ -217,7 +200,7 @@ function Home() {
                       className={styles.sortOption}
                       onClick={() => {
                         setSortValue(option.value);
-                        setVisibleCount(6);
+                        setPage(1);
                         setIsSortOpen(false);
                       }}
                     >
@@ -230,35 +213,47 @@ function Home() {
           </div>
         </div>
 
-        <ul className={styles.studyList}>
-          {visibleStudies.map((study) => {
-            return (
-              <StudyCard
-                key={study.id}
-                id={study.id}
-                title={study.title}
-                point={study.point}
-                days={study.days}
-                description={study.description}
-                participants={study.participants}
-                focusCount={study.focusCount}
-                likes={study.likes}
-                variant={study.variant}
-                image={study.image}
-                onClick={() => handleStudyClick(study.id)}
-              />
-            );
-          })}
-        </ul>
-        {visibleCount < sortedStudies.length && (
+        {isStudiesLoading && page === 1 ? (
+          <p className={styles.emptyMessage}>불러오는 중...</p>
+        ) : studiesError ? (
+          <p className={styles.emptyMessage}>스터디 목록을 불러오지 못했어요</p>
+        ) : studies.length === 0 ? (
+          <p className={styles.emptyMessage}>
+            {searchValue.trim()
+              ? '검색 결과가 없어요'
+              : '아직 둘러 볼 스터디가 없어요'}
+          </p>
+        ) : (
+          <ul className={styles.studyList}>
+            {studies.map((study) => {
+              return (
+                <StudyCard
+                  key={study.id}
+                  id={study.id}
+                  nickname={study.nickname}
+                  title={study.title}
+                  point={study.point}
+                  createdAt={study.createdAt}
+                  description={study.description}
+                  emoji={study.emoji}
+                  background={study.background}
+                  onClick={() => handleStudyClick(study.id)}
+                />
+              );
+            })}
+          </ul>
+        )}
+
+        {studies.length < totalCount && (
           <BaseButton
             variant="outline"
             size="none"
             width="260px"
             className={styles.loadMoreButton}
             onClick={handleLoadMore}
+            disabled={isStudiesLoading && page > 1}
           >
-            더보기
+            {isStudiesLoading && page > 1 ? '불러오는 중...' : '더보기'}
           </BaseButton>
         )}
       </section>
