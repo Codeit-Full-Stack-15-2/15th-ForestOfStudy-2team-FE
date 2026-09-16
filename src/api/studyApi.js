@@ -225,9 +225,20 @@ export async function checkNicknameAvailability(nickname) {
 }
 
 export async function updateStudyPoints(studyId, minutes) {
+  const verificationToken = getStudyVerifiedToken(studyId);
+
+  if (!verificationToken) {
+    throw new Error(
+      '포인트 저장 권한이 없습니다. 비밀번호를 다시 인증해주세요.',
+    );
+  }
+
   const response = await fetch(`${BASE_URL}/studies/${studyId}/points`, {
     method: 'PATCH',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${verificationToken}`,
+    },
     body: JSON.stringify({ minutes }),
   });
 
