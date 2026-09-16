@@ -37,13 +37,13 @@ export function useStudyReactions(studyId, initialReactions) {
         return filterdReactions;
       }
       return [
-        ...prev,
         {
           id: Date.now(),
           emoji: targetEmoji,
           totalCount: 1,
           guestUuids: [currentUserId],
         },
+        ...prev,
       ];
     });
   };
