@@ -1,78 +1,12 @@
-import { getStudyHabits } from '@/api/studyApi';
 import Spinner from '@/components/Spinner';
-import dayjs from '@/utils/dayjs';
 import clsx from 'clsx';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useStudyHabits } from '../hooks/useStudyHabits';
 import HabitTrackerTable from './HabitTrackerTable';
 import styles from './StudyDetailBody.module.css';
 
 function StudyDetailBody({ studyId }) {
-  const [page, setPage] = useState(1);
-  const [habits, setHabits] = useState([]);
-  const [hasMore, setHasMore] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
-  const sentinelRef = useRef(null);
-  const isEmpty = !isLoading && !hasMore && habits.length === 0;
-
-  const loadHabits = useCallback(
-    async (targetPage) => {
-      if (isLoading) return;
-      setIsLoading(true);
-
-      try {
-        const targetDate = dayjs().format('YYYY-MM-DD');
-        const data = await getStudyHabits(studyId, targetDate, {
-          page: targetPage,
-          pageSize: 7,
-        });
-
-        const incomingList = Array.isArray(data) ? data : [];
-
-        setHabits((prev) =>
-          targetPage === 1 ? incomingList : [...prev, ...incomingList],
-        );
-        setPage(targetPage + 1);
-
-        const totalLoaded =
-          targetPage === 1
-            ? incomingList.length
-            : habits.length + incomingList.length;
-
-        if (incomingList.length === 0 || totalLoaded >= data.totalCount) {
-          setHasMore(false);
-        }
-      } catch (error) {
-        console.error('습관 데이터 로딩 실패:', error.message);
-        setHasMore(false);
-      } finally {
-        setIsLoading(false);
-      }
-    },
-    [studyId, habits.length, isLoading],
-  );
-
-  useEffect(() => {
-    if (!hasMore || isLoading) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          loadHabits(page);
-        }
-      },
-      { threshold: 0.1 },
-    );
-
-    const currentSentinel = sentinelRef.current;
-    if (currentSentinel) {
-      observer.observe(currentSentinel);
-    }
-
-    return () => {
-      if (currentSentinel) observer.unobserve(currentSentinel);
-    };
-  }, [hasMore, isLoading, page, loadHabits]);
-
+  const { habits, isLoading, hasMore, isEmpty, sentinelRef } =
+    useStudyHabits(studyId);
   return (
     <section className={styles.bodyContainer}>
       <h2 className={styles.title}>습관 기록표</h2>

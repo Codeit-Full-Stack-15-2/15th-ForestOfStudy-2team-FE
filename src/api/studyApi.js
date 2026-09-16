@@ -79,7 +79,6 @@ export async function verifyStudyPassword(studyId, password) {
 // ==========================================
 export async function removeStudy(studyId) {
   try {
-    // 1. sessionStorage에서 비밀번호 검증 완료 시 저장했던 토큰 추출
     const verificationToken = getStudyVerifiedToken(studyId);
     if (!verificationToken) {
       throw new Error(
@@ -87,7 +86,6 @@ export async function removeStudy(studyId) {
       );
     }
 
-    // 2. 실제 백엔드 /api/studies/:studyId 엔드포인트로 DELETE 요청
     const response = await fetch(`${BASE_URL}/studies/${studyId}`, {
       method: 'DELETE',
       headers: {
@@ -103,7 +101,6 @@ export async function removeStudy(studyId) {
       throw new Error(result.message || '스터디 삭제에 실패했습니다.');
     }
 
-    // 3. 삭제 성공 시 사용 완료된 세션 토큰 깔끔하게 소멸
     removeStudyVerified(studyId);
 
     return result;
@@ -137,4 +134,32 @@ export async function updateStudy(studyId, updateData) {
   }
 
   return result.data;
+}
+
+// 30일 단위 스터디 정보 조회
+export async function getMonthlyHabitRecords(
+  studyId,
+  { targetDate, page = 1, pageSize = 7 } = {},
+) {
+  try {
+    const queryParams = new URLSearchParams({
+      target_date: targetDate,
+      page: String(page),
+      page_size: String(pageSize),
+    });
+
+    const response = await fetch(
+      `${BASE_URL}/studies/${studyId}/habits/records/monthly?${queryParams.toString()}`,
+    );
+
+    if (!response.ok) {
+      throw new Error('30일 단위 습관 일정을 불러오지 못했습니다.');
+    }
+
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error('[API Error] getMonthlyHabitRecords failed:', error.message);
+    throw error;
+  }
 }
