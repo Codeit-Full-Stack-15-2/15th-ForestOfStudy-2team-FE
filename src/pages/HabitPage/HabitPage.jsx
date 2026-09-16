@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getStudyDetail } from '@/api/studyApi';
+import Spinner from '@/components/Spinner';
 import {
   getHabits,
   createHabits,
@@ -27,6 +28,7 @@ function HabitPage() {
   const [habits, setHabits] = useState([]);
   const [initialHabits, setInitialHabits] = useState([]);
   const [isSaving, setIsSaving] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const isDirty = JSON.stringify(habits) !== JSON.stringify(initialHabits);
   const blocker = useBlocker(isDirty);
@@ -43,6 +45,7 @@ function HabitPage() {
 
   const fetchHabitsData = async () => {
     try {
+      setIsLoading(true);
       const response = await getHabits(studyId);
       const habitList = Array.isArray(response)
         ? response
@@ -57,6 +60,8 @@ function HabitPage() {
       setInitialHabits(normalizedHabits);
     } catch (error) {
       console.error('습관 목록 불러오기 오류:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -275,25 +280,35 @@ function HabitPage() {
                 </button>
               </div>
 
-              {visibleHabits.length === 0 && isCheckMode && (
-                <div className={styles.todayHabitBoard}>
-                  <p>
-                    아직 습관이 없어요
-                    <br /> 목록 수정을 눌러 습관을 생성해보세요
-                  </p>
+              {isLoading ? (
+                <div className={styles.spinnerContainer}>
+                  <Spinner />
                 </div>
-              )}
-              {(visibleHabits.length > 0 || !isCheckMode) && (
+              ) : (
                 <>
-                  <HabitList
-                    habits={visibleHabits}
-                    isCheckMode={isCheckMode}
-                    onDeleteHabit={handleDeleteHabit}
-                    onCheckHabit={handleCheckHabit}
-                    onUpdateHabit={handleUpdateHabit}
-                  />
-                  {!isCheckMode && (
-                    <HabitForm onAddTempHabit={handleAddTempHabit} />
+                  {visibleHabits.length === 0 && isCheckMode && (
+                    <div className={styles.todayHabitBoard}>
+                      <p>
+                        아직 습관이 없어요
+                        <br /> 목록 수정을 눌러 습관을 생성해보세요
+                      </p>
+                    </div>
+                  )}
+
+                  {(visibleHabits.length > 0 || !isCheckMode) && (
+                    <>
+                      <HabitList
+                        habits={visibleHabits}
+                        isCheckMode={isCheckMode}
+                        onDeleteHabit={handleDeleteHabit}
+                        onCheckHabit={handleCheckHabit}
+                        onUpdateHabit={handleUpdateHabit}
+                      />
+
+                      {!isCheckMode && (
+                        <HabitForm onAddTempHabit={handleAddTempHabit} />
+                      )}
+                    </>
                   )}
                 </>
               )}
