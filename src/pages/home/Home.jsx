@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import searchIcon from '@/assets/homePage/search.svg';
 import styles from './Home.module.css';
 import StudyCard from '@/pages/home/components/studyCard/StudyCard';
@@ -22,6 +22,30 @@ function Home() {
 
   const [sortValue, setSortValue] = useState('latest');
   const [searchValue, setSearchValue] = useState('');
+
+  const sortDropdownRef = useRef(null);
+
+  // 정렬 버튼 커스텀 드롭다운 구현
+  const [isSortOpen, setIsSortOpen] = useState(false);
+  const selectedSort = sortOptions.find((option) => option.value === sortValue);
+
+  // 드롭다운 메뉴 외부 클릭 시 닫힘 구현
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        sortDropdownRef.current &&
+        !sortDropdownRef.current.contains(event.target)
+      ) {
+        setIsSortOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   // 디바운스 구현
   const [debouncedSearchValue, setDebouncedSearchValue] = useState('');
@@ -112,10 +136,6 @@ function Home() {
     fetchRecentStudies();
   }, []);
 
-  // 정렬 버튼 커스텀 드롭다운 구현
-  const [isSortOpen, setIsSortOpen] = useState(false);
-  const selectedSort = sortOptions.find((option) => option.value === sortValue);
-
   // 더보기 버튼 기능 구현
   const handleLoadMore = () => {
     setPage((prevPage) => prevPage + 1);
@@ -173,7 +193,7 @@ function Home() {
               }}
             />
           </div>
-          <div className={styles.sortDropdown}>
+          <div className={styles.sortDropdown} ref={sortDropdownRef}>
             <button
               type="button"
               className={styles.sortButton}
