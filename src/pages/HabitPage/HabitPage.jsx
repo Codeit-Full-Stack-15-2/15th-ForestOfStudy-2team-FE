@@ -11,6 +11,7 @@ import ArrowButton from '@/components/arrowButton/ArrowButton';
 import CardContainer from '@/components/cardContainer/CardContainer';
 import styles from './HabitPage.module.css';
 import HabitList from './components/habitForm/HabitList';
+import { showToast } from '@/utils/showToast';
 import { useParams } from 'react-router';
 
 function HabitPage() {
@@ -53,7 +54,7 @@ function HabitPage() {
     );
 
     if (isDuplicate) {
-      alert('이미 존재하는 습관입니다.');
+      showToast('이미 존재하는 습관입니다.', 'warning');
       return;
     }
 
@@ -101,7 +102,7 @@ function HabitPage() {
   const handleCheckHabit = async (habitId) => {
     const targetHabit = habits.find((h) => h.id === habitId);
     if (!targetHabit || targetHabit.isTemp) {
-      alert('목록 수정 완료 후 완료 체크가 가능합니다.');
+      showToast('목록 수정 완료 후 완료 체크가 가능합니다.', 'warning');
       return;
     }
     const nextIsCompleted = !targetHabit.isCompleted;
@@ -167,9 +168,11 @@ function HabitPage() {
 
           // API 호출 성공 후 최신 데이터 재조회
           await fetchHabitsData();
+
+          showToast('습관 목록이 저장되었습니다.', 'success');
         } catch (error) {
           console.error('습관 변경 사항 저장 실패:', error);
-          alert('습관 저장 중 오류가 발생했습니다.');
+          showToast('습관 저장 중 오류가 발생했습니다.', 'warning');
           return;
         }
       }
