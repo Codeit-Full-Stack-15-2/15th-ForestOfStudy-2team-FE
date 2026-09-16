@@ -53,6 +53,8 @@ export function useStudyEditForm() {
       return;
     }
 
+    clearError('nickname');
+
     if (nickname === originalNickname.trim()) {
       setNicknameCheckStatus('available');
       return;

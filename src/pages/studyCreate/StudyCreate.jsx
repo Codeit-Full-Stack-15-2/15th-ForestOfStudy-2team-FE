@@ -6,6 +6,7 @@ import BaseButton from '@/components/baseButton/BaseButton';
 import ConfirmModal from '@/components/confirmModal/ConfirmModal';
 import { useNavigate } from 'react-router';
 import { createStudy } from '@/api/studyApi';
+import { showToast } from '@/utils/showToast';
 
 function StudyCreate() {
   const navigate = useNavigate();
@@ -44,6 +45,7 @@ function StudyCreate() {
       navigate(`/studies/${newStudy.id}`);
     } catch (error) {
       console.error('스터디 생성에 실패했습니다:', error);
+      showToast(error.message || '스터디 생성에 실패했습니다.', 'warning');
     }
   };
 
