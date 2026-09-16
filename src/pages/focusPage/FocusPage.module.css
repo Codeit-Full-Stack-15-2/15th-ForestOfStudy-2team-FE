@@ -67,3 +67,9 @@
     gap: 12px;
   }
 }
+
+.spinnerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

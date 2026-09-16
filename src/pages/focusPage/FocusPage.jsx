@@ -7,10 +7,12 @@ import ConfirmModal from '@/components/confirmModal/ConfirmModal';
 import timerCompletedSound from '@/assets/sounds/timer_completed_sound.mp3';
 import soundMaxIcon from '@/assets/focusPage/sound_max.svg';
 import soundMinIcon from '@/assets/focusPage/sound_min.svg';
+import Spinner from '@/components/Spinner';
 
 import { useStudy } from '@/pages/focusPage/hooks/useStudy';
 import { useState, useCallback, useEffect, useRef } from 'react';
-import { useBlocker, useParams } from 'react-router';
+import { useBlocker, useParams, useNavigate } from 'react-router';
+import { checkIsStudyVerified } from '@/utils/studyAuthSession';
 import { calculateEarnedPoints } from './utils/calculateEarnedPoints';
 import { showToast } from '@/utils/showToast';
 import { useTimer } from './hooks/useTimer';
@@ -22,6 +24,7 @@ const MIN_MINUTES = 25;
 function FocusPage({ totalSeconds = MIN_MINUTES * 60 }) {
   const { studyId: paramStudyId } = useParams();
   const studyId = paramStudyId || 123;
+  const navigate = useNavigate();
   const { points, addPoints, title, nickname, isLoading } = useStudy(studyId);
   const isDemoMode = useHiddenTimerCommand();
   const [duration, setDuration] = useState(() =>
@@ -34,6 +37,12 @@ function FocusPage({ totalSeconds = MIN_MINUTES * 60 }) {
     audioRef.current = new Audio(timerCompletedSound);
     audioRef.current.volume = 0.2;
   }, []);
+
+  useEffect(() => {
+    if (!checkIsStudyVerified(studyId)) {
+      navigate('/', { replace: true });
+    }
+  }, [studyId, navigate]);
 
   const handleTimerComplete = useCallback(async () => {
     if (!isMuted) {
@@ -91,6 +100,16 @@ function FocusPage({ totalSeconds = MIN_MINUTES * 60 }) {
     window.addEventListener('beforeunload', handleBeforeUnload);
     return () => window.removeEventListener('beforeunload', handleBeforeUnload);
   }, [timer.isRunning]);
+
+  if (isLoading) {
+    return (
+      <CardContainer>
+        <div className={styles.spinnerContainer}>
+          <Spinner />
+        </div>
+      </CardContainer>
+    );
+  }
 
   return (
     <CardContainer>
