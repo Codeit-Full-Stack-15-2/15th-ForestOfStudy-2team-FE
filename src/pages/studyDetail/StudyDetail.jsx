@@ -42,7 +42,7 @@ function StudyDetail() {
       ) : (
         <>
           <StudyDetailHeader studyId={studyId} data={headerData} />
-          <StudyDetailBody key={studyId} studyId={studyId} />
+          <StudyDetailBody key={studyId} data={headerData} studyId={studyId} />
         </>
       )}
     </CardContainer>
