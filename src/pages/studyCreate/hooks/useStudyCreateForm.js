@@ -9,7 +9,7 @@ export function useStudyCreateForm() {
   });
 
   const [nicknameCheckStatus, setNicknameCheckStatus] = useState('unchecked');
-  const [selectedBackground, setSelectedBackground] = useState('first');
+  const [selectedBackground, setSelectedBackground] = useState('green');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [errors, setErrors] = useState({});
