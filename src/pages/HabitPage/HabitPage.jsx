@@ -11,9 +11,10 @@ import ArrowButton from '@/components/arrowButton/ArrowButton';
 import CardContainer from '@/components/cardContainer/CardContainer';
 import styles from './HabitPage.module.css';
 import HabitList from './components/habitForm/HabitList';
+import { useParams } from 'react-router';
 
 function HabitPage() {
-  const TEMP_STUDY_ID = 1;
+  const { studyId } = useParams();
 
   const timeNow = new Date()
     .toLocaleString('sv-SE', { timeZone: 'Asia/Seoul' })
@@ -24,7 +25,7 @@ function HabitPage() {
 
   const fetchHabitsData = async () => {
     try {
-      const response = await getHabits(TEMP_STUDY_ID);
+      const response = await getHabits(studyId);
       const habitList = Array.isArray(response)
         ? response
         : response.data || response.habits || response.list || [];
@@ -41,10 +42,21 @@ function HabitPage() {
   };
   useEffect(() => {
     fetchHabitsData();
-  }, [TEMP_STUDY_ID]);
+  }, [studyId]);
 
   // 엔터 입력 시 화면에만 임시로 추가 (통신X)
   const handleAddTempHabit = (habitTitle) => {
+    const trimmedTitle = habitTitle.trim();
+
+    const isDuplicate = habits.some(
+      (h) => !h.isDeleted && h.title.trim() === trimmedTitle,
+    );
+
+    if (isDuplicate) {
+      alert('이미 존재하는 습관입니다.');
+      return;
+    }
+
     const newTempHabit = {
       id: `temp-${Date.now()}`,
       title: habitTitle,
@@ -103,7 +115,7 @@ function HabitPage() {
     );
 
     try {
-      await toggleHabitRecord(TEMP_STUDY_ID, habitId, timeNow);
+      await toggleHabitRecord(studyId, habitId, timeNow);
     } catch (error) {
       console.error('습관 상태 변경 실패', error);
       alert('습관 상태 변경에 실패했습니다.');
@@ -131,10 +143,17 @@ function HabitPage() {
 
       if (hasChanges) {
         try {
+          // 기존 습관 먼저 삭제
+          if (deletedHabits.length > 0) {
+            const habitIds = deletedHabits.map((h) => Number(h.id));
+            await deleteHabits(studyId, habitIds);
+          }
+
           // 추가 API
           if (createdHabits.length > 0) {
-            const habitTitles = createdHabits.map((h) => h.title);
-            await createHabits(TEMP_STUDY_ID, habitTitles);
+            for (const habit of createdHabits) {
+              await createHabits(studyId, [habit.title]);
+            }
           }
 
           // 수정 API
@@ -143,14 +162,7 @@ function HabitPage() {
               id: Number(h.id),
               title: h.title,
             }));
-
-            await updateHabits(TEMP_STUDY_ID, habitsToUpdate);
-          }
-
-          // 삭제 API
-          if (deletedHabits.length > 0) {
-            const habitIds = deletedHabits.map((h) => h.id);
-            await deleteHabits(TEMP_STUDY_ID, habitIds);
+            await updateHabits(studyId, habitsToUpdate);
           }
 
           // API 호출 성공 후 최신 데이터 재조회
@@ -176,10 +188,8 @@ function HabitPage() {
             <div className={styles.titleContainer}>
               <h2 className={styles.title}>연우의 개발공장</h2>
               <div className={styles.titleButtons}>
-                <ArrowButton to={`/studies/${TEMP_STUDY_ID}`}>
-                  대시보드
-                </ArrowButton>
-                <ArrowButton to={`/studies/${TEMP_STUDY_ID}/focus`}>
+                <ArrowButton to={`/studies/${studyId}`}>대시보드</ArrowButton>
+                <ArrowButton to={`/studies/${studyId}/focus`}>
                   오늘의 집중 타이머
                 </ArrowButton>
               </div>
