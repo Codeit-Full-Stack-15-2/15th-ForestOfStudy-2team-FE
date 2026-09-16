@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { getStudyDetail } from '@/api/studyApi';
 import {
   getHabits,
   createHabits,
@@ -12,7 +13,7 @@ import CardContainer from '@/components/cardContainer/CardContainer';
 import styles from './HabitPage.module.css';
 import HabitList from './components/habitForm/HabitList';
 import { showToast } from '@/utils/showToast';
-import { useParams } from 'react-router';
+import { useParams, useBlocker } from 'react-router';
 
 function HabitPage() {
   const { studyId } = useParams();
@@ -22,7 +23,23 @@ function HabitPage() {
     .split(' ')[0];
 
   const [isCheckMode, setIsCheckMode] = useState(true);
+  const [study, setStudy] = useState(null);
   const [habits, setHabits] = useState([]);
+  const [initialHabits, setInitialHabits] = useState([]);
+  const [isSaving, setIsSaving] = useState(false);
+
+  const isDirty = JSON.stringify(habits) !== JSON.stringify(initialHabits);
+  const blocker = useBlocker(isDirty);
+
+  const fetchStudyData = async () => {
+    try {
+      const studyData = await getStudyDetail(studyId);
+
+      setStudy(studyData);
+    } catch (error) {
+      console.error('스터디 상세 정보 불러오기 오류:', error);
+    }
+  };
 
   const fetchHabitsData = async () => {
     try {
@@ -37,13 +54,48 @@ function HabitPage() {
       }));
 
       setHabits(normalizedHabits);
+      setInitialHabits(normalizedHabits);
     } catch (error) {
       console.error('습관 목록 불러오기 오류:', error);
     }
   };
+
   useEffect(() => {
     fetchHabitsData();
   }, [studyId]);
+
+  useEffect(() => {
+    fetchStudyData();
+  }, [studyId]);
+
+  useEffect(() => {
+    if (blocker.state === 'blocked') {
+      const shouldLeave = window.confirm(
+        '저장하지 않은 변경사항이 있습니다.\n페이지를 이동하시겠습니까?',
+      );
+
+      if (shouldLeave) {
+        blocker.proceed();
+      } else {
+        blocker.reset();
+      }
+    }
+  }, [blocker]);
+
+  useEffect(() => {
+    const handleBeforeUnload = (event) => {
+      if (!isDirty) return;
+
+      event.preventDefault();
+      event.returnValue = '';
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [isDirty]);
 
   // 엔터 입력 시 화면에만 임시로 추가 (통신X)
   const handleAddTempHabit = (habitTitle) => {
@@ -132,6 +184,7 @@ function HabitPage() {
   };
 
   const handleForm = async () => {
+    if (isSaving) return;
     if (!isCheckMode) {
       const createdHabits = habits.filter((h) => h.isTemp && !h.isDeleted);
       const updatedHabits = habits.filter((h) => h.isUpdated && !h.isDeleted);
@@ -143,6 +196,8 @@ function HabitPage() {
         deletedHabits.length > 0;
 
       if (hasChanges) {
+        setIsSaving(true);
+
         try {
           // 기존 습관 먼저 삭제
           if (deletedHabits.length > 0) {
@@ -174,6 +229,8 @@ function HabitPage() {
           console.error('습관 변경 사항 저장 실패:', error);
           showToast('습관 저장 중 오류가 발생했습니다.', 'warning');
           return;
+        } finally {
+          setIsSaving(false);
         }
       }
     }
@@ -189,7 +246,9 @@ function HabitPage() {
         <div className={styles.habitInnerDiv}>
           <div className={styles.habitHead}>
             <div className={styles.titleContainer}>
-              <h2 className={styles.title}>연우의 개발공장</h2>
+              <h2 className={styles.title}>
+                {study ? `${study.nickname}의 ${study.title}` : '스터디'}
+              </h2>
               <div className={styles.titleButtons}>
                 <ArrowButton to={`/studies/${studyId}`}>대시보드</ArrowButton>
                 <ArrowButton to={`/studies/${studyId}/focus`}>
@@ -212,7 +271,7 @@ function HabitPage() {
                   className={styles.listModifyButton}
                   onClick={handleForm}
                 >
-                  {isCheckMode ? '목록 수정' : '완료'}
+                  {isSaving ? '저장 중' : isCheckMode ? '목록 수정' : '완료'}
                 </button>
               </div>
 

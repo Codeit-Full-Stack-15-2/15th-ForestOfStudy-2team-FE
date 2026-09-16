@@ -121,6 +121,11 @@
   transform: translateX(-100%) scale(1.044) translateZ(0) !important;
 }
 
+.listModifyButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .todayHabitBoard {
   display: flex;
   flex-direction: column;
