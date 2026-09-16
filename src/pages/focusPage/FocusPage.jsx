@@ -2,11 +2,14 @@ import styles from './FocusPage.module.css';
 import ArrowButton from '@/components/arrowButton/ArrowButton';
 import Timer from './components/timer/Timer';
 import CardContainer from '@/components/cardContainer/CardContainer';
-import PointBadge from './components/PointBadge';
+import PointBadge from './components/pointBadge/PointBadge';
 import ConfirmModal from '@/components/confirmModal/ConfirmModal';
+import timerCompletedSound from '@/assets/sounds/timer_completed_sound.mp3';
+import soundMaxIcon from '@/assets/focusPage/sound_max.svg';
+import soundMinIcon from '@/assets/focusPage/sound_min.svg';
 
 import { useStudy } from '@/pages/focusPage/hooks/useStudy';
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { useBlocker, useParams } from 'react-router';
 import { calculateEarnedPoints } from './utils/calculateEarnedPoints';
 import { showToast } from '@/utils/showToast';
@@ -24,8 +27,20 @@ function FocusPage({ totalSeconds = MIN_MINUTES * 60 }) {
   const [duration, setDuration] = useState(() =>
     Math.max(totalSeconds || 0, MIN_MINUTES * 60),
   );
+  const [isMuted, setIsMuted] = useState(false);
+  const audioRef = useRef(null);
+
+  useEffect(() => {
+    audioRef.current = new Audio(timerCompletedSound);
+    audioRef.current.volume = 0.2;
+  }, []);
 
   const handleTimerComplete = useCallback(async () => {
+    if (!isMuted) {
+      audioRef.current
+        ?.play()
+        .catch((err) => console.error('알림음 재생 실패:', err));
+    }
     const earnedPoints = calculateEarnedPoints(duration);
     if (earnedPoints > 0) {
       const minutes = Math.floor(duration / 60);
@@ -37,7 +52,7 @@ function FocusPage({ totalSeconds = MIN_MINUTES * 60 }) {
         showToast('포인트 저장에 문제가 생겼어요!', 'warning');
       }
     }
-  }, [duration, addPoints]);
+  }, [duration, addPoints, isMuted]);
 
   const timer = useTimer(duration, handleTimerComplete, {
     fastForward: isDemoMode,
@@ -49,9 +64,16 @@ function FocusPage({ totalSeconds = MIN_MINUTES * 60 }) {
   );
 
   const adjustTime = (amountInMinutes) => {
-    setDuration((prev) =>
-      Math.max(prev + amountInMinutes * 60, MIN_MINUTES * 60),
-    );
+    setDuration((prev) => {
+      const next = prev + amountInMinutes * 60;
+
+      if (next < MIN_MINUTES * 60) {
+        showToast(`최소 집중 시간은 ${MIN_MINUTES}분이에요!`, 'warning');
+        return prev;
+      }
+
+      return next;
+    });
   };
 
   const selectPresetTime = (minutes) => {
@@ -73,7 +95,23 @@ function FocusPage({ totalSeconds = MIN_MINUTES * 60 }) {
   return (
     <CardContainer>
       <div className={styles.titleContainer}>
-        <h3>{isLoading ? '불러오는 중...' : `${nickname}의 ${title}`}</h3>
+        <div className={styles.titleWithMute}>
+          <h3>{isLoading ? '불러오는 중...' : `${nickname}의 ${title}`}</h3>
+          <button
+            type="button"
+            className={styles.muteButton}
+            onClick={() => setIsMuted((prev) => !prev)}
+            aria-label={isMuted ? '소리 켜기' : '소리 끄기'}
+            title={isMuted ? '소리 켜기' : '소리 끄기'}
+          >
+            <img
+              src={isMuted ? soundMinIcon : soundMaxIcon}
+              alt="음소거 버튼"
+              width={36}
+              height={36}
+            />
+          </button>
+        </div>
         <div className={styles.buttonContainer}>
           <ArrowButton to={`/studies/${studyId}/habits`}>
             습관 달성 기록하기

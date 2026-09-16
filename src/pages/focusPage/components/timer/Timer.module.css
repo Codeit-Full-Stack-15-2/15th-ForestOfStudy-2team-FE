@@ -72,6 +72,10 @@
   cursor: pointer;
 }
 
+.timerPresetChip:hover {
+  background-color: color-mix(in srgb, var(--color-brand-primary), black 5%);
+}
+
 .timerAdjustButtonContainer {
   display: flex;
   align-items: center;
