@@ -18,37 +18,33 @@ function StudyDetailBody({ studyId }) {
     sentinelRef: weeklySentinelRef,
   } = useStudyHabits(studyId);
 
-  // 2. 월간 데이터 훅 (isEmpty를 monthlyIsEmpty로 이름 변경하여 추출)
+  // 2. 월간 데이터 훅 (viewMode가 'monthly'일 때만 enabled = true)
   const {
     habits: monthlyHabits,
     isLoading: isMonthlyLoading,
     hasMore: monthlyHasMore,
     isEmpty: monthlyIsEmpty,
     sentinelRef: monthlySentinelRef,
-  } = useStudyHabitsMonthly(studyId);
+  } = useStudyHabitsMonthly(studyId, viewMode === 'monthly');
 
   return (
     <section className={styles.bodyContainer}>
-      <div className="flex justify-between items-center mb-4">
+      <div className={styles.headerContainer}>
         <h2 className={styles.title}>습관 기록표</h2>
 
-        <div className="flex gap-1 bg-gray-100 p-1 rounded-lg">
+        <div className={styles.toggleGroup}>
           <button
             onClick={() => setViewMode('weekly')}
-            className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
-              viewMode === 'weekly'
-                ? 'bg-white shadow text-black'
-                : 'text-gray-500'
+            className={`${styles.toggleButton} ${
+              viewMode === 'weekly' ? styles.activeButton : ''
             }`}
           >
             7일
           </button>
           <button
             onClick={() => setViewMode('monthly')}
-            className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
-              viewMode === 'monthly'
-                ? 'bg-white shadow text-black'
-                : 'text-gray-500'
+            className={`${styles.toggleButton} ${
+              viewMode === 'monthly' ? styles.activeButton : ''
             }`}
           >
             30일 잔디

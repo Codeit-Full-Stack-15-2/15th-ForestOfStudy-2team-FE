@@ -1,8 +1,8 @@
-import { getMonthlyHabitRecords } from '@/api/studyApi'; // 프로젝트의 API 파일 경로에 맞춰주세요
+import { getMonthlyHabitRecords } from '@/api/studyApi';
 import dayjs from '@/utils/dayjs';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-export const useStudyHabitsMonthly = (studyId) => {
+export const useStudyHabitsMonthly = (studyId, enabled = true) => {
   const [page, setPage] = useState(1);
   const [habits, setHabits] = useState([]);
   const [hasMore, setHasMore] = useState(true);
@@ -12,12 +12,11 @@ export const useStudyHabitsMonthly = (studyId) => {
 
   const loadHabits = useCallback(
     async (targetPage) => {
-      if (isLoading) return;
+      if (isLoading || !enabled) return;
       setIsLoading(true);
 
       try {
         const targetDate = dayjs().format('YYYY-MM-DD');
-
         const data = await getMonthlyHabitRecords(studyId, {
           targetDate,
           page: targetPage,
@@ -45,11 +44,11 @@ export const useStudyHabitsMonthly = (studyId) => {
         setIsLoading(false);
       }
     },
-    [studyId, isLoading],
+    [studyId, isLoading, enabled],
   );
 
   useEffect(() => {
-    if (!hasMore || isLoading) return;
+    if (!enabled || !hasMore || isLoading) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -68,7 +67,7 @@ export const useStudyHabitsMonthly = (studyId) => {
     return () => {
       if (currentSentinel) observer.unobserve(currentSentinel);
     };
-  }, [hasMore, isLoading, page, loadHabits]);
+  }, [enabled, hasMore, isLoading, page, loadHabits]);
 
   return {
     habits,
