@@ -5,7 +5,7 @@ import CardContainer from '@/components/cardContainer/CardContainer';
 import PointBadge from './components/PointBadge';
 import ConfirmModal from '@/components/confirmModal/ConfirmModal';
 
-import { useFocusPoints } from '@/pages/focusPage/hooks/useFocusPoints';
+import { useStudy } from '@/pages/focusPage/hooks/useStudy';
 import { useState, useCallback, useEffect } from 'react';
 import { useBlocker, useParams } from 'react-router';
 import { calculateEarnedPoints } from './utils/calculateEarnedPoints';
@@ -18,7 +18,7 @@ const MIN_MINUTES = 25;
 function FocusPage({ totalSeconds = MIN_MINUTES * 60 }) {
   const { studyId: paramStudyId } = useParams();
   const studyId = paramStudyId || 123;
-  const { points, addPoints } = useFocusPoints(studyId);
+  const { points, addPoints, title, nickname, isLoading } = useStudy(studyId);
   const [duration, setDuration] = useState(() =>
     Math.max(totalSeconds || 0, MIN_MINUTES * 60),
   );
@@ -69,7 +69,7 @@ function FocusPage({ totalSeconds = MIN_MINUTES * 60 }) {
   return (
     <CardContainer>
       <div className={styles.titleContainer}>
-        <h3>연우의 개발공장</h3>
+        <h3>{isLoading ? '불러오는 중...' : `${nickname}의 ${title}`}</h3>
         <div className={styles.buttonContainer}>
           <ArrowButton to={`/studies/${studyId}/habits`}>
             습관 달성 기록하기
