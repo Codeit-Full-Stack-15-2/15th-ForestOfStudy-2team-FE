@@ -43,7 +43,11 @@ function HabitItem({
       return;
     }
     onCheckHabit(habit.id);
-    showToast(`${habit.title} 달성을 축하합니다!`, 'success');
+    if (habit.isCompleted) {
+      showToast(`${habit.title} 완료를 취소했습니다.`, 'warning');
+    } else {
+      showToast(`${habit.title} 달성을 축하합니다!`, 'success');
+    }
   };
 
   return (
@@ -67,7 +71,6 @@ function HabitItem({
               styles.habitText,
               habit.isCompleted && styles.checked,
             )}
-            onClick={handleClick}
           >
             {habit.title}
           </span>
