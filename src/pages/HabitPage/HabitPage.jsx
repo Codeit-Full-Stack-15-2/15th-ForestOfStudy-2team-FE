@@ -171,7 +171,7 @@ function HabitPage() {
       await toggleHabitRecord(studyId, habitId, timeNow);
     } catch (error) {
       console.error('습관 상태 변경 실패', error);
-      alert('습관 상태 변경에 실패했습니다..');
+      alert('습관 상태 변경에 실패했습니다.');
 
       setHabits((prevHabits) =>
         prevHabits.map((habit) =>
