@@ -164,13 +164,15 @@ function HabitPage() {
     }
     const nextIsCompleted = !targetHabit.isCompleted;
 
-    setHabits((prevHabits) =>
+    const updateHabitState = (prevHabits) =>
       prevHabits.map((habit) =>
         habit.id === habitId
           ? { ...habit, isCompleted: nextIsCompleted }
           : habit,
-      ),
-    );
+      );
+
+    setHabits(updateHabitState);
+    setInitialHabits(updateHabitState);
 
     try {
       await toggleHabitRecord(studyId, habitId, timeNow);
