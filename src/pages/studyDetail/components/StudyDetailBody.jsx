@@ -1,3 +1,4 @@
+import PasswordVerificationModal from '@/components/passwordVerificationModal/PasswordVerificationModal';
 import Spinner from '@/components/Spinner';
 import clsx from 'clsx';
 import { useState } from 'react';
@@ -7,7 +8,7 @@ import HabitGrassCard from './HabitGrassCard';
 import HabitTrackerTable from './HabitTrackerTable';
 import styles from './StudyDetailBody.module.css';
 
-function StudyDetailBody({ studyId }) {
+function StudyDetailBody({ data, studyId }) {
   const [viewMode, setViewMode] = useState('weekly');
 
   // 1. 월간 데이터 훅 (viewMode가 'monthly'일 때만 enabled = true)
@@ -27,6 +28,9 @@ function StudyDetailBody({ studyId }) {
     hasMore: weeklyHasMore,
     isEmpty: isWeeklyEmpty,
     sentinelRef: weeklySentinelRef,
+    activeVerificationModal,
+    setActiveVerificationModal,
+    isVerificationModalButtonLoading,
     handleToggleHabit,
   } = useStudyHabits(studyId, {
     onToggleSuccess: () => {
@@ -137,6 +141,17 @@ function StudyDetailBody({ studyId }) {
           )}
         </>
       )}
+
+      <PasswordVerificationModal
+        open={Boolean(activeVerificationModal)}
+        nickname={data.nickname}
+        title={data.title}
+        description="권한이 필요해요!"
+        okText={activeVerificationModal?.buttonText}
+        modalButtonLoading={isVerificationModalButtonLoading}
+        onOk={(password) => activeVerificationModal?.onOk(password)}
+        onCancel={() => setActiveVerificationModal(null)}
+      />
     </section>
   );
 }

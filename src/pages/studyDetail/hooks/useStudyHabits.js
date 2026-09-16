@@ -1,7 +1,11 @@
 import { toggleHabitRecord } from '@/api/habitApi';
-import { getStudyHabits } from '@/api/studyApi';
+import { getStudyHabits, verifyStudyPassword } from '@/api/studyApi';
 import dayjs from '@/utils/dayjs';
 import { showToast } from '@/utils/showToast';
+import {
+  checkIsStudyVerified,
+  saveStudyVerified,
+} from '@/utils/studyAuthSession';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 export const useStudyHabits = (studyId, options = {}) => {
@@ -9,6 +13,11 @@ export const useStudyHabits = (studyId, options = {}) => {
   const [habits, setHabits] = useState([]);
   const [hasMore, setHasMore] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [activeVerificationModal, setActiveVerificationModal] = useState(null);
+  const [
+    isVerificationModalButtonLoading,
+    setIsVerificationModalButtonLoading,
+  ] = useState(false);
   const sentinelRef = useRef(null);
   const isEmpty = !isLoading && !hasMore && habits.length === 0;
 
@@ -73,6 +82,30 @@ export const useStudyHabits = (studyId, options = {}) => {
   }, [hasMore, isLoading, page, loadHabits]);
 
   const handleToggleHabit = async ({ habitId, date }) => {
+    // 토큰이 없는 경우 비밀번호 인증
+    if (!checkIsStudyVerified(studyId)) {
+      setActiveVerificationModal({
+        buttonText: '비밀번호 인증',
+        onOk: async (password) => {
+          setIsVerificationModalButtonLoading(true);
+          try {
+            const token = await verifyStudyPassword(studyId, password);
+            saveStudyVerified(studyId, token);
+            setActiveVerificationModal(null);
+          } catch (error) {
+            console.error(error.message);
+            showToast(
+              '🚨 비밀번호가 일치하지 않습니다. 다시 입력해주세요.',
+              'warning',
+            );
+          } finally {
+            setIsVerificationModalButtonLoading(false);
+          }
+        },
+      });
+      return;
+    }
+
     const today = dayjs().format('YYYY-MM-DD');
     if (today !== date) {
       showToast('오늘 습관만 변경할 수 있습니다.', 'warning');
@@ -141,5 +174,8 @@ export const useStudyHabits = (studyId, options = {}) => {
     sentinelRef,
     setHabits,
     handleToggleHabit,
+    activeVerificationModal,
+    setActiveVerificationModal,
+    isVerificationModalButtonLoading,
   };
 };
