@@ -55,10 +55,14 @@ function FocusPage({ totalSeconds = MIN_MINUTES * 60 }) {
       const minutes = Math.floor(duration / 60);
       try {
         await addPoints(minutes);
-        showToast(`🎉 ${earnedPoints}포인트를 획득했습니다!`, 'success');
+        showToast(`🎉 ${earnedPoints}포인트를 획득했습니다!`, 'success', {
+          id: 'focus-points',
+        });
       } catch (err) {
         console.error(err.message);
-        showToast('포인트 저장에 문제가 생겼어요!', 'warning');
+        showToast('포인트 저장에 문제가 생겼어요!', 'warning', {
+          id: 'focus-points-error',
+        });
       }
     }
   }, [duration, addPoints, isMuted]);
@@ -77,7 +81,9 @@ function FocusPage({ totalSeconds = MIN_MINUTES * 60 }) {
       const next = prev + amountInMinutes * 60;
 
       if (next < MIN_MINUTES * 60) {
-        showToast(`최소 집중 시간은 ${MIN_MINUTES}분이에요!`, 'warning');
+        showToast(`최소 집중 시간은 ${MIN_MINUTES}분이에요!`, 'warning', {
+          id: 'focus-min-time',
+        });
         return prev;
       }
 
@@ -115,7 +121,9 @@ function FocusPage({ totalSeconds = MIN_MINUTES * 60 }) {
     <CardContainer>
       <div className={styles.titleContainer}>
         <div className={styles.titleWithMute}>
-          <h3>{isLoading ? '불러오는 중...' : `${nickname}의 ${title}`}</h3>
+          <h3>
+            ${nickname}의 ${title}
+          </h3>
           <button
             type="button"
             className={styles.muteButton}
