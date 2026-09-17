@@ -21,6 +21,7 @@ function HabitTrackerTable({ habits, onClick }) {
             {habit.weeklyRecords.map((recordObj) => (
               <StampIcon
                 key={recordObj.date}
+                habitStatus={habit.deletedAt}
                 date={recordObj.date}
                 habitId={habit.id}
                 record={recordObj.record}
