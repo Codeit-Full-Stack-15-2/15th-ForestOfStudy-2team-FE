@@ -7,10 +7,9 @@ export function useStudyReactions(studyId, initialReactions) {
   const [isOpenReactionList, setIsOpenReactionList] = useState(false);
   const [reactions, setReactions] = useState(initialReactions);
   const reactionQueueRef = useRef({});
-
+  const reactionListPopoverTriggerRef = useRef(null);
   const reactionListPopoverRef = useRef(null);
   const emojiPickerRef = useRef(null);
-  // 추가: [추가] 버튼의 클릭을 외부 클릭으로 처리하지 않기 위한 ref 추가
   const emojiPickerTriggerRef = useRef(null);
   const currentUserId = getOrCreateUserId();
 
@@ -90,12 +89,13 @@ export function useStudyReactions(studyId, initialReactions) {
     const handleClickOutside = (event) => {
       if (
         reactionListPopoverRef.current &&
-        !reactionListPopoverRef.current.contains(event.target)
+        !reactionListPopoverRef.current.contains(event.target) &&
+        reactionListPopoverTriggerRef.current &&
+        !reactionListPopoverTriggerRef.current.contains(event.target)
       ) {
         setIsOpenReactionList(false);
       }
 
-      // 핵심 수정: 클릭된 곳이 피커 상자도 아니고, [추가] 버튼도 아닐 때만 닫기!
       if (
         emojiPickerRef.current &&
         !emojiPickerRef.current.contains(event.target) &&
@@ -116,8 +116,9 @@ export function useStudyReactions(studyId, initialReactions) {
     isOpenEmojiPicker,
     isOpenReactionList,
     reactionListPopoverRef,
+    reactionListPopoverTriggerRef,
     emojiPickerRef,
-    emojiPickerTriggerRef, // JSX의 추가 버튼에 연결할 ref 전달
+    emojiPickerTriggerRef,
     handleSelectEmojiFromBadge,
     handleSelectEmojiFromPicker,
     handleToggleEmojiPicker,

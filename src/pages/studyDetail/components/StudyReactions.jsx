@@ -15,8 +15,9 @@ function StudyReactions({ studyId, initialReactions }) {
     isOpenEmojiPicker,
     isOpenReactionList,
     reactionListPopoverRef,
+    reactionListPopoverTriggerRef,
     emojiPickerRef,
-    emojiPickerTriggerRef, // ref 받아오기
+    emojiPickerTriggerRef,
     handleSelectEmojiFromBadge,
     handleSelectEmojiFromPicker,
     handleToggleEmojiPicker,
@@ -47,6 +48,7 @@ function StudyReactions({ studyId, initialReactions }) {
         })}
         {reactions.length > VISIBLE_LIMIT && (
           <button
+            ref={reactionListPopoverTriggerRef}
             className={clsx(styles.reactionBadge, styles.more)}
             onClick={handleToggleReactionList}
           >
@@ -73,7 +75,6 @@ function StudyReactions({ studyId, initialReactions }) {
         )}
       </div>
       <div className={styles.addWrapper}>
-        {/* 핵심 수정: 버튼 요소에 emojiPickerTriggerRef 부착 */}
         <button
           ref={emojiPickerTriggerRef}
           className={styles.add}
