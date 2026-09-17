@@ -1,4 +1,4 @@
-<img width="863" height="784" alt="habitimg" src="https://github.com/user-attachments/assets/2d2c7235-f920-4d98-a10b-e8874eee6606" />
+
 # 팀 INT
 
 ### 팀 페이지
