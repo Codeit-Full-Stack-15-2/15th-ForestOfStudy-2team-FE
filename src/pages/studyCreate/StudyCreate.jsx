@@ -7,6 +7,7 @@ import ConfirmModal from '@/components/confirmModal/ConfirmModal';
 import { useNavigate } from 'react-router';
 import { createStudy } from '@/api/studyApi';
 import { showToast } from '@/utils/showToast';
+import { useEffect, useMemo } from 'react';
 
 function StudyCreate() {
   const navigate = useNavigate();
@@ -26,6 +27,27 @@ function StudyCreate() {
     handleSubmit,
     handleCloseConfirmModal,
   } = useStudyCreateForm();
+
+  const isDirty = useMemo(() => {
+    return Boolean(
+      formData.nickname ||
+      formData.studyName ||
+      formData.description ||
+      password ||
+      passwordConfirm,
+    );
+  }, [formData, password, passwordConfirm]);
+
+  useEffect(() => {
+    if (!isDirty) return;
+
+    const handleBeforeUnload = (e) => {
+      e.preventDefault();
+      return (e.returnValue = '');
+    };
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, [isDirty]);
 
   const handleConfirmCreate = async () => {
     const description =
