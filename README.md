@@ -136,9 +136,9 @@ https://app.notion.com/p/e3c8809438758323bf53011c508f434e?v=1c088094387582578564
 
 ### 오늘의 습관 UI 구현
 
-![오늘의 습관](이미지_경로/habit_main.png)
-![오늘의 습관](이미지_경로/habit_main.png)
-![오늘의 습관](이미지_경로/habit_main.png)
+![오늘의 습관](c:\Users\worud\Downloads\habitimg.png)
+![오늘의 습관](c:\Users\worud\Downloads\habitimg1.png)
+![오늘의 습관](c:\Users\worud\Downloads\habitimg2.png)
 
 - **체크 및 목록 편집 모드 분리**
   - 체크 모드: 오늘 달성할 습관 완료/취소 토글 및 UI 반응 연동
