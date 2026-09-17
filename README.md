@@ -25,13 +25,9 @@ https://app.notion.com/p/e3c8809438758323bf53011c508f434e?v=1c088094387582578564
 | --- | --- |
 | **Language** | JavaScript |
 | **Frontend** | React, Vite, CSS Modules |
-| **Backend** | Node.js, Express.js, Prisma ORM |
-| **Database** | PostgreSQL, Supabase |
-| **Validation** | Zod |
 | **API** | REST API |
 | **Version Control** | Git, GitHub |
 | **Code Quality** | ESLint, Prettier |
-| **API / DB Test** | Swagger, DBeaver |
 | **Communication** | Discord, Notion |
 
 ### 팀원별 구현 기능 상세
