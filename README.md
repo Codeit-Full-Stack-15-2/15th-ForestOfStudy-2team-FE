@@ -12,7 +12,7 @@ https://app.notion.com/p/e3c8809438758323bf53011c508f434e?v=1c088094387582578564
 
 김재영 [깃허브](https://github.com/yangpahub)
 
-황영환 [깃허브](개인 Github 링크)
+황영환 [깃허브](https://github.com/hwang4401-sketch)
 
 김다찬 [깃허브](개인 Github 링크)
 
@@ -94,13 +94,43 @@ https://app.notion.com/p/e3c8809438758323bf53011c508f434e?v=1c088094387582578564
 
 ### 황영환
 
-(자신이 개발한 기능에 대한 사진이나 gif 파일 첨부)
+#### **스터디 생성 및 수정**
 
-- **마이 페이지**
-  - fetch(GET)를 사용하여 수강생 개인별 시간 정보 표시
-  - 반응형 레이아웃 구현
-- **공용 Button 컴포넌트**
-  - 공용으로 사용할 Button 컴포넌트 구현
+<p>
+   <img width="500" alt="스터디 생성 페이지" src="https://github.com/user-attachments/assets/54bd9683-f072-4be4-8ed2-aeb7c3537ff0" />
+</p>
+
+<p>
+  <img width="500" alt="스터디 수정 페이지" src="https://github.com/user-attachments/assets/b6e432fe-1a30-4cb2-87cd-fd83c45e7b6a" />
+</p>
+
+- 스터디 생성 및 수정 페이지 UI 구현
+- 닉네임, 스터디 이름, 소개, 배경 선택 폼 구현
+- 입력값 유효성 검사 및 인라인 에러 메시지 처리
+- 비밀번호 및 비밀번호 확인 유효성 검사
+- 스터디 생성 및 수정 API 연동
+- 기존 스터디 데이터를 불러와 수정 폼에 반영
+
+#### **공용 PasswordInput**
+
+- 비밀번호 보기/숨기기 기능 구현
+- 입력값 및 에러 상태를 전달받아 표시하도록 구현
+- 생성 페이지에서 재사용할 수 있는 공용 컴포넌트로 분리
+
+#### **백엔드 스터디 수정**
+
+- 스터디 수정 API 구현
+- JWT 인증 및 스터디 접근 권한 검증
+- 요청 데이터 유효성 검사
+- Controller → Service → Repository → Prisma 구조로 수정 로직 구현
+
+#### **닉네임 중복 확인**
+
+- 닉네임 중복 확인 기능 및 API 연동
+- `unchecked`, `checking`, `available`, `duplicate` 상태 관리
+- 닉네임 변경 시 기존 중복 확인 상태 초기화
+- 활성 스터디를 기준으로 닉네임 중복 여부 확인
+- 수정 페이지에서는 기존 닉네임을 유지할 경우 재검사 없이 사용 가능하도록 처리
 
 ### 김재영
 
