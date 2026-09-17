@@ -64,7 +64,7 @@ export function useStudyReactions(studyId, initialReactions) {
         setReactions(previousReactions);
       }
     };
-
+    setIsOpenEmojiPicker((prev) => !prev);
     reactionQueueRef.current[targetEmoji] = processQueue();
   };
 
