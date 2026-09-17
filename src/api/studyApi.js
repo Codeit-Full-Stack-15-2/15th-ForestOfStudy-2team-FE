@@ -98,6 +98,28 @@ export async function verifyStudyPassword(studyId, password) {
   return data.data.token;
 }
 
+// 스터디 삭제시 로컬 스토리지 데이터 수정 헬퍼함수
+function safeRemoveRecentStudy(studyId) {
+  try {
+    const savedRecentStudyIdsJson = localStorage.getItem('recentStudies');
+    if (!savedRecentStudyIdsJson) return;
+
+    const recentStudyIds = JSON.parse(savedRecentStudyIdsJson);
+    if (Array.isArray(recentStudyIds)) {
+      const updatedRecentStudyIds = recentStudyIds.filter(
+        (id) => String(id) !== String(studyId),
+      );
+      localStorage.setItem(
+        'recentStudies',
+        JSON.stringify(updatedRecentStudyIds),
+      );
+    }
+  } catch (error) {
+    // 메인 로직을 중단시키지 않고 스토리지 에러만 기록
+    console.error('로컬 스토리지 데이터 파싱 및 갱신 실패:', error);
+  }
+}
+
 // ==========================================
 // 5. 스터디 삭제 API
 // ==========================================
@@ -114,7 +136,6 @@ export async function removeStudy(studyId) {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
-        // Bearer 규격 또는 커스텀 헤더(X-Study-Token)로 전달 ⭐
         Authorization: `Bearer ${verificationToken}`,
       },
     });
@@ -125,11 +146,14 @@ export async function removeStudy(studyId) {
       throw new Error(result.message || '스터디 삭제에 실패했습니다.');
     }
 
+    safeRemoveRecentStudy(studyId);
+
     removeStudyVerified(studyId);
 
     return result;
   } catch (error) {
-    console.error('스터디 삭제에 실패했습니다:', error);
+    console.error('스터디 삭제 처리 중 오류 발생:', error);
+    throw error;
   }
 }
 
