@@ -6,7 +6,7 @@ https://app.notion.com/p/e3c8809438758323bf53011c508f434e?v=1c088094387582578564
 ### 팀원 구성
 곽소철 [깃허브](https://github.com/thcjfd)
 
-윤욱진 [깃허브](개인 Github 링크)
+윤욱진 [깃허브](https://github.com/Guts91-creator)
 
 김재영 [깃허브](개인 Github 링크)
 
@@ -15,14 +15,24 @@ https://app.notion.com/p/e3c8809438758323bf53011c508f434e?v=1c088094387582578564
 김다찬 [깃허브](개인 Github 링크)
 
 ### 프로젝트 소개
-공부의 숲 웹사이트 제작
+**공부의 숲**은 개인의 공부 습관과 집중 시간을 기록하고, 다른 사람의 스터디를 둘러보며 함께 학습할 수 있는 **공부 관리 및 커뮤니티 서비스**입니다.
+
+사용자는 자신만의 스터디를 생성하고 매일 반복할 습관을 관리할 수 있으며, 집중 타이머를 통해 공부 시간을 기록하고 포인트를 획득할 수 있습니다. 또한 다른 사용자의 스터디를 검색·조회하고 이모지로 응원할 수 있습니다.
 프로젝트 기간: 2026.09.01 ~ 2024.09.17
 
 ### 기술 스택
-Frontend: JavaScript, React.js, css
-Backend: Express.js, PrismaORM
-Database: MongoDB
-공통 Tool: Git & Github, Discord
+| 구분 | 기술 |
+| --- | --- |
+| **Language** | JavaScript |
+| **Frontend** | React, Vite, CSS Modules |
+| **Backend** | Node.js, Express.js, Prisma ORM |
+| **Database** | PostgreSQL, Supabase |
+| **Validation** | Zod |
+| **API** | REST API, Fetch API |
+| **Version Control** | Git, GitHub |
+| **Code Quality** | ESLint, Prettier |
+| **API / DB Test** | Swagger, DBeaver |
+| **Communication** | Discord, Notion |
 
 ### 팀원별 구현 기능 상세
 곽소철
