@@ -43,7 +43,7 @@ https://app.notion.com/p/e3c8809438758323bf53011c508f434e?v=1c088094387582578564
 <img width="500"  alt="공부의숲_홈페이지_데스크톱" src="https://github.com/user-attachments/assets/fc472618-1a00-4f24-bd0f-93510f18d701" />
   </p>
    <p>
-<img width="500"  alt="공부의숲_홈페이지_태블릿" src="https://github.com/user-attachments/assets/ca5e6003-0707-4878-93b3-5fe0b0ccda0c" />
+<img width="330"  alt="공부의숲_홈페이지_태블릿" src="https://github.com/user-attachments/assets/ca5e6003-0707-4878-93b3-5fe0b0ccda0c" />
   </p>
   <p>
 <img width="330" alt="공부의숲_홈페이지_모바일" src="https://github.com/user-attachments/assets/4df70b4f-30da-40d7-8391-bcd18af06e07" />
