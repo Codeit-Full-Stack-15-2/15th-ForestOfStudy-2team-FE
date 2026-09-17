@@ -43,7 +43,7 @@ function HabitItem({
       return;
     }
     onCheckHabit(habit.id);
-    if (habit.isCompleted) {
+    if (habit.isComplete) {
       showToast(`${habit.title} 완료를 취소했습니다.`, 'warning');
     } else {
       showToast(`${habit.title} 달성을 축하합니다!`, 'success');
@@ -53,7 +53,7 @@ function HabitItem({
   return (
     <li className={styles.habitRow}>
       <div
-        className={clsx(styles.habitBox, habit.isCompleted && styles.checked)}
+        className={clsx(styles.habitBox, habit.isComplete && styles.checked)}
         onClick={handleClick}
       >
         {isEditing ? (
@@ -69,7 +69,7 @@ function HabitItem({
           <span
             className={clsx(
               styles.habitText,
-              habit.isCompleted && styles.checked,
+              habit.isComplete && styles.checked,
             )}
           >
             {habit.title}
