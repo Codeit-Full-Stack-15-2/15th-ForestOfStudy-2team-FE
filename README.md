@@ -1,6 +1,6 @@
-팀 INT
+# 팀 INT
 
-팀 페이지
+### 팀 페이지
 https://app.notion.com/p/e3c8809438758323bf53011c508f434e?v=1c08809438758257856408805b151014&source=copy_link
 
 ### 팀원 구성
@@ -14,17 +14,17 @@ https://app.notion.com/p/e3c8809438758323bf53011c508f434e?v=1c088094387582578564
 
 김다찬 [깃허브](개인 Github 링크)
 
-프로젝트 소개
+### 프로젝트 소개
 공부의 숲 웹사이트 제작
 프로젝트 기간: 2026.09.01 ~ 2024.09.17
 
-기술 스택
+### 기술 스택
 Frontend: JavaScript, React.js, css
 Backend: Express.js, PrismaORM
 Database: MongoDB
 공통 Tool: Git & Github, Discord
 
-팀원별 구현 기능 상세
+### 팀원별 구현 기능 상세
 곽소철
 <img width="1001" height="788" alt="image" src="https://github.com/user-attachments/assets/c06f7b3b-61f0-4aa2-b627-39ccbe4ac110" />
 타이머 기능
@@ -77,7 +77,7 @@ fetch(PATCH, DELETE)를 사용하여 수강생의 개인정보 수정 및 탈퇴
 공용 Modal 컴포넌트
 공용으로 사용할 Modal 컴포넌트 구현
 
-파일 구조
+### 파일 구조
 ```
 15th-ForestOfStudy-2team-FE/
 ├── env/                              
@@ -103,8 +103,8 @@ fetch(PATCH, DELETE)를 사용하여 수강생의 개인정보 수정 및 탈퇴
 └── package.json
 ```
 
-구현 홈페이지
+### 구현 홈페이지
 https://forest-of-study-chi.vercel.app/
 
-프로젝트 회고록
+### 프로젝트 회고록
 https://app.notion.com/p/2-9fe8809438758287833c013845c2cb83?source=copy_link
