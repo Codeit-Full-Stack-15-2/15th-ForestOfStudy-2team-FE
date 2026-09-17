@@ -90,11 +90,11 @@ https://app.notion.com/p/e3c8809438758323bf53011c508f434e?v=1c088094387582578564
 #### **스터디 생성 및 수정**
 
 <p>
-  <img width="500" alt="스터디 생성 페이지" src="여기에_생성페이지_이미지_URL" />
+   <img width="500" alt="스터디 생성 페이지" src="https://github.com/user-attachments/assets/54bd9683-f072-4be4-8ed2-aeb7c3537ff0" />
 </p>
 
 <p>
-  <img width="500" alt="스터디 수정 페이지" src="여기에_수정페이지_이미지_URL" />
+  <img width="500" alt="스터디 수정 페이지" src="https://github.com/user-attachments/assets/b6e432fe-1a30-4cb2-87cd-fd83c45e7b6a" />
 </p>
 
 - 스터디 생성 및 수정 페이지 UI 구현
