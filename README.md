@@ -33,14 +33,21 @@ https://app.notion.com/p/e3c8809438758323bf53011c508f434e?v=1c088094387582578564
 ### 팀원별 구현 기능 상세
 곽소철
   <p>
-  <img width="500" height="394" alt="image" src="https://github.com/user-attachments/assets/c06f7b3b-61f0-4aa2-b627-39ccbe4ac110" />
+  <img width="500" 
+ alt="image" src="https://github.com/user-attachments/assets/c06f7b3b-61f0-4aa2-b627-39ccbe4ac110" />
 </p>
 타이머 기능, 시간 조정 기능, 타이머 만료 시 포인트 획득 기능
 
 ### 윤욱진
   <p>
 <img width="500"  alt="공부의숲_홈페이지_데스크톱" src="https://github.com/user-attachments/assets/fc472618-1a00-4f24-bd0f-93510f18d701" />
-  </p
+  </p>
+   <p>
+<img width="576" height="768" alt="공부의숲_홈페이지_태블릿" src="https://github.com/user-attachments/assets/ca5e6003-0707-4878-93b3-5fe0b0ccda0c" />
+  </p>
+  <p>
+<img width="330" height="717" alt="공부의숲_홈페이지_모바일" src="https://github.com/user-attachments/assets/4df70b4f-30da-40d7-8391-bcd18af06e07" />
+  </p>
 
 
 
