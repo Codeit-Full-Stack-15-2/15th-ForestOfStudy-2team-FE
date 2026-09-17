@@ -26,7 +26,9 @@ Database: MongoDB
 
 ### 팀원별 구현 기능 상세
 곽소철
-<img width="500" height="394" alt="image" display= "block" src="https://github.com/user-attachments/assets/c06f7b3b-61f0-4aa2-b627-39ccbe4ac110" />
+<p align="center">
+  <img width="500" height="394" alt="image" src="https://github.com/user-attachments/assets/c06f7b3b-61f0-4aa2-b627-39ccbe4ac110" />
+</p>
 타이머 기능
 시간 조정 기능
 타이머 만료 시 포인트 획득
