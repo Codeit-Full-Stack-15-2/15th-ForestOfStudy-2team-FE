@@ -39,7 +39,8 @@ https://app.notion.com/p/e3c8809438758323bf53011c508f434e?v=1c088094387582578564
 타이머 기능, 시간 조정 기능, 타이머 만료 시 포인트 획득 기능
 
 ### 윤욱진
-  <p>
+#### **홈 페이지 UI 및 반응형 레이아웃**
+ <p>
 <img width="500"  alt="공부의숲_홈페이지_데스크톱" src="https://github.com/user-attachments/assets/fc472618-1a00-4f24-bd0f-93510f18d701" />
   </p>
    <p>
@@ -48,10 +49,6 @@ https://app.notion.com/p/e3c8809438758323bf53011c508f434e?v=1c088094387582578564
   <p>
 <img width="330" alt="공부의숲_홈페이지_모바일" src="https://github.com/user-attachments/assets/4df70b4f-30da-40d7-8391-bcd18af06e07" />
   </p>
-!홈 페이지_모바일
-(자신이 개발한 기능에 대한 사진이나 gif 파일 첨부)
-
-#### **홈 페이지 UI 및 반응형 레이아웃**
 
 - 데스크톱, 태블릿, 모바일 환경에 대응하는 반응형 홈 페이지 구현
 - 재사용 가능한 `StudyCard` 컴포넌트 구현
