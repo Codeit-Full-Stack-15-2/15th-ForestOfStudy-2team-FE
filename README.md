@@ -39,7 +39,7 @@ https://app.notion.com/p/e3c8809438758323bf53011c508f434e?v=1c088094387582578564
 
 ### 윤욱진
   <p>
-<img width="1892" height="1435" alt="공부의숲_홈페이지_데스크톱" src="https://github.com/user-attachments/assets/fc472618-1a00-4f24-bd0f-93510f18d701" />
+<img width="500"  alt="공부의숲_홈페이지_데스크톱" src="https://github.com/user-attachments/assets/fc472618-1a00-4f24-bd0f-93510f18d701" />
   </p
 
 
