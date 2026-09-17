@@ -7,9 +7,10 @@ export function useStudyReactions(studyId, initialReactions) {
   const [isOpenReactionList, setIsOpenReactionList] = useState(false);
   const [reactions, setReactions] = useState(initialReactions);
   const reactionQueueRef = useRef({});
-
+  const reactionListPopoverTriggerRef = useRef(null);
   const reactionListPopoverRef = useRef(null);
   const emojiPickerRef = useRef(null);
+  const emojiPickerTriggerRef = useRef(null);
   const currentUserId = getOrCreateUserId();
 
   const applyOptimisticUpdate = (targetEmoji, currentUserId) => {
@@ -64,7 +65,7 @@ export function useStudyReactions(studyId, initialReactions) {
         setReactions(previousReactions);
       }
     };
-
+    setIsOpenEmojiPicker(false); // 이모지 선택 시 피커를 닫도록 보정
     reactionQueueRef.current[targetEmoji] = processQueue();
   };
 
@@ -88,14 +89,18 @@ export function useStudyReactions(studyId, initialReactions) {
     const handleClickOutside = (event) => {
       if (
         reactionListPopoverRef.current &&
-        !reactionListPopoverRef.current.contains(event.target)
+        !reactionListPopoverRef.current.contains(event.target) &&
+        reactionListPopoverTriggerRef.current &&
+        !reactionListPopoverTriggerRef.current.contains(event.target)
       ) {
         setIsOpenReactionList(false);
       }
 
       if (
         emojiPickerRef.current &&
-        !emojiPickerRef.current.contains(event.target)
+        !emojiPickerRef.current.contains(event.target) &&
+        emojiPickerTriggerRef.current &&
+        !emojiPickerTriggerRef.current.contains(event.target)
       ) {
         setIsOpenEmojiPicker(false);
       }
@@ -111,7 +116,9 @@ export function useStudyReactions(studyId, initialReactions) {
     isOpenEmojiPicker,
     isOpenReactionList,
     reactionListPopoverRef,
+    reactionListPopoverTriggerRef,
     emojiPickerRef,
+    emojiPickerTriggerRef,
     handleSelectEmojiFromBadge,
     handleSelectEmojiFromPicker,
     handleToggleEmojiPicker,

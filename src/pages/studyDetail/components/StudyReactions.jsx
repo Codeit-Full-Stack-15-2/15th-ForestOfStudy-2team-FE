@@ -1,7 +1,7 @@
-import clsx from 'clsx';
 import smile from '@/assets/studyDetailPage/ic_smile.svg';
 import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
+import clsx from 'clsx';
 import { useStudyReactions } from '../hooks/useStudyReactions';
 import ReactionBadge from './ReactionBadge';
 import styles from './StudyReactions.module.css';
@@ -15,14 +15,22 @@ function StudyReactions({ studyId, initialReactions }) {
     isOpenEmojiPicker,
     isOpenReactionList,
     reactionListPopoverRef,
+    reactionListPopoverTriggerRef,
     emojiPickerRef,
+    emojiPickerTriggerRef,
     handleSelectEmojiFromBadge,
     handleSelectEmojiFromPicker,
     handleToggleEmojiPicker,
     handleToggleReactionList,
   } = useStudyReactions(studyId, initialReactions);
+
   return (
-    <div className={clsx(styles.container, reactions.length > 0 && styles.containerGap)}>
+    <div
+      className={clsx(
+        styles.container,
+        reactions.length > 0 && styles.containerGap,
+      )}
+    >
       <div className={styles.badges}>
         {reactions.slice(0, VISIBLE_LIMIT).map((reaction) => {
           const isSelected = reaction.guestUuids.includes(currentUserId);
@@ -40,6 +48,7 @@ function StudyReactions({ studyId, initialReactions }) {
         })}
         {reactions.length > VISIBLE_LIMIT && (
           <button
+            ref={reactionListPopoverTriggerRef}
             className={clsx(styles.reactionBadge, styles.more)}
             onClick={handleToggleReactionList}
           >
@@ -66,21 +75,23 @@ function StudyReactions({ studyId, initialReactions }) {
         )}
       </div>
       <div className={styles.addWrapper}>
-        <button className={styles.add} onClick={handleToggleEmojiPicker}>
+        <button
+          ref={emojiPickerTriggerRef}
+          className={styles.add}
+          onClick={handleToggleEmojiPicker}
+        >
           <img src={smile} alt="스마일 아이콘" />
           <span>추가</span>
         </button>
         {isOpenEmojiPicker && (
           <div ref={emojiPickerRef} className={styles.emojiControler}>
-            {
-              <Picker
-                data={data}
-                locale="ko"
-                theme="light"
-                skinTonePosition="search"
-                onEmojiSelect={handleSelectEmojiFromPicker}
-              />
-            }
+            <Picker
+              data={data}
+              locale="ko"
+              theme="light"
+              skinTonePosition="search"
+              onEmojiSelect={handleSelectEmojiFromPicker}
+            />
           </div>
         )}
       </div>
