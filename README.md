@@ -3,7 +3,7 @@
 팀 페이지
 https://app.notion.com/p/e3c8809438758323bf53011c508f434e?v=1c08809438758257856408805b151014&source=copy_link
 
-팀원 구성
+### 팀원 구성
 곽소철 [깃허브](https://github.com/thcjfd)
 
 윤욱진 [깃허브](개인 Github 링크)
