@@ -131,7 +131,7 @@ https://app.notion.com/p/e3c8809438758323bf53011c508f434e?v=1c088094387582578564
 │   ├── mocks/                       
 │   ├── pages/
 │   │   ├── focusPage/               
-│   │   ├── HabitPage/               
+│   │   ├── habitPage/               
 │   │   ├── home/                    
 │   │   ├── studyCreate/             
 │   │   ├── studyDetail/              
