@@ -25,7 +25,12 @@ Database: MongoDB
 공통 Tool: Git & Github, Discord
 
 팀원별 구현 기능 상세
-웨인
+곽소철
+<img width="1001" height="788" alt="image" src="https://github.com/user-attachments/assets/c06f7b3b-61f0-4aa2-b627-39ccbe4ac110" />
+타이머 기능
+시간 조정 기능
+타이머 만료 시 포인트 획득
+
 (자신이 개발한 기능에 대한 사진이나 gif 파일 첨부)
 
 소셜 로그인 기능
@@ -73,11 +78,33 @@ fetch(PATCH, DELETE)를 사용하여 수강생의 개인정보 수정 및 탈퇴
 공용으로 사용할 Modal 컴포넌트 구현
 
 파일 구조
+```
+15th-ForestOfStudy-2team-FE/
+├── env/                              
+├── public/                           
+├── src/
+│   ├── api/                          
+│   ├── assets/                      
+│   ├── components/                   
+│   ├── mocks/                       
+│   ├── pages/
+│   │   ├── focusPage/               
+│   │   ├── HabitPage/               
+│   │   ├── home/                    
+│   │   ├── studyCreate/             
+│   │   ├── studyDetail/              
+│   │   ├── studyEdit/                
+│   │   └── notFound/
+│   ├── utils/                        
+│   ├── App.jsx
+│   ├── main.jsx
+│   └── router.jsx
+├── vite.config.js
+└── package.json
+```
 
 구현 홈페이지
-(개발한 홈페이지에 대한 링크 게시)
-
-https://www.codeit.kr/
+https://forest-of-study-chi.vercel.app/
 
 프로젝트 회고록
-(제작한 발표자료 링크 혹은 첨부파일 첨부)
+https://app.notion.com/p/2-9fe8809438758287833c013845c2cb83?source=copy_link
