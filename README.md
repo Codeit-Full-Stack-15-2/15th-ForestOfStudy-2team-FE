@@ -1,4 +1,5 @@
 
+
 # 팀 INT
 
 ### 팀 페이지
@@ -136,10 +137,15 @@ https://app.notion.com/p/e3c8809438758323bf53011c508f434e?v=1c088094387582578564
 ### 김재영
 
 ### 오늘의 습관 UI 구현
-
-![오늘의 습관](file:///C:/Users/worud/Downloads/habitimg.png)
-![오늘의 습관](file:///C:/Users/worud/Downloads/habitimg1.png)
-![오늘의 습관](file:///C:/Users/worud/Downloads/habitimg2.png)
+<p>
+<img width="500"  alt="habitimg" src="https://github.com/user-attachments/assets/02c531aa-41dd-40d6-87ed-13b920cd6082" />
+</p>
+<p>
+<img width="500"  alt="habitimg1" src="https://github.com/user-attachments/assets/6cbb73dd-07f1-401c-822c-ca9bebe91be3" />
+</p>
+<p>
+<img width="500"  alt="habitimg2" src="https://github.com/user-attachments/assets/e0e430a0-be29-48cb-adb7-6c10bcdf8837" />
+</p>
 
 - **체크 및 목록 편집 모드 분리**
   - 체크 모드: 오늘 달성할 습관 완료/취소 토글 및 UI 반응 연동
