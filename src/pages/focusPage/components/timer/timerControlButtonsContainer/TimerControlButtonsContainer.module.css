@@ -1,0 +1,81 @@
+.timerControlButtonsContainer {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+
+  @media (max-width: 440px) {
+    .timerPauseButton img,
+    .timerRestartButton img {
+      width: 48px;
+      height: 48px;
+    }
+  }
+}
+
+.timerPauseButton,
+.timerRestartButton {
+  border: none;
+  background: none;
+  flex-shrink: 0;
+}
+
+.timerPauseButton:not(:disabled),
+.timerRestartButton:not(:disabled) {
+  cursor: pointer;
+}
+
+.timerPauseButton:disabled img,
+.timerRestartButton:disabled img {
+  filter: grayscale(100%);
+  opacity: 0.4;
+}
+
+.timerPauseButton:not(:disabled):hover img,
+.timerRestartButton:not(:disabled):hover img {
+  filter: brightness(0.7);
+}
+
+.timerStartButton {
+  background-color: var(--color-brand-primary);
+  border-radius: 50px;
+  border: none;
+  padding: 8px 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 800;
+  font-size: 1.75rem;
+  flex-shrink: 1;
+  min-width: 0;
+
+  @media (max-width: 440px) {
+    padding: 12px 20px;
+    font-size: var(--font-size-lg);
+
+    img {
+      width: 24px;
+      height: 24px;
+    }
+  }
+}
+
+.timerStartButtonContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.timerStartButton:disabled {
+  background-color: var(--color-gray-500);
+}
+
+.timerStartButton:not(:disabled) {
+  cursor: pointer;
+}
+
+.timerStartButton:not(:disabled):hover {
+  filter: brightness(0.7);
+}

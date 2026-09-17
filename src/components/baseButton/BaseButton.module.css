@@ -1,0 +1,94 @@
+.button {
+  border: none;
+  border-radius: 16px;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+/* 버튼 스타일 정의 */
+/* primary 버튼 */
+.primary {
+  background-color: var(--color-brand-primary);
+  color: #fff;
+  border: 1px solid transparent;
+}
+
+.primary:hover {
+  background-color: var(--color-brand-600);
+}
+
+.primary:active {
+  background-color: var(--color-brand-700);
+}
+
+/* outline 버튼 */
+.outline {
+  background-color: #fff;
+  color: var(--color-green-text);
+  border: 1px solid var(--color-gray-300);
+}
+
+.outline:hover {
+  color: var(--color-brand-600);
+  border: 1px solid var(--color-brand-600);
+}
+
+.outline:active {
+  color: var(--color-brand-700);
+  border: 1px solid var(--color-brand-700);
+}
+
+/* text 버튼 */
+.text {
+  background: none;
+  color: var(--color-green-text);
+}
+
+.text:hover {
+  color: var(--color-brand-600);
+}
+
+.text:active {
+  color: var(--color-brand-700);
+}
+
+.textGray {
+  background: none;
+  border: 1px solid transparent;
+  color: var(--color-gray-500);
+}
+
+.textGray:hover {
+  color: var(--color-gray-900);
+}
+
+.textGray:active {
+  color: #000000;
+}
+
+/* 버튼 사이즈 정의 */
+.medium {
+  padding: 16px;
+  min-height: 58px;
+  font-size: var(--font-size-xl);
+}
+
+.small {
+  padding: 16px;
+  font-size: var(--font-size-md);
+}
+
+.none {
+  min-height: auto;
+  padding: 0;
+  font-size: var(--font-size-md);
+}
+
+/* 버튼 가로 값 */
+.fullWidth {
+  width: 100%;
+}

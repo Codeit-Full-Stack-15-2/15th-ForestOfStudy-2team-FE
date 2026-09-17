@@ -1,0 +1,34 @@
+.studyForm {
+  width: 100%;
+  max-width: 696px;
+  margin: 40px auto 0;
+  padding: 24px 24px 40px;
+  background-color: white;
+  border-radius: 20px;
+}
+
+.formContent {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.title {
+  font-size: var(--font-size-2xl);
+  font-weight: 800;
+  color: var(--color-gray-900);
+}
+
+@media (max-width: 768px) {
+  .studyForm {
+    width: calc(100% - 48px);
+  }
+}
+
+@media (max-width: 440px) {
+  .studyForm {
+    width: calc(100% - 32px);
+    margin-top: 24px;
+    padding: 24px 16px 40px;
+  }
+}

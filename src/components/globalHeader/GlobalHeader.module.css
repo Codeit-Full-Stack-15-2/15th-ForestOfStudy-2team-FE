@@ -1,5 +1,6 @@
 .container {
   background-color: var(--color-bg-base);
+  margin: 0 20px;
 }
 
 .wrapper {
@@ -23,24 +24,22 @@
     cursor: pointer;
 
     & span {
-      font-family: JejuStoneWall;
       font-size: var(--font-size-lg);
       color: #fff;
-      text-shadow: 0px -2px 0px var(--color-green-text);
     }
   }
 }
 
-@media (max-width: 744px) {
+@media (max-width: 768px) {
+  .container {
+    margin: 0;
+  }
   .wrapper {
     padding: 0 24px;
-    & button {
-      width: 160px;
-    }
   }
 }
 
-@media (max-width: 375px) {
+@media (max-width: 440px) {
   .wrapper {
     padding: 0 16px;
     & img {

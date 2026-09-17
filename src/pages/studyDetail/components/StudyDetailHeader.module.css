@@ -1,0 +1,115 @@
+/* Header */
+.controlsContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  & .controls {
+    order: 1;
+  }
+}
+.titleContainer {
+  display: flex;
+  margin-top: 24px;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  & .title {
+    font-size: var(--font-size-3xl);
+    line-height: 1.333333;
+    font-weight: 800;
+    color: var(--color-gray-900);
+  }
+  & .titleButtons {
+    display: flex;
+    flex-shrink: 0;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+}
+
+.label {
+  font-size: var(--font-size-lg);
+  color: var(--color-gray-500);
+}
+
+.descriptionContainer {
+  margin-top: 16px;
+  & .description {
+    margin-top: 8px;
+    font-size: var(--font-size-lg);
+    line-height: 1.333333;
+    color: var(--color-gray-900);
+    word-break: break-all;
+  }
+}
+
+.pointContainer {
+  margin-top: 24px;
+}
+
+/* studyHeader tablet */
+@media (max-width: 768px) {
+  .controllsContainer {
+    & .controlls {
+      & button {
+        font-size: var(--font-size-sm);
+      }
+    }
+  }
+  .titleContainer {
+    display: block;
+    & .title {
+      font-size: var(--font-size-2xl);
+    }
+    & .titleButtons {
+      margin-top: 16px;
+    }
+  }
+
+  .label {
+    font-size: var(--font-size-md);
+  }
+
+  .descriptionContainer {
+    & .description {
+      font-size: var(--font-size-sm);
+    }
+  }
+}
+
+/* studyHeader mobile */
+@media (max-width: 440px) {
+  .controlsContainer {
+    display: block;
+    & .reaction {
+      margin-top: 16px;
+      & .addWrapper {
+        & .emojiControler {
+          position: absolute;
+          top: 40px;
+          left: auto;
+          right: 0px;
+        }
+      }
+    }
+  }
+  .titleContainer {
+    display: block;
+    & .title {
+      font-size: var(--font-size-2xl);
+    }
+    & .titleButtons {
+      margin-top: 16px;
+    }
+  }
+
+  .label {
+    font-size: var(--font-size-md);
+  }
+
+  .descriptionContainer {
+    & .description {
+      font-size: var(--font-size-sm);
+    }
+  }
+}

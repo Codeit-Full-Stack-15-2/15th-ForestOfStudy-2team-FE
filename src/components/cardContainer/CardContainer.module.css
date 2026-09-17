@@ -1,0 +1,37 @@
+/* 전체 컨테이너 */
+.container {
+  margin: 0 20px;
+}
+
+.wrapper {
+  margin: 40px auto;
+  padding: 40px;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border-radius: 20px;
+  background-color: #fff;
+}
+
+/* 반응형 */
+
+/* container tablet*/
+@media (max-width: 768px) {
+  .container {
+    margin: 0;
+  }
+
+  .wrapper {
+    margin: 16px 24px;
+    padding: 24px;
+  }
+}
+
+/* container mobile*/
+@media (max-width: 440px) {
+  .wrapper {
+    margin: 20px 16px;
+    padding: 16px;
+  }
+}

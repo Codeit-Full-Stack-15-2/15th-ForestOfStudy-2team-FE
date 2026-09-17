@@ -1,0 +1,165 @@
+import clsx from 'clsx';
+import styles from './StudyForm.module.css';
+import BaseButton from '@/components/baseButton/BaseButton';
+import selectedIcon from '@/assets/common/ic_bg_selected.svg';
+
+const backgroundOptions = [
+  { id: 'green', className: styles.backgroundOptionGreen },
+  { id: 'yellow', className: styles.backgroundOptionYellow },
+  { id: 'blue', className: styles.backgroundOptionBlue },
+  { id: 'pink', className: styles.backgroundOptionPink },
+  { id: 'forest_path', className: styles.backgroundOptionForestPath },
+  { id: 'clouds', className: styles.backgroundOptionClouds },
+  { id: 'beach', className: styles.backgroundOptionBeach },
+  { id: 'mountain_lake', className: styles.backgroundOptionMountainLake },
+];
+
+function StudyForm({
+  formData,
+  onChange,
+  nicknameCheckStatus,
+  onNicknameCheck,
+  selectedBackground,
+  onBackgroundSelect,
+  errors = {},
+}) {
+  const handleTextChange = (event) => {
+    const { value, maxLength } = event.target;
+
+    if (value.length > maxLength) {
+      return;
+    }
+
+    onChange(event);
+  };
+
+  return (
+    <div className={styles.form}>
+      <div className={styles.formGroup}>
+        <label className={styles.label} htmlFor="nickname">
+          닉네임
+        </label>
+        <div className={styles.fieldArea}>
+          <div className={styles.nicknameInputBox}>
+            <div className={styles.nicknameField}>
+              <input
+                className={clsx(styles.input, styles.nicknameInput)}
+                id="nickname"
+                name="nickname"
+                type="text"
+                placeholder="닉네임을 입력해 주세요"
+                value={formData.nickname}
+                onChange={handleTextChange}
+                maxLength={10}
+              />
+
+              <div className={styles.fieldInfo}>
+                <div>
+                  {errors.nickname && (
+                    <p className={styles.errorMessage}>{errors.nickname}</p>
+                  )}
+                  {!errors.nickname && nicknameCheckStatus === 'available' && (
+                    <p>사용 가능한 닉네임입니다.</p>
+                  )}
+                  {!errors.nickname && nicknameCheckStatus === 'duplicate' && (
+                    <p>이미 사용 중인 닉네임입니다.</p>
+                  )}
+                </div>
+                <p className={styles.characterCount}>
+                  {formData.nickname.length} / 10
+                </p>
+              </div>
+            </div>
+
+            <BaseButton
+              type="button"
+              size="none"
+              variant="primary"
+              className={styles.nicknameCheckButton}
+              onClick={onNicknameCheck}
+              disabled={!formData.nickname.trim()}
+            >
+              중복 확인
+            </BaseButton>
+          </div>
+        </div>
+      </div>
+      <div className={styles.formGroup}>
+        <label className={styles.label} htmlFor="studyName">
+          스터디 이름
+        </label>
+        <div className={styles.fieldArea}>
+          <input
+            className={styles.input}
+            id="studyName"
+            name="studyName"
+            type="text"
+            placeholder="스터디 이름을 입력해 주세요"
+            value={formData.studyName}
+            onChange={handleTextChange}
+            maxLength={10}
+          />
+
+          <div className={styles.fieldInfo}>
+            <div>
+              {errors.studyName && (
+                <p className={styles.errorMessage}>{errors.studyName}</p>
+              )}
+            </div>
+
+            <p className={styles.characterCount}>
+              {formData.studyName.length} / 10
+            </p>
+          </div>
+        </div>
+      </div>
+      <div className={styles.formGroup}>
+        <label className={styles.label} htmlFor="description">
+          소개
+        </label>
+        <textarea
+          className={styles.textarea}
+          id="description"
+          name="description"
+          placeholder="소개 멘트를 작성해 주세요"
+          value={formData.description}
+          onChange={handleTextChange}
+          maxLength={100}
+        />
+
+        <div className={styles.fieldInfo}>
+          <p className={styles.characterCount}>
+            {formData.description.length} / 100
+          </p>
+        </div>
+      </div>
+      <div className={styles.backgroundGroup}>
+        <p className={styles.label}>배경을 선택해주세요</p>
+
+        <div className={styles.backgroundOptions}>
+          {backgroundOptions.map((option) => (
+            <button
+              key={option.id}
+              className={clsx(styles.backgroundOption, option.className, {
+                [styles.selected]: selectedBackground === option.id,
+              })}
+              type="button"
+              onClick={() => onBackgroundSelect(option.id)}
+              aria-pressed={selectedBackground === option.id}
+            >
+              {selectedBackground === option.id && (
+                <img
+                  className={styles.selectedIcon}
+                  src={selectedIcon}
+                  alt=""
+                />
+              )}
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default StudyForm;

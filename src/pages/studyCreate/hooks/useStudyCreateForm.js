@@ -1,0 +1,136 @@
+import { useState } from 'react';
+import { checkNicknameAvailability } from '@/api/studyApi';
+
+export function useStudyCreateForm() {
+  const [formData, setFormData] = useState({
+    nickname: '',
+    studyName: '',
+    description: '',
+  });
+
+  const [nicknameCheckStatus, setNicknameCheckStatus] = useState('unchecked');
+  const [selectedBackground, setSelectedBackground] = useState('green');
+  const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [errors, setErrors] = useState({});
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+
+  const clearError = (name) => {
+    setErrors((prev) => ({
+      ...prev,
+      [name]: '',
+    }));
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+
+    clearError(name);
+
+    if (name === 'nickname') {
+      setNicknameCheckStatus('unchecked');
+    }
+  };
+
+  const handleNicknameCheck = async () => {
+    const nickname = formData.nickname.trim();
+
+    if (!nickname) {
+      return;
+    }
+
+    clearError('nickname');
+
+    setNicknameCheckStatus('checking');
+
+    try {
+      const result = await checkNicknameAvailability(nickname);
+
+      setNicknameCheckStatus(result.available ? 'available' : 'duplicate');
+    } catch (error) {
+      console.error('닉네임 중복 확인에 실패했습니다.', error);
+      setNicknameCheckStatus('unchecked');
+    }
+  };
+
+  const handleBackgroundSelect = (backgroundId) => {
+    setSelectedBackground(backgroundId);
+  };
+
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
+    clearError('password');
+  };
+
+  const handlePasswordConfirmChange = (event) => {
+    setPasswordConfirm(event.target.value);
+    clearError('passwordConfirm');
+  };
+
+  const validateForm = () => {
+    const nextErrors = {};
+
+    if (!formData.nickname.trim()) {
+      nextErrors.nickname = '*닉네임을 입력해 주세요.';
+    } else if (nicknameCheckStatus !== 'available') {
+      nextErrors.nickname = '*닉네임 중복 확인을 해주세요.';
+    }
+
+    if (!formData.studyName.trim()) {
+      nextErrors.studyName = '*스터디 이름을 입력해 주세요.';
+    }
+
+    if (!password.trim()) {
+      nextErrors.password = '*비밀번호를 입력해 주세요.';
+    } else if (password.length < 4) {
+      nextErrors.password = '*비밀번호는 4~64자로 입력해 주세요.';
+    }
+
+    if (!passwordConfirm.trim()) {
+      nextErrors.passwordConfirm = '*비밀번호를 다시 입력해 주세요.';
+    } else if (password !== passwordConfirm) {
+      nextErrors.passwordConfirm = '*비밀번호가 일치하지 않습니다.';
+    }
+
+    return nextErrors;
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const nextErrors = validateForm();
+    setErrors(nextErrors);
+
+    if (Object.keys(nextErrors).length > 0) {
+      return;
+    }
+
+    setIsConfirmModalOpen(true);
+  };
+
+  const handleCloseConfirmModal = () => {
+    setIsConfirmModalOpen(false);
+  };
+
+  return {
+    formData,
+    nicknameCheckStatus,
+    selectedBackground,
+    password,
+    passwordConfirm,
+    errors,
+    isConfirmModalOpen,
+    handleChange,
+    handleNicknameCheck,
+    handleBackgroundSelect,
+    handlePasswordChange,
+    handlePasswordConfirmChange,
+    handleSubmit,
+    handleCloseConfirmModal,
+  };
+}
