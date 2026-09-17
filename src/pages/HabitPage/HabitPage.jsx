@@ -46,15 +46,24 @@ function HabitPage() {
   const fetchHabitsData = async () => {
     try {
       setIsLoading(true);
-      const response = await getHabits(studyId);
+      const response = await getHabits(studyId, timeNow, timeNow);
       const habitList = Array.isArray(response)
         ? response
         : response.data || response.habits || response.list || [];
 
-      const normalizedHabits = habitList.map((h) => ({
-        ...h,
-        isCompleted: h.isCompleted ?? h.isComplete ?? false,
-      }));
+      const normalizedHabits = habitList.map((h) => {
+        const todayRecord = Array.isArray(h.records)
+          ? h.records.find((record) => {
+              return record.recordDate?.split('T')[0] === timeNow;
+            })
+          : null;
+        const isCompletedToday = todayRecord ? todayRecord.isComplete : false;
+
+        return {
+          ...h,
+          isComplete: isCompletedToday,
+        };
+      });
 
       setHabits(normalizedHabits);
       setInitialHabits(normalizedHabits);
@@ -118,7 +127,7 @@ function HabitPage() {
     const newTempHabit = {
       id: `temp-${Date.now()}`,
       title: habitTitle,
-      isCompleted: false,
+      isComplete: false,
       isTemp: true, // 임시 생성 항목 플래그
     };
     setHabits((prev) => [...prev, newTempHabit]);
@@ -137,7 +146,7 @@ function HabitPage() {
           ...habit,
           title: newTitle,
           isUpdated: isTitleChanged ? true : habit.isUpdated,
-          isCompleted: isTitleChanged ? false : habit.isCompleted,
+          isComplete: isTitleChanged ? false : habit.isComplete,
         };
       }),
     );
@@ -162,13 +171,11 @@ function HabitPage() {
       showToast('목록 수정 완료 후 완료 체크가 가능합니다.', 'warning');
       return;
     }
-    const nextIsCompleted = !targetHabit.isCompleted;
+    const nextIsComplete = !targetHabit.isComplete;
 
     const updateHabitState = (prevHabits) =>
       prevHabits.map((habit) =>
-        habit.id === habitId
-          ? { ...habit, isCompleted: nextIsCompleted }
-          : habit,
+        habit.id === habitId ? { ...habit, isComplete: nextIsComplete } : habit,
       );
 
     setHabits(updateHabitState);
@@ -183,7 +190,7 @@ function HabitPage() {
       setHabits((prevHabits) =>
         prevHabits.map((habit) =>
           habit.id === habitId
-            ? { ...habit, isCompleted: !nextIsCompleted }
+            ? { ...habit, isComplete: !nextIsComplete }
             : habit,
         ),
       );

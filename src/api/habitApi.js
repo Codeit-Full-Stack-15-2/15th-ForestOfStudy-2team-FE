@@ -1,8 +1,18 @@
+import { getStudyVerifiedToken } from '@/utils/studyAuthSession';
+
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export async function getHabits(studyId) {
   try {
-    const response = await fetch(`${BASE_URL}/studies/${studyId}/habits`);
+    const token = getStudyVerifiedToken(studyId);
+
+    const response = await fetch(`${BASE_URL}/studies/${studyId}/habits`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
     if (!response.ok) {
       throw new Error(`습관 목록을 가져오지 못했습니다.`);
     }
@@ -15,10 +25,12 @@ export async function getHabits(studyId) {
 
 export async function createHabits(studyId, titles) {
   try {
+    const token = getStudyVerifiedToken(studyId);
     const response = await fetch(`${BASE_URL}/studies/${studyId}/habits`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
       },
 
       body: JSON.stringify({
@@ -37,10 +49,12 @@ export async function createHabits(studyId, titles) {
 
 export async function updateHabits(studyId, habitsToUpdate) {
   try {
+    const token = getStudyVerifiedToken(studyId);
     const response = await fetch(`${BASE_URL}/studies/${studyId}/habits`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({ habits: habitsToUpdate }),
     });
@@ -58,12 +72,14 @@ export async function updateHabits(studyId, habitsToUpdate) {
 
 export const toggleHabitRecord = async (studyId, habitId, recordDate) => {
   try {
+    const token = getStudyVerifiedToken(studyId);
     const response = await fetch(
       `${BASE_URL}/studies/${studyId}/habits/${habitId}/records`,
       {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           recordDate,
@@ -87,10 +103,12 @@ export const toggleHabitRecord = async (studyId, habitId, recordDate) => {
 
 export async function deleteHabits(studyId, habitIds) {
   try {
+    const token = getStudyVerifiedToken(studyId);
     const response = await fetch(`${BASE_URL}/studies/${studyId}/habits`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({ habitIds }),
     });
